@@ -20,11 +20,6 @@
 		665773F1260C4DDC00072F30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665773F0260C4DDC00072F30 /* AppDelegate.swift */; };
 		665773FA260C4DDC00072F30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 665773F9260C4DDC00072F30 /* Assets.xcassets */; };
 		665773FD260C4DDC00072F30 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 665773FB260C4DDC00072F30 /* LaunchScreen.storyboard */; };
-		66577492260C6BA800072F30 /* Font Awesome 5 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6657748D260C6BA800072F30 /* Font Awesome 5 Brands-Regular-400.otf */; };
-		66577493260C6BA800072F30 /* Font Awesome 5 Pro-Solid-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6657748E260C6BA800072F30 /* Font Awesome 5 Pro-Solid-900.otf */; };
-		66577494260C6BA800072F30 /* Font Awesome 5 Pro-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6657748F260C6BA800072F30 /* Font Awesome 5 Pro-Regular-400.otf */; };
-		66577495260C6BA800072F30 /* Font Awesome 5 Duotone-Solid-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66577490260C6BA800072F30 /* Font Awesome 5 Duotone-Solid-900.otf */; };
-		66577496260C6BA800072F30 /* Font Awesome 5 Pro-Light-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66577491260C6BA800072F30 /* Font Awesome 5 Pro-Light-300.otf */; };
 		665774A1260C6C7400072F30 /* AppStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774A0260C6C7400072F30 /* AppStep.swift */; };
 		665774A5260C6D3E00072F30 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774A4260C6D3E00072F30 /* BaseModel.swift */; };
 		665774A8260C6D7600072F30 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774A7260C6D7600072F30 /* AppFlow.swift */; };
@@ -44,6 +39,11 @@
 		667DBAC22616E93900D46E69 /* YouTubeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667DBAC12616E93900D46E69 /* YouTubeService.swift */; };
 		667DBAC82617900800D46E69 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667DBAC72617900800D46E69 /* Language.swift */; };
 		667DBACB2617907A00D46E69 /* TranslatedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667DBACA2617907A00D46E69 /* TranslatedMessage.swift */; };
+		66A0428E261F98CA00EB5896 /* Font Awesome 5 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66A04289261F98CA00EB5896 /* Font Awesome 5 Brands-Regular-400.otf */; };
+		66A0428F261F98CA00EB5896 /* Font Awesome 5 Pro-Light-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66A0428A261F98CA00EB5896 /* Font Awesome 5 Pro-Light-300.otf */; };
+		66A04290261F98CA00EB5896 /* Font Awesome 5 Duotone-Solid-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66A0428B261F98CA00EB5896 /* Font Awesome 5 Duotone-Solid-900.otf */; };
+		66A04291261F98CA00EB5896 /* Font Awesome 5 Pro-Solid-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66A0428C261F98CA00EB5896 /* Font Awesome 5 Pro-Solid-900.otf */; };
+		66A04292261F98CA00EB5896 /* Font Awesome 5 Pro-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66A0428D261F98CA00EB5896 /* Font Awesome 5 Pro-Regular-400.otf */; };
 		66E6A6EF261D04A00037B0E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 665773F9260C4DDC00072F30 /* Assets.xcassets */; };
 		E9AD19BB070C837FE2388B65 /* Pods_livetl_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ADF13A2E6F809B46FFD1942 /* Pods_livetl_ios.framework */; };
 /* End PBXBuildFile section */
@@ -92,11 +92,6 @@
 		665773F9260C4DDC00072F30 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		665773FC260C4DDC00072F30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		665773FE260C4DDC00072F30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6657748D260C6BA800072F30 /* Font Awesome 5 Brands-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Font Awesome 5 Brands-Regular-400.otf"; path = "FontAwesome/Font Awesome 5 Brands-Regular-400.otf"; sourceTree = SOURCE_ROOT; };
-		6657748E260C6BA800072F30 /* Font Awesome 5 Pro-Solid-900.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Font Awesome 5 Pro-Solid-900.otf"; path = "FontAwesome/Font Awesome 5 Pro-Solid-900.otf"; sourceTree = SOURCE_ROOT; };
-		6657748F260C6BA800072F30 /* Font Awesome 5 Pro-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Font Awesome 5 Pro-Regular-400.otf"; path = "FontAwesome/Font Awesome 5 Pro-Regular-400.otf"; sourceTree = SOURCE_ROOT; };
-		66577490260C6BA800072F30 /* Font Awesome 5 Duotone-Solid-900.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Font Awesome 5 Duotone-Solid-900.otf"; path = "FontAwesome/Font Awesome 5 Duotone-Solid-900.otf"; sourceTree = SOURCE_ROOT; };
-		66577491260C6BA800072F30 /* Font Awesome 5 Pro-Light-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Font Awesome 5 Pro-Light-300.otf"; path = "FontAwesome/Font Awesome 5 Pro-Light-300.otf"; sourceTree = SOURCE_ROOT; };
 		665774A0260C6C7400072F30 /* AppStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStep.swift; sourceTree = "<group>"; };
 		665774A4260C6D3E00072F30 /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
 		665774A7260C6D7600072F30 /* AppFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
@@ -116,6 +111,11 @@
 		667DBAC12616E93900D46E69 /* YouTubeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeService.swift; sourceTree = "<group>"; };
 		667DBAC72617900800D46E69 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		667DBACA2617907A00D46E69 /* TranslatedMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatedMessage.swift; sourceTree = "<group>"; };
+		66A04289261F98CA00EB5896 /* Font Awesome 5 Brands-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Font Awesome 5 Brands-Regular-400.otf"; path = "FontAwesome/otfs/Font Awesome 5 Brands-Regular-400.otf"; sourceTree = SOURCE_ROOT; };
+		66A0428A261F98CA00EB5896 /* Font Awesome 5 Pro-Light-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Font Awesome 5 Pro-Light-300.otf"; path = "FontAwesome/otfs/Font Awesome 5 Pro-Light-300.otf"; sourceTree = SOURCE_ROOT; };
+		66A0428B261F98CA00EB5896 /* Font Awesome 5 Duotone-Solid-900.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Font Awesome 5 Duotone-Solid-900.otf"; path = "FontAwesome/otfs/Font Awesome 5 Duotone-Solid-900.otf"; sourceTree = SOURCE_ROOT; };
+		66A0428C261F98CA00EB5896 /* Font Awesome 5 Pro-Solid-900.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Font Awesome 5 Pro-Solid-900.otf"; path = "FontAwesome/otfs/Font Awesome 5 Pro-Solid-900.otf"; sourceTree = SOURCE_ROOT; };
+		66A0428D261F98CA00EB5896 /* Font Awesome 5 Pro-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Font Awesome 5 Pro-Regular-400.otf"; path = "FontAwesome/otfs/Font Awesome 5 Pro-Regular-400.otf"; sourceTree = SOURCE_ROOT; };
 		B862590DA714E9B74BAEE65C /* Pods-livetl-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-livetl-ios.debug.xcconfig"; path = "Target Support Files/Pods-livetl-ios/Pods-livetl-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		D1BC2E05FAB74DB12E2FEC7D /* Pods-livetl-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-livetl-ios.release.xcconfig"; path = "Target Support Files/Pods-livetl-ios/Pods-livetl-ios.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -198,11 +198,11 @@
 		6657748C260C6B9A00072F30 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				6657748D260C6BA800072F30 /* Font Awesome 5 Brands-Regular-400.otf */,
-				66577490260C6BA800072F30 /* Font Awesome 5 Duotone-Solid-900.otf */,
-				66577491260C6BA800072F30 /* Font Awesome 5 Pro-Light-300.otf */,
-				6657748F260C6BA800072F30 /* Font Awesome 5 Pro-Regular-400.otf */,
-				6657748E260C6BA800072F30 /* Font Awesome 5 Pro-Solid-900.otf */,
+				66A04289261F98CA00EB5896 /* Font Awesome 5 Brands-Regular-400.otf */,
+				66A0428B261F98CA00EB5896 /* Font Awesome 5 Duotone-Solid-900.otf */,
+				66A0428A261F98CA00EB5896 /* Font Awesome 5 Pro-Light-300.otf */,
+				66A0428D261F98CA00EB5896 /* Font Awesome 5 Pro-Regular-400.otf */,
+				66A0428C261F98CA00EB5896 /* Font Awesome 5 Pro-Solid-900.otf */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -434,15 +434,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66577496260C6BA800072F30 /* Font Awesome 5 Pro-Light-300.otf in Resources */,
+				66A04290261F98CA00EB5896 /* Font Awesome 5 Duotone-Solid-900.otf in Resources */,
+				66A0428E261F98CA00EB5896 /* Font Awesome 5 Brands-Regular-400.otf in Resources */,
 				665773FD260C4DDC00072F30 /* LaunchScreen.storyboard in Resources */,
 				667DBAB52616D47400D46E69 /* WindowInjector.js in Resources */,
-				66577492260C6BA800072F30 /* Font Awesome 5 Brands-Regular-400.otf in Resources */,
-				66577493260C6BA800072F30 /* Font Awesome 5 Pro-Solid-900.otf in Resources */,
 				665773FA260C4DDC00072F30 /* Assets.xcassets in Resources */,
-				66577495260C6BA800072F30 /* Font Awesome 5 Duotone-Solid-900.otf in Resources */,
+				66A0428F261F98CA00EB5896 /* Font Awesome 5 Pro-Light-300.otf in Resources */,
+				66A04291261F98CA00EB5896 /* Font Awesome 5 Pro-Solid-900.otf in Resources */,
 				6636808C261983B500125A76 /* ChatCell.xib in Resources */,
-				66577494260C6BA800072F30 /* Font Awesome 5 Pro-Regular-400.otf in Resources */,
+				66A04292261F98CA00EB5896 /* Font Awesome 5 Pro-Regular-400.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
