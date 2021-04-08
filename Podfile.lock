@@ -1,0 +1,101 @@
+PODS:
+  - common (1.0.0):
+    - RxCocoa (~> 6.0)
+    - RxCombine (~> 2.0)
+    - RxSwift (~> 6.0)
+    - SwiftDate (~> 5.0)
+    - SwiftyUserDefaults (~> 5.0)
+    - XCDYouTubeKit (~> 2.0)
+  - Differentiator (5.0.0)
+  - Eureka (5.3.3)
+  - FLEX (4.4.0)
+  - FontBlaster (5.1.3)
+  - Kingfisher (6.2.1)
+  - Neon (0.4.0)
+  - RxCocoa (6.1.0):
+    - RxRelay (= 6.1.0)
+    - RxSwift (= 6.1.0)
+  - RxCombine (2.0.0):
+    - RxRelay (~> 6)
+    - RxSwift (~> 6)
+  - RxDataSources (5.0.0):
+    - Differentiator (~> 5.0)
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxFlow (2.12.0):
+    - RxCocoa (>= 6.0.0)
+    - RxSwift (>= 6.0.0)
+  - RxRelay (6.1.0):
+    - RxSwift (= 6.1.0)
+  - RxSwift (6.1.0)
+  - SCLAlertView (0.8)
+  - SwiftDate (5.1.0)
+  - SwiftyUserDefaults (5.3.0)
+  - XCDYouTubeKit (2.15.2)
+
+DEPENDENCIES:
+  - common (from `https://github.com/livetl/common`)
+  - Eureka
+  - FLEX
+  - FontBlaster
+  - Kingfisher
+  - Neon
+  - RxCocoa
+  - RxDataSources
+  - RxFlow
+  - RxSwift
+  - SCLAlertView
+  - SwiftDate
+  - SwiftyUserDefaults
+  - XCDYouTubeKit
+
+SPEC REPOS:
+  trunk:
+    - Differentiator
+    - Eureka
+    - FLEX
+    - FontBlaster
+    - Kingfisher
+    - Neon
+    - RxCocoa
+    - RxCombine
+    - RxDataSources
+    - RxFlow
+    - RxRelay
+    - RxSwift
+    - SCLAlertView
+    - SwiftDate
+    - SwiftyUserDefaults
+    - XCDYouTubeKit
+
+EXTERNAL SOURCES:
+  common:
+    :git: https://github.com/livetl/common
+
+CHECKOUT OPTIONS:
+  common:
+    :commit: 96663f247f536b0c34bf7e1c5f0bf312ac1809f3
+    :git: https://github.com/livetl/common
+
+SPEC CHECKSUMS:
+  common: 9bbf82fa12a257e3e017328af15f3f6f0a6dbd65
+  Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  Eureka: e6d720290c56bb23333ad1a0e020b2a98a0e9a43
+  FLEX: 0592c011c6dfbfdb94a5e24f2d4a9dbff0c6026d
+  FontBlaster: 5bbc2d94d5731e9bad4f46172e58b1106af99516
+  Kingfisher: e71c6fac2aebb1262888cabc2cb13d313362a48f
+  Neon: 7fb5a9327e7e57911843f608e08f4893a74deaf9
+  RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
+  RxCombine: 1d88b0392e4c9ccfc5187af3dbc8b10791a4b128
+  RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
+  RxFlow: b407eb6b5d956041a9e0930469346e104911a470
+  RxRelay: 483e1a19fad961b41f0b0c0bee506f46c1ae14fe
+  RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
+  SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
+  SwiftDate: 6329e58969a2de31cea7f1ee1143b247693196e7
+  SwiftyUserDefaults: 63f80248cf5bfb3458825d9a78f2eb7e1293a040
+  XCDYouTubeKit: b120aced3d8638ffb570c5450cddb5a1dac448c7
+
+PODFILE CHECKSUM: 03af1ced5a9eff3696928ca269a75e44206f71c4
+
+COCOAPODS: 1.10.1

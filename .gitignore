@@ -1,0 +1,5 @@
+Pods/
+FontAwesome/
+*.xcworkspace
+ios.xcodeproj/xcuserdata
+ios.xcodeproj/*.xcworkspace
