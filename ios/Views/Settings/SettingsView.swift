@@ -35,6 +35,17 @@ class SettingsView: FormViewController {
         navigationItem.title = "Settings"
         
         form
+            +++ Section("App Settings")
+            
+            <<< SwitchRow("clipboard_enabled") { row in
+                row.title = "Allow Clipboard Detection"
+                row.value = self.settings.clipboard
+            }.onChange { row in
+                if let value = row.value {
+                    self.settings.clipboard = value
+                }
+            }
+            
             +++ Section("Message Settings")
         
             <<< MultipleSelectorRow<String>("lang_select") { row in
