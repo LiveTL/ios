@@ -5,7 +5,7 @@ abstract_target 'livetl' do
   target 'ios' do
     platform :ios, '14.0'
 
-    pod 'common', :git => 'https://github.com/livetl/common'
+    #pod 'common', :git => 'https://github.com/livetl/common'
 
     pod 'Eureka'
     pod 'FontBlaster'
