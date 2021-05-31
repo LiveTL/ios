@@ -36,7 +36,7 @@ DEPENDENCIES:
   - SCLAlertView
   - SwiftDate
   - SwiftyUserDefaults
-  - XCDYouTubeKit
+  - "XCDYouTubeKit (from `https://github.com/jatin19121990/XCDYouTubeKit`, branch `hotfix/Can-Not-Play-video-any-more---XCDYouTubeVideoErrorDomain-Code=-3-#525`)"
 
 SPEC REPOS:
   trunk:
@@ -54,7 +54,16 @@ SPEC REPOS:
     - SCLAlertView
     - SwiftDate
     - SwiftyUserDefaults
-    - XCDYouTubeKit
+
+EXTERNAL SOURCES:
+  XCDYouTubeKit:
+    :branch: "hotfix/Can-Not-Play-video-any-more---XCDYouTubeVideoErrorDomain-Code=-3-#525"
+    :git: https://github.com/jatin19121990/XCDYouTubeKit
+
+CHECKOUT OPTIONS:
+  XCDYouTubeKit:
+    :commit: 8389cd3a1beab8bba76649ff870125b580d9a049
+    :git: https://github.com/jatin19121990/XCDYouTubeKit
 
 SPEC CHECKSUMS:
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
@@ -73,6 +82,6 @@ SPEC CHECKSUMS:
   SwiftyUserDefaults: 63f80248cf5bfb3458825d9a78f2eb7e1293a040
   XCDYouTubeKit: b120aced3d8638ffb570c5450cddb5a1dac448c7
 
-PODFILE CHECKSUM: 2a8d73f42c808d1d240b77ba17665904ea6ddd63
+PODFILE CHECKSUM: 3d03569be04b95fdaba7ba97b93cb19c7c3856d3
 
 COCOAPODS: 1.10.1

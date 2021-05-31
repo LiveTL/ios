@@ -2,3 +2,5 @@ Pods/
 *.xcworkspace
 ios.xcodeproj/xcuserdata
 ios.xcodeproj/*.xcworkspace
+
+.DS_Store
