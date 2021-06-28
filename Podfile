@@ -12,8 +12,7 @@ abstract_target 'livetl' do
     pod 'Kingfisher'
     pod 'Neon'
     pod 'SCLAlertView'
-    pod 'XCDYouTubeKit', :git => 'https://github.com/jatin19121990/XCDYouTubeKit', :branch => 'hotfix/Can-Not-Play-video-any-more---XCDYouTubeVideoErrorDomain-Code=-3-#525'
-
+    pod 'XCDYouTubeKit', :git => 'https://github.com/Candygoblen123/XCDYouTubeKit'
     pod 'RxCocoa'
     pod 'RxDataSources'
     pod 'RxFlow'
