@@ -123,6 +123,15 @@ class StreamModel: BaseModel {
             .bind(to: playerRelay)
             .disposed(by: bag)
         request.map { $0.error }
+            .map { error -> Error? in
+                guard let error = error as NSError? else { return nil }
+                if error.code == -2 {
+                    return NSError(domain: XCDYouTubeVideoErrorDomain, code: -2, userInfo: [
+                        NSLocalizedDescriptionKey: "This live stream is upcoming and is not yet available. If you see this error on a video that has already started, please report it to the developers"
+                    ])
+                }
+                return error
+            }
             .bind(to: errorRelay)
             .disposed(by: bag)
     }
