@@ -83,7 +83,8 @@ class StreamView: BaseController {
         view.addSubview(chatControl)
         
         model.output.chatDriver.drive(chatTable.rx.items(cellIdentifier: ChatCell.identifier, cellType: ChatCell.self)) { index, item, cell in
-            cell.configure(item)
+            let ts = (self.model as? StreamModel)?.services.settings.timestamps ?? true
+            cell.configure(item, useTimestamps: ts)
         }.disposed(by: bag)
         model.output.loadingDriver.drive(chatTable.loadingRelay).disposed(by: bag)
         model.output.emptyDriver.drive(chatTable.emptyRelay).disposed(by: bag)
@@ -125,19 +126,21 @@ class StreamView: BaseController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         view.bringSubviewToFront(videoView)
-        
+                
         switch UIDevice.current.model {
         case "iPhone": view.width < view.height ? iPhoneLayoutPortrait() : iPhoneLayoutLandscape()
+        case "iPad"  : view.width < view.height ? iPadLayoutPortrait() : iPadLayoutLandscape()
             
         default: break
-        }        
+        }
+        
+        videoPlayer.view.frame = videoView.bounds
+        navigationController?.setNavigationBarHidden(view.width > view.height, animated: false)
     }
     
     func iPhoneLayoutPortrait() {
-        navigationController?.setNavigationBarHidden(false, animated: false)
         let topHeight = (UIApplication.shared.delegate as? AppDelegate)?.topBarHeight ?? 0
         videoView.anchorAndFillEdge(.top, xPad: 0, yPad: topHeight, otherSize: 210)
-        videoPlayer.view.frame = videoView.bounds
         
         let chatTableHeight = view.height - (videoView.frame.maxY + 75)
         chatTable.anchorAndFillEdge(.bottom, xPad: 0, yPad: 20, otherSize: chatTableHeight)
@@ -145,13 +148,22 @@ class StreamView: BaseController {
         chatControl.align(.aboveCentered, relativeTo: chatTable, padding: 5, width: view.width - 10, height: 35)
     }
     func iPhoneLayoutLandscape() {
-        navigationController?.setNavigationBarHidden(true, animated: false)
         videoView.anchorAndFillEdge(.left, xPad: 0, yPad: 0, otherSize: view.width * 0.65)
-        videoPlayer.view.frame = videoView.bounds
         
         chatTable.anchorInCorner(.bottomRight, xPad: 0, yPad: 0, width: view.width * 0.35, height: view.height - 45)
         
         let contentMarginRight = (UIApplication.shared.delegate as? AppDelegate)?.notchSize ?? 0
         chatControl.align(.aboveCentered, relativeTo: chatTable, padding: 5, width: view.width * 0.32 - contentMarginRight, height: 35)
+    }
+    
+    func iPadLayoutPortrait() {
+        videoView.anchorAndFillEdge(.top, xPad: 0, yPad: 0, otherSize: view.height * 0.6)
+        chatTable.anchorAndFillEdge(.bottom, xPad: 0, yPad: 0, otherSize: view.height * 0.35)
+        chatControl.align(.aboveCentered, relativeTo: chatTable, padding: 5, width: view.width - 10, height: 35)
+    }
+    func iPadLayoutLandscape() {
+        videoView.anchorAndFillEdge(.left, xPad: 0, yPad: 0, otherSize: view.width * 0.7)
+        chatTable.anchorInCorner(.bottomRight, xPad: 0, yPad: 0, width: view.width * 0.3, height: view.height - 85)
+        chatControl.align(.aboveCentered, relativeTo: chatTable, padding: 2, width: view.width * 0.3, height: 35)
     }
 }

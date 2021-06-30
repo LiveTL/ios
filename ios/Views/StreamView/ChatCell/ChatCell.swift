@@ -18,9 +18,9 @@ class ChatCell: UITableViewCell {
         super.awakeFromNib()
     }
 
-    func configure(_ item: DisplayableMessage) {
+    func configure(_ item: DisplayableMessage, useTimestamps: Bool) {
         author.text = item.displayAuthor
-        timestamp.text = item.displayTimestamp
+        timestamp.text = useTimestamps ? item.displayTimestamp : ""
         
         let fullMessage = NSMutableAttributedString()
         

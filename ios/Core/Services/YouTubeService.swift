@@ -36,7 +36,6 @@ struct YouTubeService {
             request.setValue("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.1.2 Safari/605.1.15", forHTTPHeaderField: "User-Agent")
             let task = URLSession.shared.dataTask(with: request) { data, _, _ in
                 if let data = data, let html = String(data: data, encoding: .utf8) {
-                    print(duration)
                     if let token = html.groups(for: pattern).first?.last, duration > 0 {
                         // is replay stream
                         chatUrlFinal.append("_replay?v=\(id)&continuation=\(token)&embed_domain=www.livetl.app&app=desktop")

@@ -13,6 +13,7 @@ extension DefaultsKeys {
     var languages   : DefaultsKey<[TranslatedLanguageTag]> { .init("languages", defaultValue: [.en]) }
     var mod_messages: DefaultsKey<Bool> { .init("mod_messages_enabled", defaultValue: true) }
     var timestamps  : DefaultsKey<Bool> { .init("timestamps_enabled", defaultValue: true) }
+    var clipboard   : DefaultsKey<Bool> { .init("clipboard_enabled", defaultValue: false) }
     
     var always_users: DefaultsKey<[String]> { .init("always_shown_users", defaultValue: []) }
     var never_users : DefaultsKey<[String]> { .init("never_shown_users", defaultValue: []) }
@@ -33,6 +34,9 @@ class SettingsService {
     
     @SwiftyUserDefault(keyPath: \.never_users)
     var neverUsers: [String]
+    
+    @SwiftyUserDefault(keyPath: \.clipboard)
+    var clipboard: Bool
     
     var singleLanguage: TranslatedLanguageTag {
         get { return languages.first ?? .en }

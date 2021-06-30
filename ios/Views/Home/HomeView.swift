@@ -11,6 +11,7 @@ import RxCocoa
 import RxDataSources
 import RxFlow
 import RxSwift
+import SCLAlertView
 
 class HomeView: BaseController {
     var rightButton: UIBarButtonItem {
@@ -33,6 +34,11 @@ class HomeView: BaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self,
+                                                selector: #selector(checkPasteboard),
+                                                name: UIApplication.willEnterForegroundNotification,
+                                                object: nil)
+        
         view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = rightButton
         
@@ -47,7 +53,6 @@ class HomeView: BaseController {
         
         refresh.rx.controlEvent(.valueChanged).bind(to: model.input.refresh).disposed(by: bag)
         model.output.refreshDoneDriver.drive(refresh.rx.isRefreshing).disposed(by: bag)
-//        table.refreshControl = refresh
         
         table.rx.setDelegate(self).disposed(by: bag)
         table.register(StreamerCell.self, forCellReuseIdentifier: StreamerCell.identifier)
@@ -58,6 +63,39 @@ class HomeView: BaseController {
         view.addSubview(table)
         
         model.input.loadStreamers()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        checkPasteboard()
+    }
+    
+    @objc func checkPasteboard() {
+        guard (model as? HomeModel)?.services.settings.clipboard ?? false else { return }
+        
+        let pasteboard = UIPasteboard.general.urls ?? []
+            
+        for url in pasteboard {
+            if let url = URLComponents(url: url, resolvingAgainstBaseURL: false), (url.host == "youtube.com" || url.host == "youtu.be") {
+                let alert = SCLAlertView()
+                
+                alert.addButton("Let's Go!") {
+                    let final: String
+                    
+                    if let id = url.queryItems?.filter({ $0.name == "v" }).first?.value {
+                        final = id
+                    } else {
+                        final = url.path.replacingOccurrences(of: "/", with: "")
+                    }
+                    
+                    self.stepper.steps.accept(AppStep.view(final))
+                }
+                
+                alert.showInfo("Youtube Link Detected!",
+                               subTitle: "We detected a Youtube link in your clipboard. Would you like to access this stream?")
+            }
+        }
     }
     
     @objc func settings() {

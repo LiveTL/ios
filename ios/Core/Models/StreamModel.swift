@@ -55,6 +55,8 @@ class StreamModel: BaseModel {
     override init(_ services: AppServices) {
         super.init(services)
         
+        chatView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.1.2 Safari/605.1.15"
+        
         Observable.combineLatest(replayRelay, replayEventRelay).filter { $0.0 }
             .compactMap { $0.1 }
             .subscribe(onNext: { time, id in
