@@ -26,6 +26,7 @@ class AppFlow: Flow {
         case .view(let id): return toStreamView(id)
         case .settings    : return toSettings()
         case .settingsDone: return settingsDone()
+        case .toConsent(let htmlData): return toConsent(htmlData)
         }
     }
     
@@ -53,6 +54,15 @@ class AppFlow: Flow {
         rootViewController.dismiss(animated: true, completion: nil)
         
         return .none
+    }
+    private func toConsent(_ htmlData: String) -> FlowContributors {
+        //NOTE - ConsentViewController does not work correctly in simulator, use a real device!
+        let controller = ConsentViewController()
+        controller.htmlData = htmlData
+        let navigation = UINavigationController(rootViewController: controller)
+        rootViewController.present(navigation, animated: true, completion: nil)
+        
+        return .end(forwardToParentFlowWithStep: AppStep.home)
     }
 }
 
