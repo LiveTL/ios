@@ -7,7 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E6E3F94C6D4763114C619D9 /* Pods_livetl_ios_iosUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AB8E24027064F597137FFA /* Pods_livetl_ios_iosUnitTests.framework */; };
 		36447F5A268E9BC800D182A4 /* ConsentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36447F59268E9BC800D182A4 /* ConsentViewController.m */; };
+		36FD3EB5269781D900EAAF51 /* iosUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FD3EB4269781D900EAAF51 /* iosUnitTests.swift */; };
+		36FD3EBB2697862500EAAF51 /* InjectedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667DBABE2616E0F600D46E69 /* InjectedMessage.swift */; };
+		36FD3EBC2697865A00EAAF51 /* DisplayableMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667DBAB72616D96C00D46E69 /* DisplayableMessage.swift */; };
+		36FD3EBD269788C000EAAF51 /* StreamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667DBAB12616D3BE00D46E69 /* StreamModel.swift */; };
+		36FD3EBE2697896300EAAF51 /* TranslatedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667DBACA2617907A00D46E69 /* TranslatedMessage.swift */; };
+		36FD3EBF26978A7D00EAAF51 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667DBAC72617900800D46E69 /* Language.swift */; };
+		36FD3EC026978A9800EAAF51 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774A4260C6D3E00072F30 /* BaseModel.swift */; };
+		36FD3EC126978A9A00EAAF51 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774D3260C7D5A00072F30 /* BaseView.swift */; };
+		36FD3EC226978A9C00EAAF51 /* DateDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B14482611040000697ECA /* DateDecoding.swift */; };
+		36FD3EC326978A9E00EAAF51 /* AppStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774A0260C6C7400072F30 /* AppStep.swift */; };
+		36FD3EC426978AA000EAAF51 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774A7260C6D7600072F30 /* AppFlow.swift */; };
+		36FD3EC526978AA300EAAF51 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774D0260C7D1500072F30 /* HomeModel.swift */; };
+		36FD3EC626978AA800EAAF51 /* HTResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774CD260C77FA00072F30 /* HTResponse.swift */; };
+		36FD3EC726978AB300EAAF51 /* ChatControlType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667DBABA2616DBB400D46E69 /* ChatControlType.swift */; };
+		36FD3EC826978AB600EAAF51 /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774B6260C6F8E00072F30 /* AppServices.swift */; };
+		36FD3EC926978AB800EAAF51 /* HoloToolsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B144B261105E000697ECA /* HoloToolsService.swift */; };
+		36FD3ECA26978ABA00EAAF51 /* YouTubeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667DBAC12616E93900D46E69 /* YouTubeService.swift */; };
+		36FD3ECB26978ABC00EAAF51 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66368091261C263C00125A76 /* SettingsService.swift */; };
+		36FD3ECE26978CAD00EAAF51 /* ConsentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36447F59268E9BC800D182A4 /* ConsentViewController.m */; };
+		36FD3ECF26978CB900EAAF51 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774AD260C6ECE00072F30 /* HomeView.swift */; };
+		36FD3ED026978CBB00EAAF51 /* StreamerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774D7260C80F700072F30 /* StreamerCell.swift */; };
+		36FD3ED126978CBD00EAAF51 /* StreamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774B0260C6EEB00072F30 /* StreamView.swift */; };
+		36FD3ED226978CBF00EAAF51 /* StreamTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6636808E261C203500125A76 /* StreamTable.swift */; };
+		36FD3ED326978CC200EAAF51 /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66368089261983B500125A76 /* ChatCell.swift */; };
+		36FD3ED426978CC900EAAF51 /* ChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6636808A261983B500125A76 /* ChatCell.xib */; };
+		36FD3ED526978CCD00EAAF51 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774B3260C6EFE00072F30 /* SettingsView.swift */; };
+		36FD3ED626978D0300EAAF51 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665773F0260C4DDC00072F30 /* AppDelegate.swift */; };
 		662B14492611040000697ECA /* DateDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B14482611040000697ECA /* DateDecoding.swift */; };
 		662B144C261105E000697ECA /* HoloToolsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B144B261105E000697ECA /* HoloToolsService.swift */; };
 		6636808B261983B500125A76 /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66368089261983B500125A76 /* ChatCell.swift */; };
@@ -46,10 +74,18 @@
 		66A04291261F98CA00EB5896 /* Font Awesome 5 Pro-Solid-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66A0428C261F98CA00EB5896 /* Font Awesome 5 Pro-Solid-900.otf */; };
 		66A04292261F98CA00EB5896 /* Font Awesome 5 Pro-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66A0428D261F98CA00EB5896 /* Font Awesome 5 Pro-Regular-400.otf */; };
 		66E6A6EF261D04A00037B0E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 665773F9260C4DDC00072F30 /* Assets.xcassets */; };
-		E9AD19BB070C837FE2388B65 /* Pods_livetl_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ADF13A2E6F809B46FFD1942 /* Pods_livetl_ios.framework */; };
+		CD6E5528E224E7BB34A6699E /* Pods_livetl_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65EFDE634C0523FE542CDF1 /* Pods_livetl_ios.framework */; };
+		E9AD19BB070C837FE2388B65 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		36FD3EB6269781D900EAAF51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 665773E5260C4DDC00072F30 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 665773EC260C4DDC00072F30;
+			remoteInfo = ios;
+		};
 		66368101261C2E6B00125A76 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 665773E5260C4DDC00072F30 /* Project object */;
@@ -77,7 +113,8 @@
 		36447F57268E9BB200D182A4 /* ios-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ios-Bridging-Header.h"; sourceTree = "<group>"; };
 		36447F58268E9BC200D182A4 /* ConsentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConsentViewController.h; path = "../New Group/ConsentViewController.h"; sourceTree = "<group>"; };
 		36447F59268E9BC800D182A4 /* ConsentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConsentViewController.m; path = "../New Group/ConsentViewController.m"; sourceTree = "<group>"; };
-		5ADF13A2E6F809B46FFD1942 /* Pods_livetl_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_livetl_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		36FD3EB2269781D900EAAF51 /* iosUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		36FD3EB4269781D900EAAF51 /* iosUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosUnitTests.swift; sourceTree = "<group>"; };
 		662B14482611040000697ECA /* DateDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDecoding.swift; sourceTree = "<group>"; };
 		662B144B261105E000697ECA /* HoloToolsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoloToolsService.swift; sourceTree = "<group>"; };
 		66368089261983B500125A76 /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
@@ -120,11 +157,23 @@
 		66A0428B261F98CA00EB5896 /* Font Awesome 5 Duotone-Solid-900.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Font Awesome 5 Duotone-Solid-900.otf"; path = "FontAwesome/otfs/Font Awesome 5 Duotone-Solid-900.otf"; sourceTree = SOURCE_ROOT; };
 		66A0428C261F98CA00EB5896 /* Font Awesome 5 Pro-Solid-900.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Font Awesome 5 Pro-Solid-900.otf"; path = "FontAwesome/otfs/Font Awesome 5 Pro-Solid-900.otf"; sourceTree = SOURCE_ROOT; };
 		66A0428D261F98CA00EB5896 /* Font Awesome 5 Pro-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Font Awesome 5 Pro-Regular-400.otf"; path = "FontAwesome/otfs/Font Awesome 5 Pro-Regular-400.otf"; sourceTree = SOURCE_ROOT; };
+		773A8C77E6617E9828A26442 /* Pods-livetl-ios-iosUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-livetl-ios-iosUnitTests.release.xcconfig"; path = "Target Support Files/Pods-livetl-ios-iosUnitTests/Pods-livetl-ios-iosUnitTests.release.xcconfig"; sourceTree = "<group>"; };
+		77AB8E24027064F597137FFA /* Pods_livetl_ios_iosUnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_livetl_ios_iosUnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		960D7745F045E910B0BF8BDD /* Pods-livetl-ios-iosUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-livetl-ios-iosUnitTests.debug.xcconfig"; path = "Target Support Files/Pods-livetl-ios-iosUnitTests/Pods-livetl-ios-iosUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B862590DA714E9B74BAEE65C /* Pods-livetl-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-livetl-ios.debug.xcconfig"; path = "Target Support Files/Pods-livetl-ios/Pods-livetl-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		D1BC2E05FAB74DB12E2FEC7D /* Pods-livetl-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-livetl-ios.release.xcconfig"; path = "Target Support Files/Pods-livetl-ios/Pods-livetl-ios.release.xcconfig"; sourceTree = "<group>"; };
+		E65EFDE634C0523FE542CDF1 /* Pods_livetl_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_livetl_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		36FD3EAF269781D900EAAF51 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E6E3F94C6D4763114C619D9 /* Pods_livetl_ios_iosUnitTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		663680F4261C2E6B00125A76 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -136,7 +185,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9AD19BB070C837FE2388B65 /* Pods_livetl_ios.framework in Frameworks */,
+				E9AD19BB070C837FE2388B65 /* (null) in Frameworks */,
+				CD6E5528E224E7BB34A6699E /* Pods_livetl_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,6 +200,14 @@
 				36447F58268E9BC200D182A4 /* ConsentViewController.h */,
 			);
 			path = CookieConsentView;
+			sourceTree = "<group>";
+		};
+		36FD3EB3269781D900EAAF51 /* iosUnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				36FD3EB4269781D900EAAF51 /* iosUnitTests.swift */,
+			);
+			path = iosUnitTests;
 			sourceTree = "<group>";
 		};
 		663680F8261C2E6B00125A76 /* yt-extension */ = {
@@ -169,6 +227,7 @@
 			children = (
 				665773EF260C4DDC00072F30 /* ios */,
 				663680F8261C2E6B00125A76 /* yt-extension */,
+				36FD3EB3269781D900EAAF51 /* iosUnitTests */,
 				665773EE260C4DDC00072F30 /* Products */,
 				CAE73014EF51FF3789F00C08 /* Pods */,
 				992E5BBE83B4D80190C31707 /* Frameworks */,
@@ -180,6 +239,7 @@
 			children = (
 				665773ED260C4DDC00072F30 /* ios.app */,
 				663680F7261C2E6B00125A76 /* yt-extension.appex */,
+				36FD3EB2269781D900EAAF51 /* iosUnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -343,7 +403,8 @@
 		992E5BBE83B4D80190C31707 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5ADF13A2E6F809B46FFD1942 /* Pods_livetl_ios.framework */,
+				E65EFDE634C0523FE542CDF1 /* Pods_livetl_ios.framework */,
+				77AB8E24027064F597137FFA /* Pods_livetl_ios_iosUnitTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -353,6 +414,8 @@
 			children = (
 				B862590DA714E9B74BAEE65C /* Pods-livetl-ios.debug.xcconfig */,
 				D1BC2E05FAB74DB12E2FEC7D /* Pods-livetl-ios.release.xcconfig */,
+				960D7745F045E910B0BF8BDD /* Pods-livetl-ios-iosUnitTests.debug.xcconfig */,
+				773A8C77E6617E9828A26442 /* Pods-livetl-ios-iosUnitTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -360,6 +423,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		36FD3EB1269781D900EAAF51 /* iosUnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 36FD3EB8269781D900EAAF51 /* Build configuration list for PBXNativeTarget "iosUnitTests" */;
+			buildPhases = (
+				740A69721681E6CF9441F118 /* [CP] Check Pods Manifest.lock */,
+				36FD3EAE269781D900EAAF51 /* Sources */,
+				36FD3EAF269781D900EAAF51 /* Frameworks */,
+				36FD3EB0269781D900EAAF51 /* Resources */,
+				BFD7AFE0634022508C05CCCE /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				36FD3EB7269781D900EAAF51 /* PBXTargetDependency */,
+			);
+			name = iosUnitTests;
+			productName = iosUnitTests;
+			productReference = 36FD3EB2269781D900EAAF51 /* iosUnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		663680F6261C2E6B00125A76 /* yt-extension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 66368104261C2E6B00125A76 /* Build configuration list for PBXNativeTarget "yt-extension" */;
@@ -404,9 +487,13 @@
 		665773E5260C4DDC00072F30 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1240;
+				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
+					36FD3EB1269781D900EAAF51 = {
+						CreatedOnToolsVersion = 13.0;
+						TestTargetID = 665773EC260C4DDC00072F30;
+					};
 					663680F6261C2E6B00125A76 = {
 						CreatedOnToolsVersion = 12.4;
 					};
@@ -431,11 +518,20 @@
 			targets = (
 				665773EC260C4DDC00072F30 /* ios */,
 				663680F6261C2E6B00125A76 /* yt-extension */,
+				36FD3EB1269781D900EAAF51 /* iosUnitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		36FD3EB0269781D900EAAF51 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36FD3ED426978CC900EAAF51 /* ChatCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		663680F5261C2E6B00125A76 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -482,6 +578,28 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-livetl-ios/Pods-livetl-ios-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		740A69721681E6CF9441F118 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-livetl-ios-iosUnitTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A92EF591A6969906AF8A0333 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -504,9 +622,59 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		BFD7AFE0634022508C05CCCE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-livetl-ios-iosUnitTests/Pods-livetl-ios-iosUnitTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-livetl-ios-iosUnitTests/Pods-livetl-ios-iosUnitTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-livetl-ios-iosUnitTests/Pods-livetl-ios-iosUnitTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		36FD3EAE269781D900EAAF51 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36FD3ECB26978ABC00EAAF51 /* SettingsService.swift in Sources */,
+				36FD3ED226978CBF00EAAF51 /* StreamTable.swift in Sources */,
+				36FD3EB5269781D900EAAF51 /* iosUnitTests.swift in Sources */,
+				36FD3EBE2697896300EAAF51 /* TranslatedMessage.swift in Sources */,
+				36FD3ED026978CBB00EAAF51 /* StreamerCell.swift in Sources */,
+				36FD3EC026978A9800EAAF51 /* BaseModel.swift in Sources */,
+				36FD3EC426978AA000EAAF51 /* AppFlow.swift in Sources */,
+				36FD3EC626978AA800EAAF51 /* HTResponse.swift in Sources */,
+				36FD3ED626978D0300EAAF51 /* AppDelegate.swift in Sources */,
+				36FD3EC926978AB800EAAF51 /* HoloToolsService.swift in Sources */,
+				36FD3EC226978A9C00EAAF51 /* DateDecoding.swift in Sources */,
+				36FD3ECE26978CAD00EAAF51 /* ConsentViewController.m in Sources */,
+				36FD3EBD269788C000EAAF51 /* StreamModel.swift in Sources */,
+				36FD3EC726978AB300EAAF51 /* ChatControlType.swift in Sources */,
+				36FD3EC326978A9E00EAAF51 /* AppStep.swift in Sources */,
+				36FD3EBF26978A7D00EAAF51 /* Language.swift in Sources */,
+				36FD3ED526978CCD00EAAF51 /* SettingsView.swift in Sources */,
+				36FD3ECF26978CB900EAAF51 /* HomeView.swift in Sources */,
+				36FD3EC526978AA300EAAF51 /* HomeModel.swift in Sources */,
+				36FD3ED326978CC200EAAF51 /* ChatCell.swift in Sources */,
+				36FD3EBC2697865A00EAAF51 /* DisplayableMessage.swift in Sources */,
+				36FD3EC826978AB600EAAF51 /* AppServices.swift in Sources */,
+				36FD3ECA26978ABA00EAAF51 /* YouTubeService.swift in Sources */,
+				36FD3EBB2697862500EAAF51 /* InjectedMessage.swift in Sources */,
+				36FD3ED126978CBD00EAAF51 /* StreamView.swift in Sources */,
+				36FD3EC126978A9A00EAAF51 /* BaseView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		663680F3261C2E6B00125A76 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -550,6 +718,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		36FD3EB7269781D900EAAF51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 665773EC260C4DDC00072F30 /* ios */;
+			targetProxy = 36FD3EB6269781D900EAAF51 /* PBXContainerItemProxy */;
+		};
 		66368102261C2E6B00125A76 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 663680F6261C2E6B00125A76 /* yt-extension */;
@@ -577,6 +750,58 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		36FD3EB9269781D900EAAF51 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 960D7745F045E910B0BF8BDD /* Pods-livetl-ios-iosUnitTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RJNC97Y8QD;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.livetl.iosUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "ios/Views/ios-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ios.app/ios";
+			};
+			name = Debug;
+		};
+		36FD3EBA269781D900EAAF51 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 773A8C77E6617E9828A26442 /* Pods-livetl-ios-iosUnitTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RJNC97Y8QD;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.livetl.iosUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "ios/Views/ios-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ios.app/ios";
+			};
+			name = Release;
+		};
 		66368105261C2E6B00125A76 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -799,6 +1024,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		36FD3EB8269781D900EAAF51 /* Build configuration list for PBXNativeTarget "iosUnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				36FD3EB9269781D900EAAF51 /* Debug */,
+				36FD3EBA269781D900EAAF51 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		66368104261C2E6B00125A76 /* Build configuration list for PBXNativeTarget "yt-extension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

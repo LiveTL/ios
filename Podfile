@@ -21,5 +21,9 @@ abstract_target 'livetl' do
     pod 'SwiftyUserDefaults'
 
     pod 'FLEX', :configuration => 'DEBUG'
+    
+    target 'iosUnitTests' do
+      inherit! :complete
+    end
   end
 end
