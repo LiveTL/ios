@@ -18,9 +18,7 @@ jobs:
       - uses: actions/checkout@v2
         with: 
           submodules: recursive
-      
-      - name: Checkout submodules
-        run: git submodule update --init --recursive
+          token: ${{ secrets.ACTION_ACCESS_TOKEN }}
       
       - name: Pod Install
         run: pod install
