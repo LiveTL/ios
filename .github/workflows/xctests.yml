@@ -3,15 +3,7 @@
 name: XCTests
 
 # Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: all
-  pull_request:
-    branches: all
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+on: [ push, pull_request, workflow_dispatch ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -24,15 +16,17 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
+      
+      - name: Pod Install
+        run: pod install
+          
       - name: Xcode Test
         run: |
           xcodebuild \
           -workspace ios.xcworkspace \
           -scheme ios \
           -sdk iphonesimulator \
-          -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.5' \
+          -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.4' \
           clean test 
           
       - name: Analize Tests
@@ -41,3 +35,9 @@ jobs:
         with:
           results: TestResults.xcresult
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Make Test Results artifact
+        uses: actions/upload-artifact@v2
+        with: 
+          name: TestResults.xcresult
+          path: TestResults.xcresult
