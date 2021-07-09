@@ -34,7 +34,7 @@ jobs:
           -workspace ios.xcworkspace \
           -scheme ios \
           -sdk iphonesimulator \
-          -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.5' \
+          -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.1' \
           clean test 
           
       - name: Analize Tests
@@ -43,3 +43,9 @@ jobs:
         with:
           results: TestResults.xcresult
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Make Test Results artifact
+        uses: actions/upload-artifact@v2
+        with: 
+          name: TestResults.xcresult
+          path: TestResults.xcresult
