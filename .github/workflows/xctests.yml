@@ -34,7 +34,7 @@ jobs:
           -workspace ios.xcworkspace \
           -scheme ios \
           -sdk iphonesimulator \
-          -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.1' \
+          -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.4' \
           clean test 
           
       - name: Analize Tests
