@@ -7,14 +7,9 @@ on: [ push, pull_request, workflow_dispatch ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  build and test:
     runs-on: macos-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         with: 
           submodules: recursive
@@ -22,22 +17,15 @@ jobs:
       
       - name: Pod Install
         run: pod install
-          
-      - name: Xcode Test
+        
+      - name: Xcode Build
         run: |
           xcodebuild \
           -workspace ios.xcworkspace \
           -scheme ios \
           -sdk iphonesimulator \
           -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.4' \
-          clean test 
-          
-      - name: Analize Tests
-        uses: tbartelmess/analyze-xcoderesults-action@0.1.0
-        if: always()
-        with:
-          results: TestResults.xcresult
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          clean test | xcpretty
           
       - name: Make Test Results artifact
         uses: actions/upload-artifact@v2
