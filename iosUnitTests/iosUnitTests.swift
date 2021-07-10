@@ -8,35 +8,94 @@
 import XCTest
 import ios
 
-class iosFilterTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testGeneralfilter() throws {
+class IosFilterTests: XCTestCase {
+    
+    func testGeneralfilter() {
         let services = AppServices()
         services.settings.languages = TranslatedLanguageTag.allCases
             
-        let message1 = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("(en) Hello There")], showtime: 0.0, timestamp: Date.distantPast)
-        if let tl1 = StreamModel(services).translate(message1) as? TranslatedMessage {
-            XCTAssertEqual(tl1.languageTag, TranslatedLanguageTag.en)
-            XCTAssertEqual(tl1.message, " Hello There")
+        let message = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("(en) Hello There")], showtime: 0.0, timestamp: Date.distantPast)
+        if let tl = StreamModel(services).translate(message) as? TranslatedMessage {
+            XCTAssertEqual(tl.languageTag, TranslatedLanguageTag.en, "Incorrect Language")
+            XCTAssertEqual(tl.message, "Hello There", "Message not formatted correcly")
         }else {
-            XCTFail("(en) failed - not a translated message.")
-        }
-        
-        let message2 = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("(es) - Hola eso")], showtime: 0.0, timestamp: Date.distantPast)
-        if let tl2 = StreamModel(AppServices()).translate(message2) as? TranslatedMessage {
-            XCTAssertEqual(tl2.languageTag, TranslatedLanguageTag.es)
-            XCTAssertEqual(tl2.message, " - Hola eso")
-        }else {
-            XCTFail("(es) failed - not a translated message.")
+            XCTFail("\"(en) \"is not filtered as a translated message.")
         }
     }
+    
+    func testTLDash() {
+        let message = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("(es) - Hola eso")], showtime: 0.0, timestamp: Date.distantPast)
+        if let tl = StreamModel(AppServices()).translate(message) as? TranslatedMessage {
+            XCTAssertEqual(tl.languageTag, TranslatedLanguageTag.es, "Incorrect Language")
+            XCTAssertEqual(tl.message, "Hola eso", "Message not formatted correcly")
+        }else {
+            XCTFail("\"(es) - \"is not filtered as a translated message.")
+        }
+    }
+    
+    func testFancyBrackets() {
+        let message = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("【jp】 Weird bracket gang")], showtime: 0.0, timestamp: Date.distantPast)
+        if let tl = StreamModel(AppServices()).translate(message) as? TranslatedMessage {
+            XCTAssertEqual(tl.languageTag, TranslatedLanguageTag.jp, "Incorrect Language")
+            XCTAssertEqual(tl.message, "Weird bracket gang", "Message not formatted correcly")
+        }else {
+            XCTFail("\"【jp】 \"is not filtered as a translated message.")
+        }
+    }
+    
+    func testDashWithSpace() {
+        let message = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("jp - リーーーーーーー")], showtime: 0.0, timestamp: Date.distantPast)
+        if let tl = StreamModel(AppServices()).translate(message) as? TranslatedMessage {
+            XCTAssertEqual(tl.languageTag, TranslatedLanguageTag.jp, "Incorrect Language")
+            XCTAssertEqual(tl.message, "リーーーーーーー", "Message not formatted correcly")
+        }else {
+            XCTFail("\"jp - \"is not filtered as a translated message.")
+        }
+    }
+    
+    func testColon() {
+        let message = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("en:Test translation")], showtime: 0.0, timestamp: Date.distantPast)
+        if let tl = StreamModel(AppServices()).translate(message) as? TranslatedMessage {
+            XCTAssertEqual(tl.languageTag, TranslatedLanguageTag.en, "Incorrect Language")
+            XCTAssertEqual(tl.message, "Test translation", "Message not formatted correcly")
+        }else {
+            XCTFail("\"en:\"is not filtered as a translated message.")
+        }
+    }
+    
+    func testBracketsWithColon() {
+        let message = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("[en]: test translation")], showtime: 0.0, timestamp: Date.distantPast)
+        if let tl = StreamModel(AppServices()).translate(message) as? TranslatedMessage {
+            XCTAssertEqual(tl.languageTag, TranslatedLanguageTag.en, "Incorrect Language")
+            XCTAssertEqual(tl.message, "test translation", "Message not formatted correcly")
+        }else {
+            XCTFail("\"[en]: \"is not filtered as a translated message.")
+        }
+    }
+    
+    func testLongLangCode() {
+        let message = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("[eng] test translation")], showtime: 0.0, timestamp: Date.distantPast)
+        if let tl = StreamModel(AppServices()).translate(message) as? TranslatedMessage {
+            XCTAssertEqual(tl.languageTag, TranslatedLanguageTag.en, "Incorrect Language")
+            XCTAssertEqual(tl.message, "test translation", "Message not formatted correcly")
+        }else {
+            XCTExpectFailure()
+            XCTFail("\"[eng] \"is not filtered as a translated message. It should be.")
+        }
+    }
+    
+    func testNoTL() {
+        let message = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("No translation")], showtime: 0.0, timestamp: Date.distantPast)
+        if let tl = StreamModel(AppServices()).translate(message) as? TranslatedMessage {
+            XCTAssertEqual(tl.languageTag, TranslatedLanguageTag.en, "Incorrect Language")
+            XCTAssertEqual(tl.message, "test translation", "Message not formatted correcly")
+        }else {
+            //XCTExpectFailure()
+            XCTAssert(true)
+        }
+    }
+}
 
+class IosLangCodeTests: XCTestCase {
+    
 }
