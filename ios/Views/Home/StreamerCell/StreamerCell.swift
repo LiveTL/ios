@@ -37,11 +37,11 @@ class StreamerCell: UITableViewCell {
         contentView.addSubview(title)
         
         channel.font = .systemFont(ofSize: 15)
-        channel.textColor = .secondaryLabel
+        channel.textColor = .secondaryLabel.withAlphaComponent(1.0)
         contentView.addSubview(channel)
         
         start.font = .systemFont(ofSize: 15)
-        start.textColor = .secondaryLabel
+        start.textColor = .secondaryLabel.withAlphaComponent(1.0)
         start.textAlignment = .right
         contentView.addSubview(start)
     }
@@ -55,28 +55,22 @@ class StreamerCell: UITableViewCell {
         icon.kf.indicatorType = .activity
         icon.kf.setImage(with: item.channel.photo)
         
-        var tint: CGFloat
+        var processor: ImageProcessor
         
-        switch traitCollection.userInterfaceStyle {
-        case .light:
-            tint = 0.5
-        case .dark:
-            tint = 0.8
-        case .unspecified:
-            tint = 0.5
-        @unknown default:
-            tint = 0.5
+        if services.settings.thumbnailDarken {
+            processor = OverlayImageProcessor(overlay: .systemBackground, fraction: 0.4)
+        } else {
+            processor = OverlayImageProcessor(overlay: .systemBackground, fraction: 1)
+        }
+        
+        if services.settings.thumbnailBlur{
+            processor = processor |> BlurImageProcessor(blurRadius: 10.0)
         }
         
         if services.settings.thumbnails == false {
             thumbnail.isHidden = true
         } else {
-            KingfisherManager.shared.retrieveImage(with: item.thumbnail!) { r in
-                switch r {
-                case .success(let value): self.thumbnail.image = value.image.kf.apply(.tint(.systemBackground.withAlphaComponent(tint)))
-                case .failure: break
-                }
-            }
+            thumbnail.kf.setImage(with: item.thumbnail!, options: [.processor(processor)])
         }
     }
     

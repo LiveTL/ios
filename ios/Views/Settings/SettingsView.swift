@@ -47,6 +47,30 @@ class SettingsView: FormViewController {
                 }
             }
             
+            <<< SwitchRow("thumbnail_darken_enabled") { row in
+                row.title = "Enable Thumbnail Darken Effect"
+                row.value = self.settings.thumbnailDarken
+                row.hidden = Condition.function(["thumbnails_enabled"], { form in
+                    return !((form.rowBy(tag: "thumbnails_enabled") as? SwitchRow)?.value ?? false)
+                })
+            }.onChange { row in
+                if let value = row.value {
+                    self.settings.thumbnailDarken = value
+                }
+            }
+            
+            <<< SwitchRow("thumbnail_blur_enabled") { row in
+                row.title = "Enable Thumbnail Blur Effect"
+                row.value = self.settings.thumbnailBlur
+                row.hidden = Condition.function(["thumbnails_enabled"], { form in
+                    return !((form.rowBy(tag: "thumbnails_enabled") as? SwitchRow)?.value ?? false)
+                })
+            }.onChange { row in
+                if let value = row.value {
+                    self.settings.thumbnailBlur = value
+                }
+            }
+            
             <<< SwitchRow("clipboard_enabled") { row in
                 row.title = "Allow Clipboard Detection"
                 row.value = self.settings.clipboard

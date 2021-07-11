@@ -26,11 +26,11 @@ class HomeView: BaseController {
     let table = UITableView(frame: .zero, style: .insetGrouped)
     
     let model: HomeModelType
-    let ser: AppServices
+    let services: AppServices
     
     override init(_ stepper: Stepper, _ services: AppServices) {
         model = HomeModel(services)
-        ser = services
+        self.services = services
         super.init(stepper, services)
     }
     
@@ -47,7 +47,7 @@ class HomeView: BaseController {
         
         let dataSource = RxTableViewSectionedReloadDataSource<StreamerItemModel> { _, table, index, item -> UITableViewCell in
             let cell = table.dequeueReusableCell(withIdentifier: StreamerCell.identifier, for: index)
-            (cell as? StreamerCell)?.configure(with: item, services: self.ser)
+            (cell as? StreamerCell)?.configure(with: item, services: self.services)
             return cell
         }
         dataSource.titleForHeaderInSection = { source, index -> String in
