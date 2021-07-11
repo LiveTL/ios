@@ -10,10 +10,14 @@ import Neon
 import Kingfisher
 import SwiftDate
 
+
+
 class StreamerCell: UITableViewCell {
     static let identifier: String = "streamerCell"
     
     let icon: UIImageView = UIImageView()
+    
+    let thumbnail: UIImageView = UIImageView()
     
     let title  : UILabel = UILabel()
     let channel: UILabel = UILabel()
@@ -21,7 +25,11 @@ class StreamerCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        contentView.clipsToBounds = true
 
+        contentView.addSubview(thumbnail)
+        
         contentView.addSubview(icon)
         
         title.font = .systemFont(ofSize: 18)
@@ -38,12 +46,38 @@ class StreamerCell: UITableViewCell {
         contentView.addSubview(start)
     }
     
-    func configure(with item: HTResponse.Streamer) {
+    func configure(with item: HTResponse.Streamer, services: AppServices) {
+        
         title.text = item.title
         channel.text = item.channel.name
         start.text = item.live_schedule.toRelative(style: RelativeFormatter.defaultStyle())
         
+        icon.kf.indicatorType = .activity
         icon.kf.setImage(with: item.channel.photo)
+        
+        var tint: CGFloat
+        
+        switch traitCollection.userInterfaceStyle {
+        case .light:
+            tint = 0.5
+        case .dark:
+            tint = 0.8
+        case .unspecified:
+            tint = 0.5
+        @unknown default:
+            tint = 0.5
+        }
+        
+        if services.settings.thumbnails == false {
+            thumbnail.isHidden = true
+        } else {
+            KingfisherManager.shared.retrieveImage(with: item.thumbnail!) { r in
+                switch r {
+                case .success(let value): self.thumbnail.image = value.image.kf.apply(.tint(.systemBackground.withAlphaComponent(tint)))
+                case .failure: break
+                }
+            }
+        }
     }
     
     override func layoutSubviews() {
@@ -57,6 +91,12 @@ class StreamerCell: UITableViewCell {
         
         channel.align(.toTheRightMatchingBottom, relativeTo: icon, padding: 10, width: width - 180, height: 18)
         start.alignAndFillWidth(align: .toTheRightCentered, relativeTo: channel, padding: 10, height: 18)
+        
+        thumbnail.anchorToEdge(.left, padding: 0, width: 333, height: 187)
+        thumbnail.clipsToBounds = true
+        
+        
+        
     }
     
     required init?(coder: NSCoder) {

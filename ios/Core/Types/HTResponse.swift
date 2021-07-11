@@ -8,6 +8,7 @@
 import Foundation
 import RxDataSources
 
+
 struct HTResponse: Decodable, Equatable {
     let live    : [Streamer]
     let upcoming: [Streamer]
@@ -18,7 +19,9 @@ struct HTResponse: Decodable, Equatable {
         let yt_video_key: String?
         let bb_video_id: String?
         let title: String
-        let thumbnail: URL?
+        var thumbnail: URL? {
+            return URL(string: "https://i.ytimg.com/vi/\(videoId)/maxresdefault.jpg")
+        }
         let status: String
         let live_schedule: Date
         let live_start: Date?

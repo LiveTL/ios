@@ -14,6 +14,7 @@ extension DefaultsKeys {
     var mod_messages: DefaultsKey<Bool> { .init("mod_messages_enabled", defaultValue: true) }
     var timestamps  : DefaultsKey<Bool> { .init("timestamps_enabled", defaultValue: true) }
     var clipboard   : DefaultsKey<Bool> { .init("clipboard_enabled", defaultValue: false) }
+    var thumbnails  : DefaultsKey<Bool> { .init("thumbnails_enabled", defaultValue: true)}
     
     var always_users: DefaultsKey<[String]> { .init("always_shown_users", defaultValue: []) }
     var never_users : DefaultsKey<[String]> { .init("never_shown_users", defaultValue: []) }
@@ -37,6 +38,9 @@ class SettingsService {
     
     @SwiftyUserDefault(keyPath: \.clipboard)
     var clipboard: Bool
+    
+    @SwiftyUserDefault(keyPath: \.thumbnails)
+    var thumbnails: Bool
     
     var singleLanguage: TranslatedLanguageTag {
         get { return languages.first ?? .en }

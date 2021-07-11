@@ -12,6 +12,7 @@ import RxDataSources
 import RxFlow
 import RxSwift
 import SCLAlertView
+import Network
 
 class HomeView: BaseController {
     var rightButton: UIBarButtonItem {
@@ -25,9 +26,11 @@ class HomeView: BaseController {
     let table = UITableView(frame: .zero, style: .insetGrouped)
     
     let model: HomeModelType
+    let ser: AppServices
     
     override init(_ stepper: Stepper, _ services: AppServices) {
         model = HomeModel(services)
+        ser = services
         super.init(stepper, services)
     }
     
@@ -44,7 +47,7 @@ class HomeView: BaseController {
         
         let dataSource = RxTableViewSectionedReloadDataSource<StreamerItemModel> { _, table, index, item -> UITableViewCell in
             let cell = table.dequeueReusableCell(withIdentifier: StreamerCell.identifier, for: index)
-            (cell as? StreamerCell)?.configure(with: item)
+            (cell as? StreamerCell)?.configure(with: item, services: self.ser)
             return cell
         }
         dataSource.titleForHeaderInSection = { source, index -> String in
@@ -61,8 +64,6 @@ class HomeView: BaseController {
             .drive(table.rx.items(dataSource: dataSource))
             .disposed(by: bag)
         view.addSubview(table)
-        
-        model.input.loadStreamers()
     }
     
     override func viewDidAppear(_ animated: Bool) {

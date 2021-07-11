@@ -111,8 +111,8 @@
 
 /* Begin PBXFileReference section */
 		36447F57268E9BB200D182A4 /* ios-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ios-Bridging-Header.h"; sourceTree = "<group>"; };
-		36447F58268E9BC200D182A4 /* ConsentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConsentViewController.h; path = "../New Group/ConsentViewController.h"; sourceTree = "<group>"; };
-		36447F59268E9BC800D182A4 /* ConsentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConsentViewController.m; path = "../New Group/ConsentViewController.m"; sourceTree = "<group>"; };
+		36447F58268E9BC200D182A4 /* ConsentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsentViewController.h; sourceTree = "<group>"; };
+		36447F59268E9BC800D182A4 /* ConsentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsentViewController.m; sourceTree = "<group>"; };
 		36FD3EB2269781D900EAAF51 /* iosUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		36FD3EB4269781D900EAAF51 /* iosUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosUnitTests.swift; sourceTree = "<group>"; };
 		662B14482611040000697ECA /* DateDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDecoding.swift; sourceTree = "<group>"; };
