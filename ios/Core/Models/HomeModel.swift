@@ -72,7 +72,7 @@ extension HomeModel: HomeModelOutput {
     
     func video(for section: Int, and index: Int) -> String {
         let r = streamers.value!.sections()
-        return r[section].items[index].videoId
+        return r[section].items[index].id
     }
 }
 
@@ -95,9 +95,30 @@ struct StreamerItemModel: SectionModelType {
 
 extension HTResponse {
     func sections() -> [StreamerItemModel] {
-        let l = live.sorted { $0.live_schedule > $1.live_schedule }
-        let u = upcoming.sorted { $0.live_schedule < $1.live_schedule }
-        let e = ended.sorted { $0.live_schedule < $1.live_schedule }
+        
+        
+        let l = items.filter() {
+            s in if s.status == .live {
+                return true
+            }
+        return false
+        }.sorted { $0.start_scheduled > $1.start_scheduled }
+        
+        let u = items.filter() {
+            s in if s.status == .upcoming {
+                return true
+                
+            }
+        return false
+        }.sorted { $0.start_scheduled < $1.start_scheduled }
+        
+        let e = items.filter() {
+            s in if s.status == .past {
+                return true
+                
+            }
+        return false
+        }.sorted { $0.start_scheduled < $1.start_scheduled }
         
         var rtr: [StreamerItemModel] = []
         

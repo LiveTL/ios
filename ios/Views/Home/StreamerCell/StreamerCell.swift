@@ -41,7 +41,7 @@ class StreamerCell: UITableViewCell {
     func configure(with item: HTResponse.Streamer) {
         title.text = item.title
         channel.text = item.channel.name
-        start.text = item.live_schedule.toRelative(style: RelativeFormatter.defaultStyle())
+        start.text = item.start_scheduled.toRelative(style: RelativeFormatter.defaultStyle())
         
         icon.kf.setImage(with: item.channel.photo)
     }
