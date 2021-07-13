@@ -1,5 +1,5 @@
 //
-//  HoloToolsService.swift
+//  HoloDexServices.swift
 //  ios
 //
 //  Created by Mason Phillips on 3/28/21.
@@ -9,12 +9,12 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-struct HoloToolsService {
+struct HoloDexServices {
     init() {}
     
-    func streamers() -> Single<HTResponse> {
+    func streamers(_ org: String) -> Single<HTResponse> {
         return Single.create { observer in
-            let url = URL(string: "https://holodex.net/api/v2/videos?status=live%2Cupcoming%2Cpast&lang=all&type=stream&include=description%2Clive_info&org=Hololive&sort=start_scheduled&order=desc&limit=50&offset=0&paginated=%3Cempty%3E&max_upcoming_hours=48")!
+            let url = URL(string: "https://holodex.net/api/v2/videos?status=live%2Cupcoming%2Cpast&lang=all&type=stream&include=description%2Clive_info&org=\(org.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "Hololive")&sort=start_scheduled&order=desc&limit=50&offset=0&paginated=%3Cempty%3E&max_upcoming_hours=48")!
             let task = URLSession.shared.dataTask(with: url) { response, _, error in
                 if let response = response {
                     do {

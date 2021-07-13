@@ -34,7 +34,7 @@ struct HTResponse: Decodable, Equatable {
             let name: String
             let type: String
             let photo: URL
-            let english_name: String
+            let english_name: String?
         }
         
         static func ==(l: Streamer, r: Streamer) -> Bool {

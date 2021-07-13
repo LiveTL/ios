@@ -138,9 +138,6 @@ class SettingsView: FormViewController {
             }
     }
     
-    @objc func viewDone() {
-        navigationController?.popViewController(animated: true)
-    }
     
     @objc func settingsDone() {
         let values = form.values()

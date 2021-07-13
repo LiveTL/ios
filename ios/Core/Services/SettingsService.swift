@@ -17,6 +17,8 @@ extension DefaultsKeys {
     
     var always_users: DefaultsKey<[String]> { .init("always_shown_users", defaultValue: []) }
     var never_users : DefaultsKey<[String]> { .init("never_shown_users", defaultValue: []) }
+    
+    var orgFilter   : DefaultsKey<Organization> { .init("org_filter", defaultValue: Organization.Hololive)}
 }
 
 class SettingsService {
@@ -38,6 +40,9 @@ class SettingsService {
     @SwiftyUserDefault(keyPath: \.clipboard)
     var clipboard: Bool
     
+    @SwiftyUserDefault(keyPath: \.orgFilter)
+    var orgFilter: Organization
+    
     var singleLanguage: TranslatedLanguageTag {
         get { return languages.first ?? .en }
         set { languages = [newValue] }
@@ -47,3 +52,5 @@ class SettingsService {
 extension SettingsService: ObservableObject {}
 
 extension TranslatedLanguageTag: DefaultsSerializable, RawRepresentable {}
+
+extension Organization: DefaultsSerializable, RawRepresentable {}

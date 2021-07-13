@@ -8,7 +8,7 @@
 import Foundation
 
 class AppServices {
-    let holotools = HoloToolsService()
+    let holodex = HoloDexServices()
     let youtube   = YouTubeService()
     let settings  = SettingsService()
     

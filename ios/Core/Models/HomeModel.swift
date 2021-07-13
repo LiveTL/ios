@@ -20,7 +20,7 @@ protocol HomeModelType {
 protocol HomeModelInput {
     var refresh: BehaviorRelay<Void> { get }
     
-    func loadStreamers()
+    func loadStreamers(_ org: Organization)
 }
 protocol HomeModelOutput {
     var streamersDriver  : Driver<HTResponse> { get }
@@ -38,16 +38,16 @@ class HomeModel: BaseModel {
     override init(_ services: AppServices) {
         super.init(services)
         
-        refresh.subscribe(onNext: { _ in self.loadStreamers() }).disposed(by: bag)
+        refresh.subscribe(onNext: { _ in self.loadStreamers(services.settings.orgFilter) }).disposed(by: bag)
         streamers.compactMap { $0 }.distinctUntilChanged()
             .map { _ in false }
             .bind(to: refreshState)
             .disposed(by: bag)
     }
     
-    func loadStreamers() {
+    func loadStreamers(_ org: Organization) {
         refreshState.accept(true)
-        services.holotools.streamers()
+        services.holodex.streamers(org.description)
             .asObservable()
             .bind(to: streamers)
             .disposed(by: bag)
@@ -125,6 +125,7 @@ extension HTResponse {
         if !l.isEmpty { rtr.append(StreamerItemModel(title: "Live", items: l)) }
         if !u.isEmpty { rtr.append(StreamerItemModel(title: "Upcoming", items: u)) }
         if !e.isEmpty { rtr.append(StreamerItemModel(title: "Ended", items: e))}
+        rtr.append(StreamerItemModel(title: "Stream data provided by Holodex. Results capped at 50.", items: []))
         
         return rtr
     }

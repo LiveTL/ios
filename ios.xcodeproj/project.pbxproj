@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		2E6E3F94C6D4763114C619D9 /* Pods_livetl_ios_iosUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AB8E24027064F597137FFA /* Pods_livetl_ios_iosUnitTests.framework */; };
+		361772A4269CEE5500F0C6E7 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361772A3269CEE5500F0C6E7 /* FilterView.swift */; };
 		36447F5A268E9BC800D182A4 /* ConsentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36447F59268E9BC800D182A4 /* ConsentViewController.m */; };
+		369256D7269CE088001AAAEE /* Organizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369256D6269CE088001AAAEE /* Organizations.swift */; };
+		369256D8269CE088001AAAEE /* Organizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369256D6269CE088001AAAEE /* Organizations.swift */; };
 		36FD3EB5269781D900EAAF51 /* iosUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FD3EB4269781D900EAAF51 /* iosUnitTests.swift */; };
 		36FD3EBB2697862500EAAF51 /* InjectedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667DBABE2616E0F600D46E69 /* InjectedMessage.swift */; };
 		36FD3EBC2697865A00EAAF51 /* DisplayableMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667DBAB72616D96C00D46E69 /* DisplayableMessage.swift */; };
@@ -24,7 +27,7 @@
 		36FD3EC626978AA800EAAF51 /* HTResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774CD260C77FA00072F30 /* HTResponse.swift */; };
 		36FD3EC726978AB300EAAF51 /* ChatControlType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667DBABA2616DBB400D46E69 /* ChatControlType.swift */; };
 		36FD3EC826978AB600EAAF51 /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774B6260C6F8E00072F30 /* AppServices.swift */; };
-		36FD3EC926978AB800EAAF51 /* HoloToolsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B144B261105E000697ECA /* HoloToolsService.swift */; };
+		36FD3EC926978AB800EAAF51 /* HoloDexServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B144B261105E000697ECA /* HoloDexServices.swift */; };
 		36FD3ECA26978ABA00EAAF51 /* YouTubeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667DBAC12616E93900D46E69 /* YouTubeService.swift */; };
 		36FD3ECB26978ABC00EAAF51 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66368091261C263C00125A76 /* SettingsService.swift */; };
 		36FD3ECE26978CAD00EAAF51 /* ConsentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36447F59268E9BC800D182A4 /* ConsentViewController.m */; };
@@ -37,7 +40,7 @@
 		36FD3ED526978CCD00EAAF51 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774B3260C6EFE00072F30 /* SettingsView.swift */; };
 		36FD3ED626978D0300EAAF51 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665773F0260C4DDC00072F30 /* AppDelegate.swift */; };
 		662B14492611040000697ECA /* DateDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B14482611040000697ECA /* DateDecoding.swift */; };
-		662B144C261105E000697ECA /* HoloToolsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B144B261105E000697ECA /* HoloToolsService.swift */; };
+		662B144C261105E000697ECA /* HoloDexServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B144B261105E000697ECA /* HoloDexServices.swift */; };
 		6636808B261983B500125A76 /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66368089261983B500125A76 /* ChatCell.swift */; };
 		6636808C261983B500125A76 /* ChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6636808A261983B500125A76 /* ChatCell.xib */; };
 		6636808F261C203500125A76 /* StreamTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6636808E261C203500125A76 /* StreamTable.swift */; };
@@ -110,13 +113,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		361772A3269CEE5500F0C6E7 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		36447F57268E9BB200D182A4 /* ios-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ios-Bridging-Header.h"; sourceTree = "<group>"; };
-		36447F58268E9BC200D182A4 /* ConsentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConsentViewController.h; path = "../New Group/ConsentViewController.h"; sourceTree = "<group>"; };
-		36447F59268E9BC800D182A4 /* ConsentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConsentViewController.m; path = "../New Group/ConsentViewController.m"; sourceTree = "<group>"; };
+		36447F58268E9BC200D182A4 /* ConsentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsentViewController.h; sourceTree = "<group>"; };
+		36447F59268E9BC800D182A4 /* ConsentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsentViewController.m; sourceTree = "<group>"; };
+		369256D6269CE088001AAAEE /* Organizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Organizations.swift; sourceTree = "<group>"; };
 		36FD3EB2269781D900EAAF51 /* iosUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		36FD3EB4269781D900EAAF51 /* iosUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosUnitTests.swift; sourceTree = "<group>"; };
 		662B14482611040000697ECA /* DateDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDecoding.swift; sourceTree = "<group>"; };
-		662B144B261105E000697ECA /* HoloToolsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoloToolsService.swift; sourceTree = "<group>"; };
+		662B144B261105E000697ECA /* HoloDexServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoloDexServices.swift; sourceTree = "<group>"; };
 		66368089261983B500125A76 /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
 		6636808A261983B500125A76 /* ChatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatCell.xib; sourceTree = "<group>"; };
 		6636808E261C203500125A76 /* StreamTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamTable.swift; sourceTree = "<group>"; };
@@ -193,13 +198,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		361772A2269CEDD600F0C6E7 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				361772A3269CEE5500F0C6E7 /* FilterView.swift */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
 		36447F5B268EA5BD00D182A4 /* CookieConsentView */ = {
 			isa = PBXGroup;
 			children = (
 				36447F59268E9BC800D182A4 /* ConsentViewController.m */,
 				36447F58268E9BC200D182A4 /* ConsentViewController.h */,
 			);
-			path = CookieConsentView;
+			name = CookieConsentView;
+			path = CookieConsent;
 			sourceTree = "<group>";
 		};
 		36FD3EB3269781D900EAAF51 /* iosUnitTests */ = {
@@ -295,6 +309,7 @@
 		6657749A260C6C0D00072F30 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				361772A2269CEDD600F0C6E7 /* Filter */,
 				36447F5B268EA5BD00D182A4 /* CookieConsentView */,
 				665774AC260C6EC300072F30 /* Home */,
 				665774AB260C6EB000072F30 /* StreamView */,
@@ -318,7 +333,7 @@
 			isa = PBXGroup;
 			children = (
 				665774B6260C6F8E00072F30 /* AppServices.swift */,
-				662B144B261105E000697ECA /* HoloToolsService.swift */,
+				662B144B261105E000697ECA /* HoloDexServices.swift */,
 				667DBAC12616E93900D46E69 /* YouTubeService.swift */,
 				66368091261C263C00125A76 /* SettingsService.swift */,
 			);
@@ -340,6 +355,7 @@
 				665774CD260C77FA00072F30 /* HTResponse.swift */,
 				667DBAB72616D96C00D46E69 /* DisplayableMessage.swift */,
 				667DBAC72617900800D46E69 /* Language.swift */,
+				369256D6269CE088001AAAEE /* Organizations.swift */,
 				667DBABE2616E0F600D46E69 /* InjectedMessage.swift */,
 				667DBACA2617907A00D46E69 /* TranslatedMessage.swift */,
 				667DBABA2616DBB400D46E69 /* ChatControlType.swift */,
@@ -653,9 +669,10 @@
 				36FD3ED026978CBB00EAAF51 /* StreamerCell.swift in Sources */,
 				36FD3EC026978A9800EAAF51 /* BaseModel.swift in Sources */,
 				36FD3EC426978AA000EAAF51 /* AppFlow.swift in Sources */,
+				369256D8269CE088001AAAEE /* Organizations.swift in Sources */,
 				36FD3EC626978AA800EAAF51 /* HTResponse.swift in Sources */,
 				36FD3ED626978D0300EAAF51 /* AppDelegate.swift in Sources */,
-				36FD3EC926978AB800EAAF51 /* HoloToolsService.swift in Sources */,
+				36FD3EC926978AB800EAAF51 /* HoloDexServices.swift in Sources */,
 				36FD3EC226978A9C00EAAF51 /* DateDecoding.swift in Sources */,
 				36FD3ECE26978CAD00EAAF51 /* ConsentViewController.m in Sources */,
 				36FD3EBD269788C000EAAF51 /* StreamModel.swift in Sources */,
@@ -689,7 +706,9 @@
 			files = (
 				667DBAC22616E93900D46E69 /* YouTubeService.swift in Sources */,
 				6636808F261C203500125A76 /* StreamTable.swift in Sources */,
+				369256D7269CE088001AAAEE /* Organizations.swift in Sources */,
 				667DBAC82617900800D46E69 /* Language.swift in Sources */,
+				361772A4269CEE5500F0C6E7 /* FilterView.swift in Sources */,
 				665774D8260C80F700072F30 /* StreamerCell.swift in Sources */,
 				667DBABB2616DBB400D46E69 /* ChatControlType.swift in Sources */,
 				665774B4260C6EFE00072F30 /* SettingsView.swift in Sources */,
@@ -707,7 +726,7 @@
 				665774AE260C6ECE00072F30 /* HomeView.swift in Sources */,
 				36447F5A268E9BC800D182A4 /* ConsentViewController.m in Sources */,
 				66368092261C263C00125A76 /* SettingsService.swift in Sources */,
-				662B144C261105E000697ECA /* HoloToolsService.swift in Sources */,
+				662B144C261105E000697ECA /* HoloDexServices.swift in Sources */,
 				665774B1260C6EEB00072F30 /* StreamView.swift in Sources */,
 				665774D1260C7D1500072F30 /* HomeModel.swift in Sources */,
 				665774D4260C7D5A00072F30 /* BaseView.swift in Sources */,

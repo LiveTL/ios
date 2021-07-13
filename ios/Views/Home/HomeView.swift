@@ -20,14 +20,23 @@ class HomeView: BaseController {
         b.setTitleTextAttributes([.font: UIFont(name: "FontAwesome5Pro-Solid", size: 20)!], for: .highlighted)
         return b
     }
+    
+    var leftButton: UIBarButtonItem {
+        let b = UIBarButtonItem(title: "filter", style: .plain, target: self, action: #selector(orgFilter))
+        b.setTitleTextAttributes([.font: UIFont(name: "FontAwesome5Pro-Solid", size: 20)!], for: .normal)
+        b.setTitleTextAttributes([.font: UIFont(name: "FontAwesome5Pro-Solid", size: 20)!], for: .highlighted)
+        return b
+    }
 
     let refresh = UIRefreshControl()
     let table = UITableView(frame: .zero, style: .insetGrouped)
     
     let model: HomeModelType
+    let services: AppServices
     
     override init(_ stepper: Stepper, _ services: AppServices) {
         model = HomeModel(services)
+        self.services = services
         super.init(stepper, services)
     }
     
@@ -41,6 +50,7 @@ class HomeView: BaseController {
         
         view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = rightButton
+        navigationItem.leftBarButtonItem = leftButton
         
         let dataSource = RxTableViewSectionedReloadDataSource<StreamerItemModel> { _, table, index, item -> UITableViewCell in
             let cell = table.dequeueReusableCell(withIdentifier: StreamerCell.identifier, for: index)
@@ -62,7 +72,7 @@ class HomeView: BaseController {
             .disposed(by: bag)
         view.addSubview(table)
         
-        model.input.loadStreamers()
+        model.input.loadStreamers(services.settings.orgFilter)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -100,6 +110,10 @@ class HomeView: BaseController {
     
     @objc func settings() {
         stepper.steps.accept(AppStep.settings)
+    }
+    
+    @objc func orgFilter() {
+        stepper.steps.accept(AppStep.filter)
     }
 
     override func viewWillLayoutSubviews() {
