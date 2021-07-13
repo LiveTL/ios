@@ -86,7 +86,7 @@ class StreamerCell: UITableViewCell {
         channel.align(.toTheRightMatchingBottom, relativeTo: icon, padding: 10, width: width - 180, height: 18)
         start.alignAndFillWidth(align: .toTheRightCentered, relativeTo: channel, padding: 10, height: 18)
         
-        thumbnail.anchorToEdge(.left, padding: 0, width: 333, height: 187)
+        thumbnail.anchorToEdge(.left, padding: 0, width: contentView.width, height: (contentView.width * (16/9)))
         thumbnail.clipsToBounds = true
         
         
