@@ -79,8 +79,9 @@ class AppFlow: Flow {
     }
     private func filterDone() -> FlowContributors {
         rootViewController.dismiss(animated: true, completion: nil)
-        let homeView = rootViewController.topViewController as! HomeView
-        homeView.doRefresh()
+        if let homeView = rootViewController.topViewController as? HomeView {
+            homeView.doRefresh()
+        }
         
         return .none
     }
