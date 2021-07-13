@@ -12,6 +12,7 @@ import RxDataSources
 import RxFlow
 import RxSwift
 import SCLAlertView
+import Network
 
 class HomeView: BaseController {
     var rightButton: UIBarButtonItem {
@@ -54,7 +55,7 @@ class HomeView: BaseController {
         
         let dataSource = RxTableViewSectionedReloadDataSource<StreamerItemModel> { _, table, index, item -> UITableViewCell in
             let cell = table.dequeueReusableCell(withIdentifier: StreamerCell.identifier, for: index)
-            (cell as? StreamerCell)?.configure(with: item)
+            (cell as? StreamerCell)?.configure(with: item, services: self.services)
             return cell
         }
         dataSource.titleForHeaderInSection = { source, index -> String in

@@ -8,6 +8,7 @@
 import Foundation
 import RxDataSources
 
+
 struct HTResponse: Decodable, Equatable {
     let items    : [Streamer]
     //let upcoming: [Streamer]
@@ -16,6 +17,9 @@ struct HTResponse: Decodable, Equatable {
     struct Streamer: Decodable, Identifiable, Equatable {
         let id: String
         let title: String
+        var thumbnail: URL? {
+            return URL(string: "https://i.ytimg.com/vi/\(id)/maxresdefault.jpg")
+        }
         let type: String
         let published_at: Date
         let available_at: Date?
