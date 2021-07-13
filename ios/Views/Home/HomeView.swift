@@ -76,6 +76,10 @@ class HomeView: BaseController {
         model.input.loadStreamers(services.settings.orgFilter)
     }
     
+    func doRefresh() {
+        model.input.loadStreamers(services.settings.orgFilter)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         

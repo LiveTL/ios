@@ -55,6 +55,10 @@ class AppFlow: Flow {
     private func settingsDone() -> FlowContributors {
         rootViewController.dismiss(animated: true, completion: nil)
         
+        if let homeView = rootViewController.topViewController as? HomeView {
+            homeView.doRefresh()
+        }
+        
         return .none
     }
     private func toConsent(_ htmlData: String) -> FlowContributors {
@@ -75,6 +79,8 @@ class AppFlow: Flow {
     }
     private func filterDone() -> FlowContributors {
         rootViewController.dismiss(animated: true, completion: nil)
+        let homeView = rootViewController.topViewController as! HomeView
+        homeView.doRefresh()
         
         return .none
     }

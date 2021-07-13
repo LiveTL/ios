@@ -71,6 +71,6 @@ class FilterView: FormViewController {
             settings.neverUsers = never
         }
         
-        stepper.steps.accept(AppStep.settingsDone)
+        stepper.steps.accept(AppStep.filterDone)
     }
 }

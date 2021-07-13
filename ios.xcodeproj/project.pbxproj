@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2E6E3F94C6D4763114C619D9 /* Pods_livetl_ios_iosUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AB8E24027064F597137FFA /* Pods_livetl_ios_iosUnitTests.framework */; };
+		360A1DFA269E131A006B6EB3 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361772A3269CEE5500F0C6E7 /* FilterView.swift */; };
 		361772A4269CEE5500F0C6E7 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361772A3269CEE5500F0C6E7 /* FilterView.swift */; };
 		36447F5A268E9BC800D182A4 /* ConsentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36447F59268E9BC800D182A4 /* ConsentViewController.m */; };
 		369256D7269CE088001AAAEE /* Organizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369256D6269CE088001AAAEE /* Organizations.swift */; };
@@ -662,6 +663,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				360A1DFA269E131A006B6EB3 /* FilterView.swift in Sources */,
 				36FD3ECB26978ABC00EAAF51 /* SettingsService.swift in Sources */,
 				36FD3ED226978CBF00EAAF51 /* StreamTable.swift in Sources */,
 				36FD3EB5269781D900EAAF51 /* iosUnitTests.swift in Sources */,
