@@ -52,6 +52,7 @@ class HomeView: BaseController {
         view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = rightButton
         navigationItem.leftBarButtonItem = leftButton
+        navigationItem.title = "\(services.settings.orgFilter.short)Dex"
         
         let dataSource = RxTableViewSectionedReloadDataSource<StreamerItemModel> { _, table, index, item -> UITableViewCell in
             let cell = table.dequeueReusableCell(withIdentifier: StreamerCell.identifier, for: index)
@@ -78,6 +79,7 @@ class HomeView: BaseController {
     
     func doRefresh() {
         model.input.loadStreamers(services.settings.orgFilter)
+        navigationItem.title = "\(services.settings.orgFilter.short)Dex"
     }
     
     override func viewDidAppear(_ animated: Bool) {
