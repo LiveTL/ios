@@ -12,10 +12,18 @@ import RxDataSources
 import RxFlow
 import RxSwift
 import SCLAlertView
+import Network
 
 class HomeView: BaseController {
     var rightButton: UIBarButtonItem {
         let b = UIBarButtonItem(title: "cogs", style: .plain, target: self, action: #selector(settings))
+        b.setTitleTextAttributes([.font: UIFont(name: "FontAwesome5Pro-Solid", size: 20)!], for: .normal)
+        b.setTitleTextAttributes([.font: UIFont(name: "FontAwesome5Pro-Solid", size: 20)!], for: .highlighted)
+        return b
+    }
+    
+    var leftButton: UIBarButtonItem {
+        let b = UIBarButtonItem(title: "filter", style: .plain, target: self, action: #selector(orgFilter))
         b.setTitleTextAttributes([.font: UIFont(name: "FontAwesome5Pro-Solid", size: 20)!], for: .normal)
         b.setTitleTextAttributes([.font: UIFont(name: "FontAwesome5Pro-Solid", size: 20)!], for: .highlighted)
         return b
@@ -25,9 +33,11 @@ class HomeView: BaseController {
     let table = UITableView(frame: .zero, style: .insetGrouped)
     
     let model: HomeModelType
+    let services: AppServices
     
     override init(_ stepper: Stepper, _ services: AppServices) {
         model = HomeModel(services)
+        self.services = services
         super.init(stepper, services)
     }
     
@@ -41,10 +51,12 @@ class HomeView: BaseController {
         
         view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = rightButton
+        navigationItem.leftBarButtonItem = leftButton
+        navigationItem.title = "\(services.settings.orgFilter.short)Dex"
         
         let dataSource = RxTableViewSectionedReloadDataSource<StreamerItemModel> { _, table, index, item -> UITableViewCell in
             let cell = table.dequeueReusableCell(withIdentifier: StreamerCell.identifier, for: index)
-            (cell as? StreamerCell)?.configure(with: item)
+            (cell as? StreamerCell)?.configure(with: item, services: self.services)
             return cell
         }
         dataSource.titleForHeaderInSection = { source, index -> String in
@@ -62,7 +74,12 @@ class HomeView: BaseController {
             .disposed(by: bag)
         view.addSubview(table)
         
-        model.input.loadStreamers()
+        model.input.loadStreamers(services.settings.orgFilter)
+    }
+    
+    func doRefresh() {
+        model.input.loadStreamers(services.settings.orgFilter)
+        navigationItem.title = "\(services.settings.orgFilter.short)Dex"
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -100,6 +117,10 @@ class HomeView: BaseController {
     
     @objc func settings() {
         stepper.steps.accept(AppStep.settings)
+    }
+    
+    @objc func orgFilter() {
+        stepper.steps.accept(AppStep.filter)
     }
 
     override func viewWillLayoutSubviews() {

@@ -22,10 +22,13 @@ class AppFlow: Flow {
         guard let step = step as? AppStep else { return .none }
         
         switch step {
-        case .home        : return toHome()
-        case .view(let id): return toStreamView(id)
-        case .settings    : return toSettings()
-        case .settingsDone: return settingsDone()
+        case .home                    : return toHome()
+        case .view(let id)            : return toStreamView(id)
+        case .settings                : return toSettings()
+        case .settingsDone            : return settingsDone()
+        case .toConsent(let htmlData) : return toConsent(htmlData)
+        case .filter                  : return toFilter()
+        case .filterDone              : return filterDone()
         }
     }
     
@@ -51,6 +54,34 @@ class AppFlow: Flow {
     }
     private func settingsDone() -> FlowContributors {
         rootViewController.dismiss(animated: true, completion: nil)
+        
+        if let homeView = rootViewController.topViewController as? HomeView {
+            homeView.doRefresh()
+        }
+        
+        return .none
+    }
+    private func toConsent(_ htmlData: String) -> FlowContributors {
+        //NOTE - ConsentViewController does not work correctly in simulator, use a real device!
+        let controller = ConsentViewController()
+        controller.htmlData = htmlData
+        let navigation = UINavigationController(rootViewController: controller)
+        rootViewController.present(navigation, animated: true, completion: nil)
+        
+        return .end(forwardToParentFlowWithStep: AppStep.home)
+    }
+    private func toFilter() -> FlowContributors {
+        let controller = FilterView(services, stepper: stepper)
+        let navigation = UINavigationController(rootViewController: controller)
+        rootViewController.present(navigation, animated: true, completion: nil)
+        
+        return .none
+    }
+    private func filterDone() -> FlowContributors {
+        rootViewController.dismiss(animated: true, completion: nil)
+        if let homeView = rootViewController.topViewController as? HomeView {
+            homeView.doRefresh()
+        }
         
         return .none
     }

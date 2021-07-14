@@ -9,6 +9,7 @@ import UIKit
 import Eureka
 import RxFlow
 import RxSwift
+import Kingfisher
 import SwiftyUserDefaults
 
 class SettingsView: FormViewController {
@@ -36,6 +37,39 @@ class SettingsView: FormViewController {
         
         form
             +++ Section("App Settings")
+            
+            <<< SwitchRow("thumbnails_enabled") { row in
+                row.title = "Enable Thumbnail Backgrounds"
+                row.value = self.settings.thumbnails
+            }.onChange { row in
+                if let value = row.value {
+                    self.settings.thumbnails = value
+                }
+            }
+            
+            <<< SwitchRow("thumbnail_darken_enabled") { row in
+                row.title = "Enable Thumbnail Darken Effect"
+                row.value = self.settings.thumbnailDarken
+                row.hidden = Condition.function(["thumbnails_enabled"], { form in
+                    return !((form.rowBy(tag: "thumbnails_enabled") as? SwitchRow)?.value ?? false)
+                })
+            }.onChange { row in
+                if let value = row.value {
+                    self.settings.thumbnailDarken = value
+                }
+            }
+            
+            <<< SwitchRow("thumbnail_blur_enabled") { row in
+                row.title = "Enable Thumbnail Blur Effect"
+                row.value = self.settings.thumbnailBlur
+                row.hidden = Condition.function(["thumbnails_enabled"], { form in
+                    return !((form.rowBy(tag: "thumbnails_enabled") as? SwitchRow)?.value ?? false)
+                })
+            }.onChange { row in
+                if let value = row.value {
+                    self.settings.thumbnailBlur = value
+                }
+            }
             
             <<< SwitchRow("clipboard_enabled") { row in
                 row.title = "Allow Clipboard Detection"
@@ -136,10 +170,44 @@ class SettingsView: FormViewController {
                     $0.placeholder = "Username"
                 }
             }
+            +++ Section("Advanced Settings")
+        
+            <<< ButtonRow("clear_image_cashe") { row in
+                ImageCache.default.calculateDiskStorageSize { result in
+                    switch result {
+                    case .success(let size):
+                        row.title = "Clear Image Cache (\(round((Double(size) / 1024 / 1024) * 100) / 100.0) MB)"
+                    case .failure:
+                        row.title = "Clear Image Cache"
+                    }
+                }
+            }.onCellSelection() { _ , row  in
+                KingfisherManager.shared.cache.clearCache()
+                row.title = "Clear Image Cache (0.0 MB)"
+                row.updateCell()
+            }
+        
+            <<< ButtonRow("clear_other_cashe") { row in
+                row.title = "Clear Other Caches"
+            }.onCellSelection() { _ , row  in
+                URLCache.shared.removeAllCachedResponses()
+            }
     }
     
-    @objc func viewDone() {
-        navigationController?.popViewController(animated: true)
+    
+    func getCacheSize() -> String {
+        var sizeOut: String = ""
+        
+        ImageCache.default.calculateDiskStorageSize { result in
+            switch result {
+            case .success(let size):
+                sizeOut = "(\(Double(size) / 1024 / 1024) MB)"
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
+        return sizeOut
     }
     
     @objc func settingsDone() {

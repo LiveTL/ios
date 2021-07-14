@@ -23,6 +23,9 @@ let tokens: [LangToken] = [
     (start: "⁽", end: "₎")
 ]
 
+
+let LangDelims: [Character] = ["-", ":", "-"]
+
 enum TranslatedLanguageTag: String, CustomStringConvertible, CaseIterable {
     case en, jp, es, id, kr, zh, ru, fr
     case dev

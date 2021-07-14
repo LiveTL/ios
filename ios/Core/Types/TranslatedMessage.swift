@@ -44,8 +44,23 @@ struct TranslatedMessage {
                 
                 guard TranslatedLanguageTag.allCases.map({ $0.tag }).contains(lang) else { continue }
                 let mStart = s.index(after: end)
-                m = String(s[mStart..<s.endIndex])
+                m = String(s[mStart..<s.endIndex]).trimmingCharacters(in: [" ", "-", ":"])
                 l = lang
+                break
+            }
+            for delim in LangDelims {
+                guard let end = s.firstIndex(of: delim) else { continue }
+                
+                let lang = String(s[s.startIndex..<end])
+                    .replacingOccurrences(of: "\(delim)", with: "")
+                    .lowercased()
+                    .trimmingCharacters(in: [" "])
+                
+                guard TranslatedLanguageTag.allCases.map({ $0.tag }).contains(lang) else { continue }
+                let mStart = s.index(after: end)
+                m = String(s[mStart..<s.endIndex]).trimmingCharacters(in: [" ", "-", ":"])
+                l = lang
+                break
             }
         }
         

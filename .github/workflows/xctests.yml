@@ -1,0 +1,34 @@
+# This is a basic workflow to help you get started with Actions
+
+name: XCTests
+
+# Controls when the workflow will run
+on: [ push, pull_request, workflow_dispatch ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build-and-test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+        with: 
+          submodules: recursive
+          token: ${{ secrets.ACTION_ACCESS_TOKEN }}
+      
+      - name: Pod Install
+        run: pod install
+        
+      - name: Xcode Build
+        run: |
+          xcodebuild \
+          -workspace ios.xcworkspace \
+          -scheme ios \
+          -sdk iphonesimulator \
+          -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.4' \
+          clean test | xcpretty
+          
+      - name: Make Test Results artifact
+        uses: actions/upload-artifact@v2
+        with: 
+          name: TestResults.xcresult
+          path: TestResults.xcresult

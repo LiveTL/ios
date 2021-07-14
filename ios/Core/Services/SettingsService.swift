@@ -14,9 +14,14 @@ extension DefaultsKeys {
     var mod_messages: DefaultsKey<Bool> { .init("mod_messages_enabled", defaultValue: true) }
     var timestamps  : DefaultsKey<Bool> { .init("timestamps_enabled", defaultValue: true) }
     var clipboard   : DefaultsKey<Bool> { .init("clipboard_enabled", defaultValue: false) }
+    var thumbnails  : DefaultsKey<Bool> { .init("thumbnails_enabled", defaultValue: true)}
+    var thumbnailBlur: DefaultsKey<Bool> { .init("thumbnail_blur_enabled", defaultValue: false)}
+    var thumbnailDarken: DefaultsKey<Bool> { .init("thumbnail_darken_enabled", defaultValue: true)}
     
     var always_users: DefaultsKey<[String]> { .init("always_shown_users", defaultValue: []) }
     var never_users : DefaultsKey<[String]> { .init("never_shown_users", defaultValue: []) }
+    
+    var orgFilter   : DefaultsKey<Organization> { .init("org_filter", defaultValue: Organization.Hololive)}
 }
 
 class SettingsService {
@@ -38,6 +43,18 @@ class SettingsService {
     @SwiftyUserDefault(keyPath: \.clipboard)
     var clipboard: Bool
     
+    @SwiftyUserDefault(keyPath: \.orgFilter)
+    var orgFilter: Organization
+    
+    @SwiftyUserDefault(keyPath: \.thumbnails)
+    var thumbnails: Bool
+    
+    @SwiftyUserDefault(keyPath: \.thumbnailBlur)
+    var thumbnailBlur: Bool
+    
+    @SwiftyUserDefault(keyPath: \.thumbnailDarken)
+    var thumbnailDarken: Bool
+    
     var singleLanguage: TranslatedLanguageTag {
         get { return languages.first ?? .en }
         set { languages = [newValue] }
@@ -47,3 +64,5 @@ class SettingsService {
 extension SettingsService: ObservableObject {}
 
 extension TranslatedLanguageTag: DefaultsSerializable, RawRepresentable {}
+
+extension Organization: DefaultsSerializable, RawRepresentable {}
