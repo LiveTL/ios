@@ -16,10 +16,9 @@ class FilterView: FormViewController {
     let services: AppServices
     let stepper: Stepper
     let bag = DisposeBag()
-    
-    
-    var settings: SettingsService { services.settings }
 
+    var settings: SettingsService { services.settings }
+    
     var rightButton: UIBarButtonItem {
         return UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(filterDone))
     }
@@ -36,41 +35,31 @@ class FilterView: FormViewController {
         navigationItem.rightBarButtonItem = rightButton
         navigationItem.title = "Organization Filter"
         
-        form +++ SelectableSection<ListCheckRow<Organization>>("org_filter", selectionType: .singleSelection(enableDeselection: false))
         
-        for option in Organization.allCases {
-            form.last! <<< ListCheckRow<Organization>(option.description){ listRow in
-                listRow.title = option.description
-                listRow.selectableValue = option
-                if option == settings.orgFilter {
-                    listRow.value = settings.orgFilter
+        var section = SelectableSection<ListCheckRow<Organization>>("Select Organization", selectionType: .singleSelection(enableDeselection: false)) { $0.tag = "orgFilter" }
+        section += Organization.allCases.map { org -> ListCheckRow<Organization> in
+            return ListCheckRow<Organization>(org.rawValue) { row in
+                row.title = org.description
+                row.selectableValue = org
+                
+                if org == self.settings.orgFilter {
+                    row.value = org
                 } else {
-                    listRow.value = nil
+                    row.value = nil
                 }
             }.onChange { row in
-                if let value = row.value {
-                    self.settings.orgFilter = value
-                }
+                if let value = row.value { self.settings.orgFilter = value }
             }
         }
         
-        
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        form +++ section
     }
     
     @objc func filterDone() {
-        let values = form.values()
-        
-        if let always = values["always_users_section"] as? Array<String> {
-            settings.alwaysUsers = always
-        }
-        if let never = values["never_users_section"] as? Array<String> {
-            settings.neverUsers = never
-        }
-        
         stepper.steps.accept(AppStep.filterDone)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError()
     }
 }

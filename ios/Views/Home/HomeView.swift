@@ -13,6 +13,7 @@ import RxFlow
 import RxSwift
 import SCLAlertView
 import Network
+import SwiftyUserDefaults
 
 class HomeView: BaseController {
     var rightButton: UIBarButtonItem {
@@ -32,6 +33,7 @@ class HomeView: BaseController {
     let refresh = UIRefreshControl()
     let table = UITableView(frame: .zero, style: .insetGrouped)
     
+    var observers: Array<DefaultsDisposable> = []
     let model: HomeModelType
     let services: AppServices
     
@@ -39,6 +41,13 @@ class HomeView: BaseController {
         model = HomeModel(services)
         self.services = services
         super.init(stepper, services)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+        for observer in observers {
+            observer.dispose()
+        }
     }
     
     override func viewDidLoad() {
@@ -63,6 +72,12 @@ class HomeView: BaseController {
             source.sectionModels[index].title
         }
         
+        let orgObserver = Defaults.observe(\.orgFilter) { _ in self.reload() }
+        let thumbnailsObserver = Defaults.observe(\.thumbnails) { _ in self.reload() }
+        let blurObserver = Defaults.observe(\.thumbnailBlur) { _ in self.reload() }
+        let darkenObserver = Defaults.observe(\.thumbnailDarken) { _ in self.reload() }
+        observers.append(contentsOf: [orgObserver, thumbnailsObserver, blurObserver, darkenObserver])
+        
         refresh.rx.controlEvent(.valueChanged).bind(to: model.input.refresh).disposed(by: bag)
         model.output.refreshDoneDriver.drive(refresh.rx.isRefreshing).disposed(by: bag)
         
@@ -75,11 +90,6 @@ class HomeView: BaseController {
         view.addSubview(table)
         
         model.input.loadStreamers(services.settings.orgFilter)
-    }
-    
-    func doRefresh() {
-        model.input.loadStreamers(services.settings.orgFilter)
-        navigationItem.title = "\(services.settings.orgFilter.short)Dex"
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -121,6 +131,13 @@ class HomeView: BaseController {
     
     @objc func orgFilter() {
         stepper.steps.accept(AppStep.filter)
+    }
+    
+    private func reload() {
+        model.input.refresh.accept(())
+        DispatchQueue.main.async {
+            self.navigationItem.title = "\(self.services.settings.orgFilter.short)Dex"
+        }
     }
 
     override func viewWillLayoutSubviews() {
