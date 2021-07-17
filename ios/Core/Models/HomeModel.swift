@@ -96,29 +96,9 @@ struct StreamerItemModel: SectionModelType {
 extension HTResponse {
     func sections() -> [StreamerItemModel] {
         
-        
-        let l = items.filter() {
-            s in if s.status == .live {
-                return true
-            }
-        return false
-        }.sorted { $0.start_scheduled > $1.start_scheduled }
-        
-        let u = items.filter() {
-            s in if s.status == .upcoming {
-                return true
-                
-            }
-        return false
-        }.sorted { $0.start_scheduled < $1.start_scheduled }
-        
-        let e = items.filter() {
-            s in if s.status == .past {
-                return true
-                
-            }
-        return false
-        }.sorted { $0.start_scheduled < $1.start_scheduled }
+        let l = items.filter { $0.status == .live }.sorted { $0.start_scheduled > $1.start_scheduled }
+        let u = items.filter { $0.status == .upcoming }.sorted { $0.start_scheduled < $1.start_scheduled }
+        let e = items.filter { $0.status == .past }.sorted { $0.start_scheduled > $1.start_scheduled }
         
         var rtr: [StreamerItemModel] = []
         
