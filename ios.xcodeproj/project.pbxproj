@@ -20,7 +20,6 @@
 		36FD3EBF26978A7D00EAAF51 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667DBAC72617900800D46E69 /* Language.swift */; };
 		36FD3EC026978A9800EAAF51 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774A4260C6D3E00072F30 /* BaseModel.swift */; };
 		36FD3EC126978A9A00EAAF51 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774D3260C7D5A00072F30 /* BaseView.swift */; };
-		36FD3EC226978A9C00EAAF51 /* DateDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B14482611040000697ECA /* DateDecoding.swift */; };
 		36FD3EC326978A9E00EAAF51 /* AppStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774A0260C6C7400072F30 /* AppStep.swift */; };
 		36FD3EC426978AA000EAAF51 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774A7260C6D7600072F30 /* AppFlow.swift */; };
 		36FD3EC526978AA300EAAF51 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774D0260C7D1500072F30 /* HomeModel.swift */; };
@@ -38,7 +37,6 @@
 		36FD3ED426978CC900EAAF51 /* ChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6636808A261983B500125A76 /* ChatCell.xib */; };
 		36FD3ED526978CCD00EAAF51 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774B3260C6EFE00072F30 /* SettingsView.swift */; };
 		36FD3ED626978D0300EAAF51 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665773F0260C4DDC00072F30 /* AppDelegate.swift */; };
-		662B14492611040000697ECA /* DateDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B14482611040000697ECA /* DateDecoding.swift */; };
 		662B144C261105E000697ECA /* HoloDexServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662B144B261105E000697ECA /* HoloDexServices.swift */; };
 		6636808B261983B500125A76 /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66368089261983B500125A76 /* ChatCell.swift */; };
 		6636808C261983B500125A76 /* ChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6636808A261983B500125A76 /* ChatCell.xib */; };
@@ -117,7 +115,6 @@
 		369256D6269CE088001AAAEE /* Organizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Organizations.swift; sourceTree = "<group>"; };
 		36FD3EB2269781D900EAAF51 /* iosUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		36FD3EB4269781D900EAAF51 /* iosUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosUnitTests.swift; sourceTree = "<group>"; };
-		662B14482611040000697ECA /* DateDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDecoding.swift; sourceTree = "<group>"; };
 		662B144B261105E000697ECA /* HoloDexServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoloDexServices.swift; sourceTree = "<group>"; };
 		66368089261983B500125A76 /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
 		6636808A261983B500125A76 /* ChatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatCell.xib; sourceTree = "<group>"; };
@@ -320,7 +317,6 @@
 			children = (
 				665774A4260C6D3E00072F30 /* BaseModel.swift */,
 				665774D3260C7D5A00072F30 /* BaseView.swift */,
-				662B14482611040000697ECA /* DateDecoding.swift */,
 			);
 			path = Bootstrap;
 			sourceTree = "<group>";
@@ -670,7 +666,6 @@
 				36FD3EC626978AA800EAAF51 /* HTResponse.swift in Sources */,
 				36FD3ED626978D0300EAAF51 /* AppDelegate.swift in Sources */,
 				36FD3EC926978AB800EAAF51 /* HoloDexServices.swift in Sources */,
-				36FD3EC226978A9C00EAAF51 /* DateDecoding.swift in Sources */,
 				36FD3EBD269788C000EAAF51 /* StreamModel.swift in Sources */,
 				36FD3EC726978AB300EAAF51 /* ChatControlType.swift in Sources */,
 				36FD3EC326978A9E00EAAF51 /* AppStep.swift in Sources */,
@@ -718,7 +713,6 @@
 				665773F1260C4DDC00072F30 /* AppDelegate.swift in Sources */,
 				6647C14526A3457600557E29 /* ConsentViewController.swift in Sources */,
 				6636808B261983B500125A76 /* ChatCell.swift in Sources */,
-				662B14492611040000697ECA /* DateDecoding.swift in Sources */,
 				667DBAB82616D96C00D46E69 /* DisplayableMessage.swift in Sources */,
 				665774AE260C6ECE00072F30 /* HomeView.swift in Sources */,
 				66368092261C263C00125A76 /* SettingsService.swift in Sources */,
