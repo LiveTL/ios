@@ -118,20 +118,12 @@ class StreamView: BaseController {
     override func handle(_ error: Error) {
         let nserror = error as NSError
         
-        if nserror.code == -6 {
-            if (nserror.userInfo["consentHtmlData"] != nil) {
-                let errorResponceString: String = nserror.userInfo["consentHtmlData"] as! String
-                self.closeStream()
-                stepper.steps.accept(AppStep.toConsent(errorResponceString))
-            }
-        } else {
-            let alert = SCLAlertView()
-            alert.addButton("Go Back") {
-                self.closeStream()
-            }
-            alert.showError("An Error Occurred", subTitle: error.localizedDescription)
+        if nserror.code == -6, let responseString = nserror.userInfo["consentHtmlData"] as? String {
+            self.closeStream()
+            return stepper.steps.accept(AppStep.toConsent(responseString))
         }
         
+        super.handle(error)
     }
 
     override func viewWillLayoutSubviews() {

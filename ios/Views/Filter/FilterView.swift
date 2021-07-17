@@ -36,7 +36,7 @@ class FilterView: FormViewController {
         navigationItem.title = "Organization Filter"
         
         
-        var section = SelectableSection<ListCheckRow<Organization>>("Select Organization", selectionType: .singleSelection(enableDeselection: false)) { $0.tag = "orgFilter" }
+        var section = SelectableSection<ListCheckRow<Organization>>("Select Organization", selectionType: .singleSelection(enableDeselection: false)) { $0.tag = "org_filter" }
         section += Organization.allCases.map { org -> ListCheckRow<Organization> in
             return ListCheckRow<Organization>(org.rawValue) { row in
                 row.title = org.description
@@ -48,7 +48,9 @@ class FilterView: FormViewController {
                     row.value = nil
                 }
             }.onChange { row in
-                if let value = row.value { self.settings.orgFilter = value }
+                if let value = row.value {
+                    self.settings.orgFilter = value
+                }
             }
         }
         
