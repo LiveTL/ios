@@ -9,15 +9,26 @@ import UIKit
 import Neon
 import WebKit
 import SCLAlertView
+import RxSwift
+import RxCocoa
 
 class ConsentViewController: BaseController {
     let webView = WKWebView()
+    let acceptanceDone = BehaviorRelay<Void>(value: ())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         webView.navigationDelegate = self
         view.addSubview(webView)
+        
+        acceptanceDone.skip(1)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.asyncInstance)
+            // Moving to a stream too quickly will cause acceptance to pop back up
+            .delay(.seconds(1), scheduler: MainScheduler.asyncInstance)
+            .subscribe(onNext: { _ in
+                self.stepper.steps.accept(AppStep.consentDone)
+            }).disposed(by: bag)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -40,12 +51,16 @@ class ConsentViewController: BaseController {
 
 extension ConsentViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        defer { decisionHandler(.allow) }
-        
-        if let urlString = navigationAction.request.url?.absoluteString {
-            if urlString.contains("/accounts/SetSID") {
-                self.stepper.steps.accept(AppStep.consentDone)
+        if
+            let urlString = navigationAction.request.url?.absoluteString,
+            (urlString.contains("/accounts/SetSID") || urlString.contains("consent.youtube.com")) {
+            self.dismiss(animated: true) {
+                self.acceptanceDone.accept(())
             }
+        } else if navigationAction.request.url?.host == "www.youtube.com" {
+            return decisionHandler(.cancel)
         }
+        
+        decisionHandler(.allow)
     }
 }
