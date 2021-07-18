@@ -14,6 +14,7 @@ import RxSwift
 import SCLAlertView
 import Network
 import SwiftyUserDefaults
+import Kingfisher
 
 class HomeView: BaseController {
     var rightButton: UIBarButtonItem {
@@ -155,5 +156,46 @@ extension HomeView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vid = model.output.video(for: indexPath.section, and: indexPath.row)
         stepper.steps.accept(AppStep.view(vid))
+    }
+
+
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let index = indexPath.row
+        let identifier = "\(index)" as NSString
+    
+        func makeThumbnailPreview() -> UIViewController {
+            let viewController = UIViewController()
+        
+            let imageView: UIImageView = UIImageView()
+        
+            imageView.kf.indicatorType = .activity
+            imageView.kf.setImage(with: model.output.thumbnail(for: indexPath.section, and: indexPath.row))
+            viewController.view = imageView
+        
+            imageView.frame = CGRect(x: point.x, y: point.y, width: 333, height: 187)
+            //imageView.contentMode = .scaleAspectFill
+            //imageView.fillSuperview()
+            imageView.clipsToBounds = true
+        
+            viewController.preferredContentSize = imageView.frame.size
+        
+            return viewController
+        }
+    
+        return UIContextMenuConfiguration(identifier: identifier, previewProvider: makeThumbnailPreview) { _ in
+            let favoriteAction = UIAction(title: "These Do", image: UIImage(systemName: "heart.fill")) { _ in
+                print("Favorite")
+            }
+        
+            let descriptionAction = UIAction(title: "Nothing", image: UIImage(systemName: "newspaper.fill")) { _ in
+                print("Description")
+            }
+        
+            let shareAction = UIAction(title: "Right Now", image: UIImage(systemName: "square.and.arrow.up")) { _ in
+                print("Share")
+            }
+        
+            return UIMenu(title: "", image: nil, children: [favoriteAction, descriptionAction, shareAction])
+        }
     }
 }

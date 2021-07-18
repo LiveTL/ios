@@ -27,6 +27,7 @@ protocol HomeModelOutput {
     var refreshDoneDriver: Driver<Bool>       { get }
     
     func video(for section: Int, and id: Int) -> String
+    func thumbnail(for section: Int, and index: Int) -> URL?
 }
 
 class HomeModel: BaseModel {
@@ -73,6 +74,10 @@ extension HomeModel: HomeModelOutput {
     func video(for section: Int, and index: Int) -> String {
         let r = streamers.value!.sections()
         return r[section].items[index].id
+    }
+    func thumbnail(for section: Int, and index: Int) -> URL? {
+        let r = streamers.value!.sections()
+        return r[section].items[index].thumbnail
     }
 }
 
