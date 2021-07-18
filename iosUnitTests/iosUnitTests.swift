@@ -9,9 +9,9 @@ import XCTest
 import ios
 
 class IosFilterTests: XCTestCase {
+    let services = AppServices()
     
     func testGeneralfilter() {
-        let services = AppServices()
         services.settings.languages = TranslatedLanguageTag.allCases
             
         let message = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("(en) Hello There")], showtime: 0.0, timestamp: Date.distantPast)
@@ -24,6 +24,9 @@ class IosFilterTests: XCTestCase {
     }
     
     func testTLDash() {
+        
+        services.settings.languages = TranslatedLanguageTag.allCases
+        
         let message = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("(es) - Hola eso")], showtime: 0.0, timestamp: Date.distantPast)
         if let tl = StreamModel(AppServices()).translate(message) as? TranslatedMessage {
             XCTAssertEqual(tl.languageTag, TranslatedLanguageTag.es, "Incorrect Language")
@@ -34,6 +37,8 @@ class IosFilterTests: XCTestCase {
     }
     
     func testFancyBrackets() {
+        services.settings.languages = TranslatedLanguageTag.allCases
+        
         let message = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("【jp】 Weird bracket gang")], showtime: 0.0, timestamp: Date.distantPast)
         if let tl = StreamModel(AppServices()).translate(message) as? TranslatedMessage {
             XCTAssertEqual(tl.languageTag, TranslatedLanguageTag.jp, "Incorrect Language")
@@ -44,6 +49,8 @@ class IosFilterTests: XCTestCase {
     }
     
     func testDashWithSpace() {
+        services.settings.languages = TranslatedLanguageTag.allCases
+        
         let message = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("jp - リーーーーーーー")], showtime: 0.0, timestamp: Date.distantPast)
         if let tl = StreamModel(AppServices()).translate(message) as? TranslatedMessage {
             XCTAssertEqual(tl.languageTag, TranslatedLanguageTag.jp, "Incorrect Language")
@@ -54,6 +61,8 @@ class IosFilterTests: XCTestCase {
     }
     
     func testColon() {
+        services.settings.languages = TranslatedLanguageTag.allCases
+        
         let message = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("en:Test translation")], showtime: 0.0, timestamp: Date.distantPast)
         if let tl = StreamModel(AppServices()).translate(message) as? TranslatedMessage {
             XCTAssertEqual(tl.languageTag, TranslatedLanguageTag.en, "Incorrect Language")
@@ -64,6 +73,8 @@ class IosFilterTests: XCTestCase {
     }
     
     func testBracketsWithColon() {
+        services.settings.languages = TranslatedLanguageTag.allCases
+        
         let message = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("[en]: test translation")], showtime: 0.0, timestamp: Date.distantPast)
         if let tl = StreamModel(AppServices()).translate(message) as? TranslatedMessage {
             XCTAssertEqual(tl.languageTag, TranslatedLanguageTag.en, "Incorrect Language")
@@ -74,6 +85,8 @@ class IosFilterTests: XCTestCase {
     }
     
     func testLongLangCode() {
+        services.settings.languages = TranslatedLanguageTag.allCases
+        
         let message = InjectedMessage(author: InjectedMessage.Author(id: "00", name: "Test", types: []), messages: [Message.text("[eng] test translation")], showtime: 0.0, timestamp: Date.distantPast)
         if let tl = StreamModel(AppServices()).translate(message) as? TranslatedMessage {
             XCTAssertEqual(tl.languageTag, TranslatedLanguageTag.en, "Incorrect Language")

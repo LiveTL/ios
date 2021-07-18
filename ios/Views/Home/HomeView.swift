@@ -12,6 +12,8 @@ import RxDataSources
 import RxFlow
 import RxSwift
 import SCLAlertView
+import Network
+import SwiftyUserDefaults
 
 class HomeView: BaseController {
     var rightButton: UIBarButtonItem {
@@ -20,15 +22,32 @@ class HomeView: BaseController {
         b.setTitleTextAttributes([.font: UIFont(name: "FontAwesome5Pro-Solid", size: 20)!], for: .highlighted)
         return b
     }
+    
+    var leftButton: UIBarButtonItem {
+        let b = UIBarButtonItem(title: "filter", style: .plain, target: self, action: #selector(orgFilter))
+        b.setTitleTextAttributes([.font: UIFont(name: "FontAwesome5Pro-Solid", size: 20)!], for: .normal)
+        b.setTitleTextAttributes([.font: UIFont(name: "FontAwesome5Pro-Solid", size: 20)!], for: .highlighted)
+        return b
+    }
 
     let refresh = UIRefreshControl()
     let table = UITableView(frame: .zero, style: .insetGrouped)
     
+    var observers: Array<DefaultsDisposable> = []
     let model: HomeModelType
+    let services: AppServices
     
     override init(_ stepper: Stepper, _ services: AppServices) {
         model = HomeModel(services)
+        self.services = services
         super.init(stepper, services)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+        for observer in observers {
+            observer.dispose()
+        }
     }
     
     override func viewDidLoad() {
@@ -41,15 +60,23 @@ class HomeView: BaseController {
         
         view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = rightButton
+        navigationItem.leftBarButtonItem = leftButton
+        navigationItem.title = "\(services.settings.orgFilter.short)Dex"
         
         let dataSource = RxTableViewSectionedReloadDataSource<StreamerItemModel> { _, table, index, item -> UITableViewCell in
             let cell = table.dequeueReusableCell(withIdentifier: StreamerCell.identifier, for: index)
-            (cell as? StreamerCell)?.configure(with: item)
+            (cell as? StreamerCell)?.configure(with: item, services: self.services)
             return cell
         }
         dataSource.titleForHeaderInSection = { source, index -> String in
             source.sectionModels[index].title
         }
+        
+        let orgObserver = Defaults.observe(\.orgFilter) { _ in self.reload() }
+        let thumbnailsObserver = Defaults.observe(\.thumbnails) { _ in self.reload() }
+        let blurObserver = Defaults.observe(\.thumbnailBlur) { _ in self.reload() }
+        let darkenObserver = Defaults.observe(\.thumbnailDarken) { _ in self.reload() }
+        observers.append(contentsOf: [orgObserver, thumbnailsObserver, blurObserver, darkenObserver])
         
         refresh.rx.controlEvent(.valueChanged).bind(to: model.input.refresh).disposed(by: bag)
         model.output.refreshDoneDriver.drive(refresh.rx.isRefreshing).disposed(by: bag)
@@ -62,7 +89,7 @@ class HomeView: BaseController {
             .disposed(by: bag)
         view.addSubview(table)
         
-        model.input.loadStreamers()
+        model.input.loadStreamers(services.settings.orgFilter)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -100,6 +127,17 @@ class HomeView: BaseController {
     
     @objc func settings() {
         stepper.steps.accept(AppStep.settings)
+    }
+    
+    @objc func orgFilter() {
+        stepper.steps.accept(AppStep.filter)
+    }
+    
+    private func reload() {
+        model.input.refresh.accept(())
+        DispatchQueue.main.async {
+            self.navigationItem.title = "\(self.services.settings.orgFilter.short)Dex"
+        }
     }
 
     override func viewWillLayoutSubviews() {
