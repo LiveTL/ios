@@ -62,7 +62,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   XCDYouTubeKit:
-    :commit: b82a72e2590b1958a78514fcd8107edd572d2c8e
+    :commit: 82fcc9357ab920774c0a7c5c8d42802dacc1e81b
     :git: https://github.com/Candygoblen123/XCDYouTubeKit
 
 SPEC CHECKSUMS:

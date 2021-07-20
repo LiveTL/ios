@@ -125,9 +125,9 @@ class StreamModel: BaseModel {
         request.map { $0.error }
             .map { error -> Error? in
                 guard let error = error as NSError? else { return nil }
-                if error.code == -2 {
+                if error.code == -2 && error.localizedDescription.isEmpty {
                     return NSError(domain: XCDYouTubeVideoErrorDomain, code: -2, userInfo: [
-                        NSLocalizedDescriptionKey: "This live stream is upcoming and is not yet available. If you see this error on a video that has already started, please report it to the developers"
+                        NSLocalizedDescriptionKey: "This stream either has not started yet, is private, is member-only, or is not playable for some other reason."
                     ])
                 }
                 return error

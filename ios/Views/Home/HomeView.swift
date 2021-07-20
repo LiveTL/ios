@@ -105,7 +105,7 @@ class HomeView: BaseController {
         let pasteboard = UIPasteboard.general.urls ?? []
             
         for url in pasteboard {
-            if let url = URLComponents(url: url, resolvingAgainstBaseURL: false), (url.host == "youtube.com" || url.host == "youtu.be") {
+            if let url = URLComponents(url: url, resolvingAgainstBaseURL: false), (url.host == "www.youtube.com" || url.host == "youtu.be" || url.host == "m.youtube.com") {
                 let alert = SCLAlertView()
                 
                 alert.addButton("Let's Go!") {

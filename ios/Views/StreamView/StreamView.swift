@@ -121,9 +121,25 @@ class StreamView: BaseController {
         if nserror.code == -6, let responseString = nserror.userInfo["consentHtmlData"] as? String {
             self.closeStream()
             return stepper.steps.accept(AppStep.toConsent(responseString))
+        } else if nserror.code == -2 && nserror.localizedDescription == "Join this channel to get access to members-only content like this video, and other exclusive perks." {
+            let alert = SCLAlertView()
+            alert.addButton("Go Back") {
+                self.closeStream()
+            }
+            alert.addButton("Sign In to Youtube") {
+                // TODO: implement Sign in to Youtube
+                self.closeStream()
+            }
+            alert.showInfo("Member Only Stream", subTitle: "It looks like you're trying to watch a member only stream. If you're already a member of this channel, you can sign into Youtube to watch it!")
+        } else {
+            let alert = SCLAlertView()
+            alert.addButton("Go Back") {
+                self.closeStream()
+            }
+            alert.showError("An Error Occurred", subTitle: error.localizedDescription)
         }
         
-        super.handle(error)
+        //super.handle(error)
     }
 
     override func viewWillLayoutSubviews() {
