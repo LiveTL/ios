@@ -108,6 +108,7 @@ class StreamView: BaseController {
     @objc func closeStream() {
         videoPlayer.player?.pause()
         videoPlayer.player = nil
+        player = nil
         stepper.steps.accept(AppStep.home)
     }
     
