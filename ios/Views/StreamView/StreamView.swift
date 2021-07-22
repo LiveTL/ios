@@ -12,10 +12,12 @@ import RxFlow
 import RxSwift
 import Neon
 import SCLAlertView
+import M3U8Kit
 
 class StreamView: BaseController {
-    let videoPlayer = AVPlayerViewController()
+    var videoPlayer = AVPlayerViewController()
     let videoView   = UIView(frame: .zero)
+    var player: AVPlayer? = AVPlayer(playerItem: nil)
     
     let chatTable = ChatTable(frame: .zero, style: .plain)
     let chatControl: UISegmentedControl
@@ -61,14 +63,24 @@ class StreamView: BaseController {
         
         model.output.videoDriver.compactMap { $0 }
             .drive(onNext: { item in
-                DispatchQueue.main.async {
-                    let player = AVPlayer(playerItem: AVPlayerItem(url: item.streamURL!))
-                    self.videoPlayer.player = player
-                    player.play()
+                DispatchQueue.main.async { [self] in
+                    let m3u8 = try! M3U8PlaylistModel(url: item.streamURL!)
+                    var streamURL: URL? = item.streamURL!
+                    
+                    for i in 0..<m3u8.masterPlaylist.xStreamList.count {
+                        if m3u8.masterPlaylist.xStreamList.xStreamInf(at: i)?.resolution == YouTubeResolution.hd1080p.mediaResolution {
+                            streamURL = m3u8.masterPlaylist.xStreamList.xStreamInf(at: i).m3u8URL()
+                        }
+                    }
+                    let playerItem = AVPlayerItem(url: streamURL!)
+                    
+                    player?.replaceCurrentItem(with: playerItem)
+                    videoPlayer.player = player
+                    player?.play()
                     
                     let time = CMTime(seconds: 0.25, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-                    self.videoPlayer.player?.addPeriodicTimeObserver(forInterval: time, queue: .main) { time in
-                        self.model.input.timeControl.accept((time.seconds, item.identifier))
+                    videoPlayer.player?.addPeriodicTimeObserver(forInterval: time, queue: .main) { time in
+                        model.input.timeControl.accept((time.seconds, item.identifier))
                     }
                 }
             }).disposed(by: bag)
@@ -185,5 +197,14 @@ class StreamView: BaseController {
         videoView.anchorAndFillEdge(.left, xPad: 0, yPad: 0, otherSize: view.width * 0.7)
         chatTable.anchorInCorner(.bottomRight, xPad: 0, yPad: 0, width: view.width * 0.3, height: view.height - 85)
         chatControl.align(.aboveCentered, relativeTo: chatTable, padding: 2, width: view.width * 0.3, height: 35)
+    }
+}
+
+extension MediaResoulution: Equatable {
+    public static func == (lhs: MediaResoulution, rhs: MediaResoulution) -> Bool {
+        if lhs.height == rhs.height && lhs.width == rhs.width {
+            return true
+        }
+        return false
     }
 }

@@ -8,8 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		2E6E3F94C6D4763114C619D9 /* Pods_livetl_ios_iosUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AB8E24027064F597137FFA /* Pods_livetl_ios_iosUnitTests.framework */; };
+		3600776326A73653004CB44B /* StreamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774B0260C6EEB00072F30 /* StreamView.swift */; };
 		360A1DFA269E131A006B6EB3 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361772A3269CEE5500F0C6E7 /* FilterView.swift */; };
 		361772A4269CEE5500F0C6E7 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361772A3269CEE5500F0C6E7 /* FilterView.swift */; };
+		36E6C1FA26A71DF600C2B08C /* HTResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F026A64C370005E6FC /* HTResponse.swift */; };
+		36E6C1FB26A71DF600C2B08C /* TranslatedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F226A64C370005E6FC /* TranslatedMessage.swift */; };
+		36E6C1FC26A71DF600C2B08C /* YouTubeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35FE26A64C370005E6FC /* YouTubeService.swift */; };
+		36E6C1FD26A71DF600C2B08C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F526A64C370005E6FC /* BaseView.swift */; };
+		36E6C1FE26A71DF600C2B08C /* DisplayableMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F126A64C370005E6FC /* DisplayableMessage.swift */; };
+		36E6C1FF26A71DF600C2B08C /* AppStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35FB26A64C370005E6FC /* AppStep.swift */; };
+		36E6C20026A71DF600C2B08C /* HoloDexServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35FD26A64C370005E6FC /* HoloDexServices.swift */; };
+		36E6C20126A71DF600C2B08C /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35EC26A64C370005E6FC /* Language.swift */; };
+		36E6C20226A71DF600C2B08C /* StreamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F726A64C370005E6FC /* StreamModel.swift */; };
+		36E6C20326A71DF600C2B08C /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35FA26A64C370005E6FC /* AppFlow.swift */; };
+		36E6C20426A71DF600C2B08C /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF360026A64C370005E6FC /* SettingsService.swift */; };
+		36E6C20526A71DF600C2B08C /* InjectedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35EE26A64C370005E6FC /* InjectedMessage.swift */; };
+		36E6C20626A71DF600C2B08C /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F826A64C370005E6FC /* HomeModel.swift */; };
+		36E6C20726A71DF600C2B08C /* Organizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35ED26A64C370005E6FC /* Organizations.swift */; };
+		36E6C20826A71DF600C2B08C /* ChatControlType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35EF26A64C370005E6FC /* ChatControlType.swift */; };
+		36E6C20926A71DF600C2B08C /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F426A64C370005E6FC /* BaseModel.swift */; };
+		36E6C20A26A71DF600C2B08C /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35FF26A64C370005E6FC /* AppServices.swift */; };
+		36E6C20B26A71E0500C2B08C /* ConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6647C13E26A33B6A00557E29 /* ConsentViewController.swift */; };
 		36EF360126A64C370005E6FC /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35EC26A64C370005E6FC /* Language.swift */; };
 		36EF360226A64C370005E6FC /* Organizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35ED26A64C370005E6FC /* Organizations.swift */; };
 		36EF360326A64C370005E6FC /* InjectedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35EE26A64C370005E6FC /* InjectedMessage.swift */; };
@@ -30,7 +49,6 @@
 		36FD3EB5269781D900EAAF51 /* iosUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FD3EB4269781D900EAAF51 /* iosUnitTests.swift */; };
 		36FD3ECF26978CB900EAAF51 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774AD260C6ECE00072F30 /* HomeView.swift */; };
 		36FD3ED026978CBB00EAAF51 /* StreamerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774D7260C80F700072F30 /* StreamerCell.swift */; };
-		36FD3ED126978CBD00EAAF51 /* StreamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774B0260C6EEB00072F30 /* StreamView.swift */; };
 		36FD3ED226978CBF00EAAF51 /* StreamTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6636808E261C203500125A76 /* StreamTable.swift */; };
 		36FD3ED326978CC200EAAF51 /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66368089261983B500125A76 /* ChatCell.swift */; };
 		36FD3ED426978CC900EAAF51 /* ChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6636808A261983B500125A76 /* ChatCell.xib */; };
@@ -638,14 +656,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				360A1DFA269E131A006B6EB3 /* FilterView.swift in Sources */,
+				36E6C1FD26A71DF600C2B08C /* BaseView.swift in Sources */,
+				36E6C20626A71DF600C2B08C /* HomeModel.swift in Sources */,
+				36E6C20826A71DF600C2B08C /* ChatControlType.swift in Sources */,
 				36FD3ED226978CBF00EAAF51 /* StreamTable.swift in Sources */,
 				36FD3EB5269781D900EAAF51 /* iosUnitTests.swift in Sources */,
 				36FD3ED026978CBB00EAAF51 /* StreamerCell.swift in Sources */,
+				36E6C1FA26A71DF600C2B08C /* HTResponse.swift in Sources */,
 				36FD3ED626978D0300EAAF51 /* AppDelegate.swift in Sources */,
+				36E6C20926A71DF600C2B08C /* BaseModel.swift in Sources */,
+				36E6C20026A71DF600C2B08C /* HoloDexServices.swift in Sources */,
+				36E6C20526A71DF600C2B08C /* InjectedMessage.swift in Sources */,
+				36E6C20126A71DF600C2B08C /* Language.swift in Sources */,
+				36E6C20726A71DF600C2B08C /* Organizations.swift in Sources */,
 				36FD3ED526978CCD00EAAF51 /* SettingsView.swift in Sources */,
+				36E6C20426A71DF600C2B08C /* SettingsService.swift in Sources */,
+				36E6C20B26A71E0500C2B08C /* ConsentViewController.swift in Sources */,
 				36FD3ECF26978CB900EAAF51 /* HomeView.swift in Sources */,
+				36E6C1FB26A71DF600C2B08C /* TranslatedMessage.swift in Sources */,
+				3600776326A73653004CB44B /* StreamView.swift in Sources */,
+				36E6C1FF26A71DF600C2B08C /* AppStep.swift in Sources */,
+				36E6C1FE26A71DF600C2B08C /* DisplayableMessage.swift in Sources */,
+				36E6C1FC26A71DF600C2B08C /* YouTubeService.swift in Sources */,
 				36FD3ED326978CC200EAAF51 /* ChatCell.swift in Sources */,
-				36FD3ED126978CBD00EAAF51 /* StreamView.swift in Sources */,
+				36E6C20326A71DF600C2B08C /* AppFlow.swift in Sources */,
+				36E6C20226A71DF600C2B08C /* StreamModel.swift in Sources */,
+				36E6C20A26A71DF600C2B08C /* AppServices.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -744,7 +780,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = app.livetl.iosUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "ios/Views/ios-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ios.app/ios";
@@ -770,7 +806,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = app.livetl.iosUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "ios/Views/ios-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ios.app/ios";
