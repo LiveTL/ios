@@ -21,6 +21,7 @@ class StreamView: BaseController {
     
     let chatTable = ChatTable(frame: .zero, style: .plain)
     let chatControl: UISegmentedControl
+    var caption: UILabel = UILabel()
     
     let model: StreamModelType
     
@@ -73,6 +74,13 @@ class StreamView: BaseController {
                         }
                     }
                     let playerItem = AVPlayerItem(url: streamURL!)
+                    
+                    caption.textColor = .white
+                    caption.backgroundColor = .black.withAlphaComponent(0.8)
+                    caption.text = "Yo wut up?"
+                    videoPlayer.contentOverlayView?.addSubview(caption)
+                    caption.sizeToFit()
+                    caption.anchorToEdge(.bottom, padding: 5, width: caption.width, height: caption.height)
                     
                     player?.replaceCurrentItem(with: playerItem)
                     videoPlayer.player = player
