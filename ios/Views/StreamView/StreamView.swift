@@ -75,13 +75,6 @@ class StreamView: BaseController {
                     }
                     let playerItem = AVPlayerItem(url: streamURL!)
                     
-                    caption.textColor = .white
-                    caption.backgroundColor = .black.withAlphaComponent(0.8)
-                    caption.text = "Yo wut up?"
-                    videoPlayer.contentOverlayView?.addSubview(caption)
-                    caption.sizeToFit()
-                    caption.anchorToEdge(.bottom, padding: 5, width: caption.width, height: caption.height)
-                    
                     player?.replaceCurrentItem(with: playerItem)
                     videoPlayer.player = player
                     player?.play()
@@ -96,6 +89,11 @@ class StreamView: BaseController {
         addChild(videoPlayer)
         view.addSubview(videoView)
         videoPlayer.didMove(toParent: self)
+        
+        caption.textColor = .white
+        caption.backgroundColor = .black.withAlphaComponent(0.8)
+        caption.text = "hello"
+        videoPlayer.contentOverlayView?.addSubview(caption)
         
         chatControl.rx.value.compactMap { ChatControlType(rawValue: $0) }
             .bind(to: model.input.chatControl)
@@ -176,6 +174,10 @@ class StreamView: BaseController {
         
         videoPlayer.view.frame = videoView.bounds
         navigationController?.setNavigationBarHidden(view.width > view.height, animated: false)
+        
+        caption.sizeToFit()
+        caption.widthAnchor.constraint(lessThanOrEqualTo: (caption.superview?.superview!.widthAnchor)!, multiplier: 0.99).isActive = true
+        caption.align(.underCentered, relativeTo: videoPlayer.view, padding: (videoPlayer.view.height/8)*(-1), width: caption.width, height: caption.height)
     }
     
     func iPhoneLayoutPortrait() {
