@@ -28,7 +28,7 @@ class StreamerCell: UITableViewCell {
         
         contentView.clipsToBounds = true
 
-        thumbnail.contentMode = .scaleAspectFill
+        thumbnail.contentMode = .center
         contentView.addSubview(thumbnail)
         
         contentView.addSubview(icon)

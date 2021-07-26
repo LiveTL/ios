@@ -11,6 +11,8 @@
 		3600776326A73653004CB44B /* StreamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774B0260C6EEB00072F30 /* StreamView.swift */; };
 		360A1DFA269E131A006B6EB3 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361772A3269CEE5500F0C6E7 /* FilterView.swift */; };
 		361772A4269CEE5500F0C6E7 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361772A3269CEE5500F0C6E7 /* FilterView.swift */; };
+		361CEECB26AE51D400B0558E /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F826A64C370005E6FC /* HomeModel.swift */; };
+		361CEECD26AE527B00B0558E /* MediaResoulution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361CEECC26AE527B00B0558E /* MediaResoulution.swift */; };
 		36E6C1FA26A71DF600C2B08C /* HTResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F026A64C370005E6FC /* HTResponse.swift */; };
 		36E6C1FB26A71DF600C2B08C /* TranslatedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F226A64C370005E6FC /* TranslatedMessage.swift */; };
 		36E6C1FC26A71DF600C2B08C /* YouTubeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35FE26A64C370005E6FC /* YouTubeService.swift */; };
@@ -23,7 +25,6 @@
 		36E6C20326A71DF600C2B08C /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35FA26A64C370005E6FC /* AppFlow.swift */; };
 		36E6C20426A71DF600C2B08C /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF360026A64C370005E6FC /* SettingsService.swift */; };
 		36E6C20526A71DF600C2B08C /* InjectedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35EE26A64C370005E6FC /* InjectedMessage.swift */; };
-		36E6C20626A71DF600C2B08C /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F826A64C370005E6FC /* HomeModel.swift */; };
 		36E6C20726A71DF600C2B08C /* Organizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35ED26A64C370005E6FC /* Organizations.swift */; };
 		36E6C20826A71DF600C2B08C /* ChatControlType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35EF26A64C370005E6FC /* ChatControlType.swift */; };
 		36E6C20926A71DF600C2B08C /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F426A64C370005E6FC /* BaseModel.swift */; };
@@ -113,6 +114,7 @@
 
 /* Begin PBXFileReference section */
 		361772A3269CEE5500F0C6E7 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		361CEECC26AE527B00B0558E /* MediaResoulution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResoulution.swift; sourceTree = "<group>"; };
 		36EF35EC26A64C370005E6FC /* Language.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		36EF35ED26A64C370005E6FC /* Organizations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organizations.swift; sourceTree = "<group>"; };
 		36EF35EE26A64C370005E6FC /* InjectedMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectedMessage.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				36EF35F026A64C370005E6FC /* HTResponse.swift */,
 				36EF35F126A64C370005E6FC /* DisplayableMessage.swift */,
 				36EF35F226A64C370005E6FC /* TranslatedMessage.swift */,
+				361CEECC26AE527B00B0558E /* MediaResoulution.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -657,7 +660,7 @@
 			files = (
 				360A1DFA269E131A006B6EB3 /* FilterView.swift in Sources */,
 				36E6C1FD26A71DF600C2B08C /* BaseView.swift in Sources */,
-				36E6C20626A71DF600C2B08C /* HomeModel.swift in Sources */,
+				361CEECB26AE51D400B0558E /* HomeModel.swift in Sources */,
 				36E6C20826A71DF600C2B08C /* ChatControlType.swift in Sources */,
 				36FD3ED226978CBF00EAAF51 /* StreamTable.swift in Sources */,
 				36FD3EB5269781D900EAAF51 /* iosUnitTests.swift in Sources */,
@@ -701,6 +704,7 @@
 				36EF360126A64C370005E6FC /* Language.swift in Sources */,
 				36EF360426A64C370005E6FC /* ChatControlType.swift in Sources */,
 				361772A4269CEE5500F0C6E7 /* FilterView.swift in Sources */,
+				361CEECD26AE527B00B0558E /* MediaResoulution.swift in Sources */,
 				36EF360A26A64C370005E6FC /* StreamModel.swift in Sources */,
 				36EF360626A64C370005E6FC /* DisplayableMessage.swift in Sources */,
 				665774D8260C80F700072F30 /* StreamerCell.swift in Sources */,

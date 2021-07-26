@@ -174,9 +174,15 @@ extension StreamModel: WKScriptMessageHandler {
     
     func translate(_ message: InjectedMessage) -> DisplayableMessage? {
         if let translated = TranslatedMessage(from: message) {
-            if services.settings.languages.contains(translated.languageTag), !services.settings.neverUsers.contains(translated.displayAuthor) {
-                return translated
+            for lang in translated.languages {
+                if services.settings.languages.map({ $0.tag }).contains(lang) ||
+                    services.settings.languages.map({ $0.description.lowercased().hasPrefix(lang) }).contains(Bool.init(true)) ||
+                    services.settings.languages.map({ $0.tag.lowercased().hasPrefix(lang) }).contains(Bool.init(true)),
+                   !services.settings.neverUsers.contains(translated.displayAuthor) {
+                    return translated
+                }
             }
+            
         }
         
         if services.settings.alwaysUsers.contains(message.displayAuthor) {

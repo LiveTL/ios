@@ -210,11 +210,3 @@ class StreamView: BaseController {
     }
 }
 
-extension MediaResoulution: Equatable {
-    public static func == (lhs: MediaResoulution, rhs: MediaResoulution) -> Bool {
-        if lhs.height == rhs.height && lhs.width == rhs.width {
-            return true
-        }
-        return false
-    }
-}
