@@ -13,6 +13,7 @@ extension DefaultsKeys {
     var languages   : DefaultsKey<[TranslatedLanguageTag]> { .init("languages", defaultValue: [.en]) }
     var mod_messages: DefaultsKey<Bool> { .init("mod_messages_enabled", defaultValue: true) }
     var timestamps  : DefaultsKey<Bool> { .init("timestamps_enabled", defaultValue: true) }
+    var captions    : DefaultsKey<Bool> { .init("captions_enabled", defaultValue: true)}
     var clipboard   : DefaultsKey<Bool> { .init("clipboard_enabled", defaultValue: false) }
     var thumbnails  : DefaultsKey<Bool> { .init("thumbnails_enabled", defaultValue: true)}
     var thumbnailBlur: DefaultsKey<Bool> { .init("thumbnail_blur_enabled", defaultValue: false)}
@@ -54,6 +55,9 @@ class SettingsService {
     
     @SwiftyUserDefault(keyPath: \.thumbnailDarken)
     var thumbnailDarken: Bool
+    
+    @SwiftyUserDefault(keyPath: \.captions)
+    var captions: Bool
     
     var singleLanguage: TranslatedLanguageTag {
         get { return languages.first ?? .en }

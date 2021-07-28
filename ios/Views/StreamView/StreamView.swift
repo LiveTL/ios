@@ -24,6 +24,7 @@ class StreamView: BaseController {
     var caption: UILabel = UILabel()
     
     let model: StreamModelType
+    let settingsService: SettingsService
     
     var leftButton: UIBarButtonItem {
         let b = UIBarButtonItem(title: "times", style: .plain, target: self, action: #selector(closeStream))
@@ -40,6 +41,7 @@ class StreamView: BaseController {
     
     override init(_ stepper: Stepper, _ services: AppServices) {
         model = StreamModel(services)
+        settingsService = services.settings
         
         let actions = [
             UIAction(title: "All Chat") { _ in return },
@@ -97,7 +99,11 @@ class StreamView: BaseController {
         caption.numberOfLines = 0
         caption.lineBreakMode = .byWordWrapping
         caption.text = ""
-        //caption.isHidden = true
+        
+        if !settingsService.captions {
+            caption.isHidden = true
+        }
+        
         model.output.captionDriver.drive(onNext: { [self] item in
             if item.last != nil {
                 //remove emotes
