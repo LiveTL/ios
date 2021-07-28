@@ -28,7 +28,7 @@ class StreamerCell: UITableViewCell {
         
         contentView.clipsToBounds = true
 
-        thumbnail.contentMode = .center
+        thumbnail.contentMode = .scaleAspectFill
         contentView.addSubview(thumbnail)
         
         contentView.addSubview(icon)
@@ -69,9 +69,9 @@ class StreamerCell: UITableViewCell {
         if services.settings.thumbnailBlur {
             processor = processor |> BlurImageProcessor(blurRadius: 10.0)
         }
-        processor = processor |> DownsamplingImageProcessor(size: (self.thumbnail.frame.size))
         
-        self.thumbnail.kf.setImage(with: item.thumbnail!, options: [.processor(processor), .scaleFactor(UIScreen.main.scale), .cacheOriginalImage])
+        
+        self.thumbnail.kf.setImage(with: item.thumbnail!, options: [.processor(processor), .cacheOriginalImage])
     }
     
     override func layoutSubviews() {

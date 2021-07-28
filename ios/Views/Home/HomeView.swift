@@ -165,37 +165,63 @@ extension HomeView: UITableViewDelegate {
     
         func makeThumbnailPreview() -> UIViewController {
             let viewController = UIViewController()
-        
+            let popoutView: UIView = UIView()
             let imageView: UIImageView = UIImageView()
-        
+            popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: 999)
+            popoutView.clipsToBounds = true
+            
             imageView.kf.indicatorType = .activity
             imageView.kf.setImage(with: model.output.thumbnail(for: indexPath.section, and: indexPath.row))
-            viewController.view = imageView
-        
-            imageView.frame = CGRect(x: point.x, y: point.y, width: 333, height: 187)
-            //imageView.contentMode = .scaleAspectFill
-            //imageView.fillSuperview()
-            imageView.clipsToBounds = true
-        
-            viewController.preferredContentSize = imageView.frame.size
+            popoutView.addSubview(imageView)
+            imageView.anchorToEdge(.top, padding: 0, width: 333, height: 187)
+            
+            let titleText = model.output.title(for: indexPath.section, and: indexPath.row)
+            let nsText = titleText as NSString?
+            let textSize = nsText?.boundingRect(with: popoutView.frame.size, options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)], context: nil).size
+            
+            let title = UILabel()
+            title.lineBreakMode = .byWordWrapping
+            title.numberOfLines = 0
+            title.text = titleText
+            title.font = .systemFont(ofSize: 18)
+            popoutView.addSubview(title)
+            //title.backgroundColor = .blue
+            
+            title.sizeToFit()
+            title.align(.underCentered, relativeTo: imageView, padding: 10, width: 300, height: textSize?.height ?? 0)
+            
+            
+            print(title.height + imageView.height + 20)
+            let popoutHeight = title.height + imageView.height + 20
+            popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: popoutHeight)
+            viewController.view = popoutView
+            viewController.preferredContentSize = popoutView.frame.size
         
             return viewController
         }
     
         return UIContextMenuConfiguration(identifier: identifier, previewProvider: makeThumbnailPreview) { _ in
-            let favoriteAction = UIAction(title: "These Do", image: UIImage(systemName: "heart.fill")) { _ in
+            _ = UIAction(title: "Favorite", image: UIImage(systemName: "heart.fill")) { _ in
                 print("Favorite")
             }
         
-            let descriptionAction = UIAction(title: "Nothing", image: UIImage(systemName: "newspaper.fill")) { _ in
+            _ = UIAction(title: "Description", image: UIImage(systemName: "newspaper.fill")) { _ in
                 print("Description")
+                print(self.model.output.description(for: indexPath.section, and: indexPath.row))
             }
         
-            let shareAction = UIAction(title: "Right Now", image: UIImage(systemName: "square.and.arrow.up")) { _ in
-                print("Share")
+            let youtubeAction = UIAction(title: "Open in Youtube", image: UIImage(systemName: "play.rectangle.fill")) { _ in
+                let youtubeId = self.model.output.video(for: indexPath.section, and: indexPath.row)
+                var youtubeUrl = URL(string:"youtube://\(youtubeId)")!
+                if UIApplication.shared.canOpenURL(youtubeUrl){
+                    UIApplication.shared.open(youtubeUrl)
+                } else {
+                    youtubeUrl = URL(string:"https://www.youtube.com/watch?v=\(youtubeId)")!
+                    UIApplication.shared.open(youtubeUrl)
+                }
             }
         
-            return UIMenu(title: "", image: nil, children: [favoriteAction, descriptionAction, shareAction])
+            return UIMenu(title: "", image: nil, children: [youtubeAction])
         }
     }
 }
