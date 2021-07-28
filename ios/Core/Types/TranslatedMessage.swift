@@ -39,10 +39,15 @@ struct TranslatedMessage {
                     .lowercased()
                 var finalLang: [String] = []
                 
-                for splitLang in lang.split(usingRegex: "\\W+") {
-                    guard TranslatedLanguageTag.allCases.map({ $0.tag }).contains(splitLang) || TranslatedLanguageTag.allCases.map({ $0.description.lowercased().hasPrefix(splitLang) }).contains(Bool.init(true)) || TranslatedLanguageTag.allCases.map({ $0.tag.lowercased().hasPrefix(splitLang) }).contains(Bool.init(true)) else { continue }
-                    finalLang.append(splitLang)
+                do {
+                    for splitLang in try lang.split(usingRegex: "\\W+") {
+                        guard TranslatedLanguageTag.allCases.map({ $0.tag }).contains(splitLang) || TranslatedLanguageTag.allCases.map({ $0.description.lowercased().hasPrefix(splitLang) }).contains(Bool.init(true)) || TranslatedLanguageTag.allCases.map({ $0.tag.lowercased().hasPrefix(splitLang) }).contains(Bool.init(true)) else { continue }
+                        finalLang.append(splitLang)
+                    }
+                } catch {
+                    print("Whoops")
                 }
+                
                 
                 
                 let mStart = s.index(after: end)
@@ -91,11 +96,18 @@ extension TranslatedMessage: DisplayableMessage {
 }
 
 extension String {
-    func split(usingRegex pattern: String) -> [String] {
+    func split(usingRegex pattern: String) throws -> [String] {
         //### Crashes when you pass invalid `pattern`
-        let regex = try! NSRegularExpression(pattern: pattern)
+        let regex = try NSRegularExpression(pattern: pattern)
         let matches = regex.matches(in: self, range: NSRange(0..<utf16.count))
-        let ranges = [startIndex..<startIndex] + matches.map{Range($0.range, in: self)!} + [endIndex..<endIndex]
+        let ranges = try [startIndex..<startIndex] + matches.map{
+            guard let test = Range($0.range, in: self) else { throw TypeError.badType }
+            return test
+        } + [endIndex..<endIndex]
         return (0...matches.count).map {String(self[ranges[$0].upperBound..<ranges[$0+1].lowerBound])}
     }
+}
+
+enum TypeError: Error {
+    case badType
 }

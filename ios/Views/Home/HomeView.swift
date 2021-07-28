@@ -185,13 +185,10 @@ extension HomeView: UITableViewDelegate {
             title.text = titleText
             title.font = .systemFont(ofSize: 18)
             popoutView.addSubview(title)
-            //title.backgroundColor = .blue
             
             title.sizeToFit()
             title.align(.underCentered, relativeTo: imageView, padding: 10, width: 300, height: textSize?.height ?? 0)
             
-            
-            print(title.height + imageView.height + 20)
             let popoutHeight = title.height + imageView.height + 20
             popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: popoutHeight)
             viewController.view = popoutView

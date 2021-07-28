@@ -210,9 +210,6 @@ class StreamView: BaseController {
         let nsText = caption.text! as NSString
         let textSize = nsText.boundingRect(with: videoPlayer.view.frame.size, options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: UIFont.systemFontSize)], context: nil).size
         caption.frame.size = textSize
-        //print(caption.superview?.widthAnchor)
-        //caption.widthAnchor.constraint(lessThanOrEqualTo: caption.superview!.widthAnchor, multiplier: 0.90).isActive = true
-        //caption.sizeToFit()
         caption.align(.underCentered, relativeTo: videoPlayer.view, padding: ((videoPlayer.view.height/8)*(-1)) - caption.height, width: caption.width, height: caption.height)
         
     }
