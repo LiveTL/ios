@@ -28,6 +28,8 @@ protocol HomeModelOutput {
     
     func video(for section: Int, and id: Int) -> String
     func thumbnail(for section: Int, and index: Int) -> URL?
+    func title(for section: Int, and index: Int) -> String?
+    func description(for section: Int, and index: Int) -> String?
 }
 
 class HomeModel: BaseModel {
@@ -62,6 +64,16 @@ extension HomeModel: HomeModelType {
 
 extension HomeModel: HomeModelInput {}
 extension HomeModel: HomeModelOutput {
+    func description(for section: Int, and index: Int) -> String? {
+        let r = streamers.value?.sections()
+        return r?[section].items[index].description
+    }
+    
+    func title(for section: Int, and index: Int) -> String? {
+        let r = streamers.value!.sections()
+        return r[section].items[index].title
+    }
+    
     var streamersDriver: Driver<HTResponse> {
         return streamers
             .compactMap { $0 }
