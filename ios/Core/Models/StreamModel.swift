@@ -30,6 +30,7 @@ protocol StreamModelOutput {
     var loadingDriver: Driver<Bool> { get }
     var emptyDriver  : Driver<Bool> { get }
     var chatDriver   : Driver<[DisplayableMessage]> { get }
+    var captionDriver: Driver<[DisplayableMessage]> { get }
     var videoDriver  : Driver<XCDYouTubeVideo?> { get }
 }
 
@@ -265,6 +266,7 @@ extension StreamModel: StreamModelOutput {
     var loadingDriver: Driver<Bool> { loadingRelay.asDriver() }
     var emptyDriver  : Driver<Bool> { chatRelay.map { $0.isEmpty }.asDriver(onErrorJustReturn: true) }
     var chatDriver   : Driver<[DisplayableMessage]> { chatRelay.asDriver() }
+    var captionDriver: Driver<[DisplayableMessage]> { translatedRelay.asDriver() }
     var videoDriver  : Driver<XCDYouTubeVideo?> { playerRelay.asDriver() }
 }
 

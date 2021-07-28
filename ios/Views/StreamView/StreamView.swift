@@ -91,8 +91,39 @@ class StreamView: BaseController {
         videoPlayer.didMove(toParent: self)
         
         caption.textColor = .white
+        caption.font = .systemFont(ofSize: UIFont.systemFontSize)
+        caption.textAlignment = .center
         caption.backgroundColor = .black.withAlphaComponent(0.8)
-        caption.text = "hello"
+        caption.numberOfLines = 0
+        caption.lineBreakMode = .byWordWrapping
+        caption.text = ""
+        //caption.isHidden = true
+        model.output.captionDriver.drive(onNext: { [self] item in
+            if item.last != nil {
+                //remove emotes
+                var fullMessage = String()
+                
+                for m in item.last!.displayMessage {
+                    switch m {
+                    case .text(let s):
+                        fullMessage.append(s)
+                    case .emote:
+                        continue
+                    }
+                }
+                
+                //calculate view size
+                let nsText = fullMessage as NSString
+                
+                let textSize = nsText.boundingRect(with: videoPlayer.view.frame.size, options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: UIFont.systemFontSize)], context: nil).size
+                caption.frame.size = textSize
+                
+                caption.align(.underCentered, relativeTo: videoPlayer.view, padding: ((videoPlayer.view.height/8)*(-1)) - caption.height, width: caption.width, height: caption.height)
+                
+                //update text
+                caption.text = fullMessage
+            }
+        }).disposed(by: bag)
         videoPlayer.contentOverlayView?.addSubview(caption)
         
         chatControl.rx.value.compactMap { ChatControlType(rawValue: $0) }
@@ -174,10 +205,16 @@ class StreamView: BaseController {
         
         videoPlayer.view.frame = videoView.bounds
         navigationController?.setNavigationBarHidden(view.width > view.height, animated: false)
+        videoPlayer.contentOverlayView?.frame = videoView.bounds
         
-        caption.sizeToFit()
-        caption.widthAnchor.constraint(lessThanOrEqualTo: (caption.superview?.superview!.widthAnchor)!, multiplier: 0.99).isActive = true
-        caption.align(.underCentered, relativeTo: videoPlayer.view, padding: (videoPlayer.view.height/8)*(-1), width: caption.width, height: caption.height)
+        let nsText = caption.text! as NSString
+        let textSize = nsText.boundingRect(with: videoPlayer.view.frame.size, options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: UIFont.systemFontSize)], context: nil).size
+        caption.frame.size = textSize
+        //print(caption.superview?.widthAnchor)
+        //caption.widthAnchor.constraint(lessThanOrEqualTo: caption.superview!.widthAnchor, multiplier: 0.90).isActive = true
+        //caption.sizeToFit()
+        caption.align(.underCentered, relativeTo: videoPlayer.view, padding: ((videoPlayer.view.height/8)*(-1)) - caption.height, width: caption.width, height: caption.height)
+        
     }
     
     func iPhoneLayoutPortrait() {
