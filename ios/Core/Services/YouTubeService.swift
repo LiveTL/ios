@@ -85,6 +85,7 @@ enum YouTubeResolution: String, CustomStringConvertible, CaseIterable {
         case MediaResoulution(width: 854, height: 480)  : self = .sd480p
         case MediaResoulution(width: 640, height: 360)  : self = .sd360p
         case MediaResoulution(width: 426, height: 240)  : self = .sd240p
+        case MediaResoulution()                         : self = .auto
         default:
             self = .auto
         }

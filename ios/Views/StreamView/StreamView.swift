@@ -73,7 +73,7 @@ class StreamView: BaseController {
                     var streamURL: URL? = item.streamURL!
                     
                     for i in 0..<m3u8.masterPlaylist.xStreamList.count {
-                        if m3u8.masterPlaylist.xStreamList.xStreamInf(at: i)?.resolution == YouTubeResolution.hd1080p.mediaResolution {
+                        if m3u8.masterPlaylist.xStreamList.xStreamInf(at: i)?.resolution == YouTubeResolution.auto.mediaResolution {
                             streamURL = m3u8.masterPlaylist.xStreamList.xStreamInf(at: i).m3u8URL()
                         }
                     }
