@@ -22,9 +22,11 @@ class StreamView: BaseController {
     let chatTable = ChatTable(frame: .zero, style: .plain)
     let chatControl: UISegmentedControl
     var caption: UILabel = UILabel()
+    let captionFontSize: CGFloat = 17.0
     
     let model: StreamModelType
     let settingsService: SettingsService
+    let sharedAudio = AVAudioSession.sharedInstance()
     
     var leftButton: UIBarButtonItem {
         let b = UIBarButtonItem(title: "times", style: .plain, target: self, action: #selector(closeStream))
@@ -92,8 +94,9 @@ class StreamView: BaseController {
         view.addSubview(videoView)
         videoPlayer.didMove(toParent: self)
         
+        
         caption.textColor = .white
-        caption.font = .systemFont(ofSize: UIFont.systemFontSize)
+        caption.font = .systemFont(ofSize: captionFontSize)
         caption.textAlignment = .center
         caption.backgroundColor = .black.withAlphaComponent(0.8)
         caption.numberOfLines = 0
@@ -121,7 +124,7 @@ class StreamView: BaseController {
                 //calculate view size
                 let nsText = fullMessage as NSString
                 
-                let textSize = nsText.boundingRect(with: videoPlayer.view.frame.size, options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: UIFont.systemFontSize)], context: nil).size
+                let textSize = nsText.boundingRect(with: videoPlayer.view.frame.size, options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: captionFontSize)], context: nil).size
                 caption.frame.size = textSize
                 
                 caption.align(.underCentered, relativeTo: videoPlayer.view, padding: ((videoPlayer.view.height/8)*(-1)) - caption.height, width: caption.width, height: caption.height)
@@ -147,7 +150,8 @@ class StreamView: BaseController {
         view.addSubview(chatTable)
         
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .moviePlayback)
+            try sharedAudio.setCategory(.playback, mode: .moviePlayback)
+            try sharedAudio.setActive(true)
         } catch {
             print("AVAudioSession error: \(error.localizedDescription)")
             errorRelay.accept(NSError(domain: "app.livetl.ios", code: 100, userInfo: [
@@ -214,7 +218,7 @@ class StreamView: BaseController {
         videoPlayer.contentOverlayView?.frame = videoView.bounds
         
         let nsText = caption.text! as NSString
-        let textSize = nsText.boundingRect(with: videoPlayer.view.frame.size, options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: UIFont.systemFontSize)], context: nil).size
+        let textSize = nsText.boundingRect(with: videoPlayer.view.frame.size, options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: captionFontSize)], context: nil).size
         caption.frame.size = textSize
         caption.align(.underCentered, relativeTo: videoPlayer.view, padding: ((videoPlayer.view.height/8)*(-1)) - caption.height, width: caption.width, height: caption.height)
         
