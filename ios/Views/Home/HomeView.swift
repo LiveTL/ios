@@ -13,6 +13,8 @@ import RxFlow
 import RxSwift
 import SCLAlertView
 import Network
+import SwiftyUserDefaults
+import Kingfisher
 
 class HomeView: BaseController {
     var rightButton: UIBarButtonItem {
@@ -32,6 +34,7 @@ class HomeView: BaseController {
     let refresh = UIRefreshControl()
     let table = UITableView(frame: .zero, style: .insetGrouped)
     
+    var observers: Array<DefaultsDisposable> = []
     let model: HomeModelType
     let services: AppServices
     
@@ -39,6 +42,13 @@ class HomeView: BaseController {
         model = HomeModel(services)
         self.services = services
         super.init(stepper, services)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+        for observer in observers {
+            observer.dispose()
+        }
     }
     
     override func viewDidLoad() {
@@ -63,6 +73,12 @@ class HomeView: BaseController {
             source.sectionModels[index].title
         }
         
+        let orgObserver = Defaults.observe(\.orgFilter) { _ in self.reload() }
+        let thumbnailsObserver = Defaults.observe(\.thumbnails) { _ in self.reload() }
+        let blurObserver = Defaults.observe(\.thumbnailBlur) { _ in self.reload() }
+        let darkenObserver = Defaults.observe(\.thumbnailDarken) { _ in self.reload() }
+        observers.append(contentsOf: [orgObserver, thumbnailsObserver, blurObserver, darkenObserver])
+        
         refresh.rx.controlEvent(.valueChanged).bind(to: model.input.refresh).disposed(by: bag)
         model.output.refreshDoneDriver.drive(refresh.rx.isRefreshing).disposed(by: bag)
         
@@ -77,11 +93,6 @@ class HomeView: BaseController {
         model.input.loadStreamers(services.settings.orgFilter)
     }
     
-    func doRefresh() {
-        model.input.loadStreamers(services.settings.orgFilter)
-        navigationItem.title = "\(services.settings.orgFilter.short)Dex"
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -94,7 +105,7 @@ class HomeView: BaseController {
         let pasteboard = UIPasteboard.general.urls ?? []
             
         for url in pasteboard {
-            if let url = URLComponents(url: url, resolvingAgainstBaseURL: false), (url.host == "youtube.com" || url.host == "youtu.be") {
+            if let url = URLComponents(url: url, resolvingAgainstBaseURL: false), (url.host == "www.youtube.com" || url.host == "youtu.be" || url.host == "m.youtube.com") {
                 let alert = SCLAlertView()
                 
                 alert.addButton("Let's Go!") {
@@ -122,6 +133,13 @@ class HomeView: BaseController {
     @objc func orgFilter() {
         stepper.steps.accept(AppStep.filter)
     }
+    
+    private func reload() {
+        model.input.refresh.accept(())
+        DispatchQueue.main.async {
+            self.navigationItem.title = "\(self.services.settings.orgFilter.short)Dex"
+        }
+    }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -138,5 +156,69 @@ extension HomeView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vid = model.output.video(for: indexPath.section, and: indexPath.row)
         stepper.steps.accept(AppStep.view(vid))
+    }
+
+
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let index = indexPath.row
+        let identifier = "\(index)" as NSString
+    
+        func makeThumbnailPreview() -> UIViewController {
+            let viewController = UIViewController()
+            let popoutView: UIView = UIView()
+            let imageView: UIImageView = UIImageView()
+            popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: 999)
+            popoutView.clipsToBounds = true
+            
+            imageView.kf.indicatorType = .activity
+            imageView.kf.setImage(with: model.output.thumbnail(for: indexPath.section, and: indexPath.row))
+            popoutView.addSubview(imageView)
+            imageView.anchorToEdge(.top, padding: 0, width: 333, height: 187)
+            
+            let titleText = model.output.title(for: indexPath.section, and: indexPath.row)
+            let nsText = titleText as NSString?
+            let textSize = nsText?.boundingRect(with: popoutView.frame.size, options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)], context: nil).size
+            
+            let title = UILabel()
+            title.lineBreakMode = .byWordWrapping
+            title.numberOfLines = 0
+            title.text = titleText
+            title.font = .systemFont(ofSize: 18)
+            popoutView.addSubview(title)
+            
+            title.sizeToFit()
+            title.align(.underCentered, relativeTo: imageView, padding: 10, width: 300, height: textSize?.height ?? 0)
+            
+            let popoutHeight = title.height + imageView.height + 20
+            popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: popoutHeight)
+            viewController.view = popoutView
+            viewController.preferredContentSize = popoutView.frame.size
+        
+            return viewController
+        }
+    
+        return UIContextMenuConfiguration(identifier: identifier, previewProvider: makeThumbnailPreview) { _ in
+            _ = UIAction(title: "Favorite", image: UIImage(systemName: "heart.fill")) { _ in
+                print("Favorite")
+            }
+        
+            _ = UIAction(title: "Description", image: UIImage(systemName: "newspaper.fill")) { _ in
+                print("Description")
+                print(self.model.output.description(for: indexPath.section, and: indexPath.row))
+            }
+        
+            let youtubeAction = UIAction(title: "Open in Youtube", image: UIImage(systemName: "play.rectangle.fill")) { _ in
+                let youtubeId = self.model.output.video(for: indexPath.section, and: indexPath.row)
+                var youtubeUrl = URL(string:"youtube://\(youtubeId)")!
+                if UIApplication.shared.canOpenURL(youtubeUrl){
+                    UIApplication.shared.open(youtubeUrl)
+                } else {
+                    youtubeUrl = URL(string:"https://www.youtube.com/watch?v=\(youtubeId)")!
+                    UIApplication.shared.open(youtubeUrl)
+                }
+            }
+        
+            return UIMenu(title: "", image: nil, children: [youtubeAction])
+        }
     }
 }

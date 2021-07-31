@@ -30,6 +30,7 @@ protocol StreamModelOutput {
     var loadingDriver: Driver<Bool> { get }
     var emptyDriver  : Driver<Bool> { get }
     var chatDriver   : Driver<[DisplayableMessage]> { get }
+    var captionDriver: Driver<[DisplayableMessage]> { get }
     var videoDriver  : Driver<XCDYouTubeVideo?> { get }
 }
 
@@ -125,9 +126,9 @@ class StreamModel: BaseModel {
         request.map { $0.error }
             .map { error -> Error? in
                 guard let error = error as NSError? else { return nil }
-                if error.code == -2 {
+                if error.code == -2 && error.localizedDescription.isEmpty {
                     return NSError(domain: XCDYouTubeVideoErrorDomain, code: -2, userInfo: [
-                        NSLocalizedDescriptionKey: "This live stream is upcoming and is not yet available. If you see this error on a video that has already started, please report it to the developers"
+                        NSLocalizedDescriptionKey: "This stream either has not started yet, is private, is member-only, or is not playable for some other reason."
                     ])
                 }
                 return error
@@ -174,9 +175,16 @@ extension StreamModel: WKScriptMessageHandler {
     
     func translate(_ message: InjectedMessage) -> DisplayableMessage? {
         if let translated = TranslatedMessage(from: message) {
-            if services.settings.languages.contains(translated.languageTag), !services.settings.neverUsers.contains(translated.displayAuthor) {
-                return translated
+            for lang in translated.languages {
+                if lang == "" { continue }
+                if services.settings.languages.map({ $0.tag }).contains(lang) ||
+                    services.settings.languages.map({ $0.description.lowercased().hasPrefix(lang) }).contains(Bool.init(true)) ||
+                    services.settings.languages.map({ $0.tag.lowercased().hasPrefix(lang) }).contains(Bool.init(true)),
+                   !services.settings.neverUsers.contains(translated.displayAuthor) {
+                    return translated
+                }
             }
+            
         }
         
         if services.settings.alwaysUsers.contains(message.displayAuthor) {
@@ -258,6 +266,7 @@ extension StreamModel: StreamModelOutput {
     var loadingDriver: Driver<Bool> { loadingRelay.asDriver() }
     var emptyDriver  : Driver<Bool> { chatRelay.map { $0.isEmpty }.asDriver(onErrorJustReturn: true) }
     var chatDriver   : Driver<[DisplayableMessage]> { chatRelay.asDriver() }
+    var captionDriver: Driver<[DisplayableMessage]> { translatedRelay.asDriver() }
     var videoDriver  : Driver<XCDYouTubeVideo?> { playerRelay.asDriver() }
 }
 

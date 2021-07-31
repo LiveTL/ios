@@ -13,5 +13,5 @@ enum AppStep: Step {
     case view(_ id: String)
     case settings, settingsDone
     case filter, filterDone
-    case toConsent(_ htmlData: String)
+    case toConsent(_ htmlData: String), consentDone
 }

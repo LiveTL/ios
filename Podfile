@@ -19,6 +19,7 @@ abstract_target 'livetl' do
     pod 'RxSwift'
     pod 'SwiftDate'
     pod 'SwiftyUserDefaults'
+    pod 'M3U8Kit'
 
     pod 'FLEX', :configuration => 'DEBUG'
     

@@ -27,6 +27,9 @@ protocol HomeModelOutput {
     var refreshDoneDriver: Driver<Bool>       { get }
     
     func video(for section: Int, and id: Int) -> String
+    func thumbnail(for section: Int, and index: Int) -> URL?
+    func title(for section: Int, and index: Int) -> String?
+    func description(for section: Int, and index: Int) -> String?
 }
 
 class HomeModel: BaseModel {
@@ -61,6 +64,16 @@ extension HomeModel: HomeModelType {
 
 extension HomeModel: HomeModelInput {}
 extension HomeModel: HomeModelOutput {
+    func description(for section: Int, and index: Int) -> String? {
+        let r = streamers.value?.sections()
+        return r?[section].items[index].description
+    }
+    
+    func title(for section: Int, and index: Int) -> String? {
+        let r = streamers.value!.sections()
+        return r[section].items[index].title
+    }
+    
     var streamersDriver: Driver<HTResponse> {
         return streamers
             .compactMap { $0 }
@@ -73,6 +86,10 @@ extension HomeModel: HomeModelOutput {
     func video(for section: Int, and index: Int) -> String {
         let r = streamers.value!.sections()
         return r[section].items[index].id
+    }
+    func thumbnail(for section: Int, and index: Int) -> URL? {
+        let r = streamers.value!.sections()
+        return r[section].items[index].thumbnail
     }
 }
 
@@ -96,29 +113,9 @@ struct StreamerItemModel: SectionModelType {
 extension HTResponse {
     func sections() -> [StreamerItemModel] {
         
-        
-        let l = items.filter() {
-            s in if s.status == .live {
-                return true
-            }
-        return false
-        }.sorted { $0.start_scheduled > $1.start_scheduled }
-        
-        let u = items.filter() {
-            s in if s.status == .upcoming {
-                return true
-                
-            }
-        return false
-        }.sorted { $0.start_scheduled < $1.start_scheduled }
-        
-        let e = items.filter() {
-            s in if s.status == .past {
-                return true
-                
-            }
-        return false
-        }.sorted { $0.start_scheduled < $1.start_scheduled }
+        let l = items.filter { $0.status == .live }.sorted { $0.start_scheduled > $1.start_scheduled }
+        let u = items.filter { $0.status == .upcoming }.sorted { $0.start_scheduled < $1.start_scheduled }
+        let e = items.filter { $0.status == .past }.sorted { $0.start_scheduled > $1.start_scheduled }
         
         var rtr: [StreamerItemModel] = []
         

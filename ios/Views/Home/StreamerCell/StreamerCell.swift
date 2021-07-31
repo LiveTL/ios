@@ -28,6 +28,7 @@ class StreamerCell: UITableViewCell {
         
         contentView.clipsToBounds = true
 
+        thumbnail.contentMode = .scaleAspectFill
         contentView.addSubview(thumbnail)
         
         contentView.addSubview(icon)
@@ -54,6 +55,8 @@ class StreamerCell: UITableViewCell {
         
         icon.kf.indicatorType = .activity
         icon.kf.setImage(with: item.channel.photo)
+
+        thumbnail.isHidden = !services.settings.thumbnails
         
         var processor: ImageProcessor
         
@@ -63,15 +66,12 @@ class StreamerCell: UITableViewCell {
             processor = OverlayImageProcessor(overlay: .systemBackground, fraction: 1)
         }
         
-        if services.settings.thumbnailBlur{
+        if services.settings.thumbnailBlur {
             processor = processor |> BlurImageProcessor(blurRadius: 10.0)
         }
         
-        if services.settings.thumbnails == false {
-            thumbnail.isHidden = true
-        } else {
-            thumbnail.kf.setImage(with: item.thumbnail!, options: [.processor(processor)])
-        }
+        
+        self.thumbnail.kf.setImage(with: item.thumbnail!, options: [.processor(processor), .cacheOriginalImage])
     }
     
     override func layoutSubviews() {
@@ -86,11 +86,8 @@ class StreamerCell: UITableViewCell {
         channel.align(.toTheRightMatchingBottom, relativeTo: icon, padding: 10, width: width - 180, height: 18)
         start.alignAndFillWidth(align: .toTheRightCentered, relativeTo: channel, padding: 10, height: 18)
         
-        thumbnail.anchorToEdge(.left, padding: 0, width: contentView.width, height: (contentView.width * (16/9)))
+        thumbnail.fillSuperview()
         thumbnail.clipsToBounds = true
-        
-        
-        
     }
     
     required init?(coder: NSCoder) {

@@ -113,6 +113,15 @@ class SettingsView: FormViewController {
                     self.settings.timestamps = value
                 }
             }
+            
+            <<< SwitchRow("captions_enabled") { row in
+                row.title = "Caption Mode"
+                row.value = settings.captions
+            }.onChange { row in
+                if let value = row.value {
+                    self.settings.captions = value
+                }
+            }
         
             +++ MultivaluedSection(multivaluedOptions: [.Insert, .Delete],
                                    header: "Allowed Users",

@@ -28,6 +28,7 @@ struct HTResponse: Decodable, Equatable {
         let start_actual: Date?
         let live_viewers: Int?
         let channel: Channel
+        let description: String?
         
         enum LiveState: String, Decodable {
             case new, upcoming, live, past, missing
