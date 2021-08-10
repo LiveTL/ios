@@ -91,7 +91,7 @@
 "LiveTL Mode" = "LiveTL Mode";
 
 /* a warning that audio will not play if the device is not in silent mode, in the event of an error*/
-"Audio will only play if device in not in silent mode.";
+"Audio will only play if device in not in silent mode." = "Audio will only play if device in not in silent mode.";
 
 /* a dismissal button that will go back a screen */
 "Go Back" = "Go Back";
