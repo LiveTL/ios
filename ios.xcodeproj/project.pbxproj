@@ -13,7 +13,6 @@
 		361772A4269CEE5500F0C6E7 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361772A3269CEE5500F0C6E7 /* FilterView.swift */; };
 		361CEECB26AE51D400B0558E /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F826A64C370005E6FC /* HomeModel.swift */; };
 		361CEECD26AE527B00B0558E /* MediaResoulution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361CEECC26AE527B00B0558E /* MediaResoulution.swift */; };
-		3652A47D26C20E7C003DA76B /* Localizeable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3652A47F26C20E7C003DA76B /* Localizeable.strings */; };
 		36E6C1FA26A71DF600C2B08C /* HTResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F026A64C370005E6FC /* HTResponse.swift */; };
 		36E6C1FB26A71DF600C2B08C /* TranslatedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F226A64C370005E6FC /* TranslatedMessage.swift */; };
 		36E6C1FC26A71DF600C2B08C /* YouTubeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35FE26A64C370005E6FC /* YouTubeService.swift */; };
@@ -66,7 +65,7 @@
 		6647C14526A3457600557E29 /* ConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6647C13E26A33B6A00557E29 /* ConsentViewController.swift */; };
 		665773F1260C4DDC00072F30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665773F0260C4DDC00072F30 /* AppDelegate.swift */; };
 		665773FA260C4DDC00072F30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 665773F9260C4DDC00072F30 /* Assets.xcassets */; };
-		665773FD260C4DDC00072F30 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 665773FB260C4DDC00072F30 /* LaunchScreen.storyboard */; };
+		665773FD260C4DDC00072F30 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		665774AE260C6ECE00072F30 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774AD260C6ECE00072F30 /* HomeView.swift */; };
 		665774B1260C6EEB00072F30 /* StreamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774B0260C6EEB00072F30 /* StreamView.swift */; };
 		665774B4260C6EFE00072F30 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774B3260C6EFE00072F30 /* SettingsView.swift */; };
@@ -150,7 +149,6 @@
 		665773ED260C4DDC00072F30 /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		665773F0260C4DDC00072F30 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		665773F9260C4DDC00072F30 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		665773FC260C4DDC00072F30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		665773FE260C4DDC00072F30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		665774AD260C6ECE00072F30 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		665774B0260C6EEB00072F30 /* StreamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamView.swift; sourceTree = "<group>"; };
@@ -340,7 +338,6 @@
 			children = (
 				6657748C260C6B9A00072F30 /* Fonts */,
 				665773F9260C4DDC00072F30 /* Assets.xcassets */,
-				665773FB260C4DDC00072F30 /* LaunchScreen.storyboard */,
 				665773FE260C4DDC00072F30 /* Info.plist */,
 				667DBAB42616D47400D46E69 /* WindowInjector.js */,
 			);
@@ -563,7 +560,7 @@
 			files = (
 				66A04290261F98CA00EB5896 /* Font Awesome 5 Duotone-Solid-900.otf in Resources */,
 				66A0428E261F98CA00EB5896 /* Font Awesome 5 Brands-Regular-400.otf in Resources */,
-				665773FD260C4DDC00072F30 /* LaunchScreen.storyboard in Resources */,
+				665773FD260C4DDC00072F30 /* (null) in Resources */,
 				667DBAB52616D47400D46E69 /* WindowInjector.js in Resources */,
 				665773FA260C4DDC00072F30 /* Assets.xcassets in Resources */,
 				66A0428F261F98CA00EB5896 /* Font Awesome 5 Pro-Light-300.otf in Resources */,
@@ -836,7 +833,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "app.livetl-dev.ios.yt-extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.livetl.ios.yt-extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -860,7 +857,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "app.livetl-dev.ios.yt-extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.livetl.ios.yt-extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1005,7 +1002,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "app.livetl-dev.ios";
+				PRODUCT_BUNDLE_IDENTIFIER = app.livetl.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1033,7 +1030,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "app.livetl-dev.ios";
+				PRODUCT_BUNDLE_IDENTIFIER = app.livetl.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
