@@ -103,7 +103,7 @@
 "No messages yet" = "No messages yet";
 
 /* a message that appears when we are loading the chat */
-"Loading chat..." = "Loading chat...";
+"Loading chat..." = "Loading chat…";
 
 /* a dismiss button */
 "Save" = "Save";
