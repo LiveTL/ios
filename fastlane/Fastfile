@@ -35,7 +35,7 @@ platform :ios do
       #api_key: api_key
     #)
 
-    build_app(workspace: "ios.xcworkspace", scheme: "ios")
+    build_app(xcargs: "-allowProvisioningUpdates", workspace: "ios.xcworkspace", scheme: "ios")
     upload_to_testflight
   end
 
