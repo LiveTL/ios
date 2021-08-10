@@ -4,3 +4,10 @@ ios.xcodeproj/xcuserdata
 ios.xcodeproj/*.xcworkspace
 
 .DS_Store
+fastlane/README.md
+
+fastlane/report.xml
+
+ios.app.dSYM.zip
+
+ios.ipa
