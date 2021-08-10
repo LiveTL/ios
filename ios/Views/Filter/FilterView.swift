@@ -20,7 +20,7 @@ class FilterView: FormViewController {
     var settings: SettingsService { services.settings }
     
     var rightButton: UIBarButtonItem {
-        return UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(filterDone))
+        return UIBarButtonItem(title: Bundle.main.localizedString(forKey: "Done", value: "Done", table: "Localizeable"), style: .plain, target: self, action: #selector(filterDone))
     }
     
     init(_ services: AppServices, stepper: Stepper) {
@@ -33,10 +33,10 @@ class FilterView: FormViewController {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = rightButton
-        navigationItem.title = "Organization Filter"
+        navigationItem.title = Bundle.main.localizedString(forKey: "Organization Filter", value: "Organization Filter", table: "Localizeable")
         
         
-        var section = SelectableSection<ListCheckRow<Organization>>("Select Organization", selectionType: .singleSelection(enableDeselection: false)) { $0.tag = "org_filter" }
+        var section = SelectableSection<ListCheckRow<Organization>>(Bundle.main.localizedString(forKey: "Select Organization", value: "Select Organization", table: "Localizeable"), selectionType: .singleSelection(enableDeselection: false)) { $0.tag = "org_filter" }
         section += Organization.allCases.map { org -> ListCheckRow<Organization> in
             return ListCheckRow<Organization>(org.rawValue) { row in
                 row.title = org.description

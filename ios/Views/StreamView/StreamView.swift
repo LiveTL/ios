@@ -155,7 +155,7 @@ class StreamView: BaseController {
         } catch {
             print("AVAudioSession error: \(error.localizedDescription)")
             errorRelay.accept(NSError(domain: "app.livetl.ios", code: 100, userInfo: [
-                NSLocalizedDescriptionKey: "Audio will only play if device in not in silent mode."
+                NSLocalizedDescriptionKey: Bundle.main.localizedString(forKey: "Audio will only play if device in not in silent mode.", value: "Audio will only play if device in not in silent mode.", table: "Localizeable")
             ]))
         }
     }
@@ -193,10 +193,10 @@ class StreamView: BaseController {
 //            alert.showInfo("Member Only Stream", subTitle: "It looks like you're trying to watch a member only stream. If you're already a member of this channel, you can sign into Youtube to watch it!")
         } else {
             let alert = SCLAlertView()
-            alert.addButton("Go Back") {
+            alert.addButton(Bundle.main.localizedString(forKey: "Go Back", value: "Go Back", table: "Localizeable")) {
                 self.closeStream()
             }
-            alert.showError("An Error Occurred", subTitle: error.localizedDescription)
+            alert.showError(Bundle.main.localizedString(forKey: "An Error Occurred", value: "An Error Occurred", table: "Localizeable"), subTitle: error.localizedDescription)
         }
         
         //super.handle(error)

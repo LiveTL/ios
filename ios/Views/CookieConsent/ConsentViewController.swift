@@ -35,7 +35,7 @@ class ConsentViewController: BaseController {
         super.viewDidAppear(animated)
         
         let alert = SCLAlertView()
-        alert.showInfo("YouTube Cookies Consent", subTitle: "YouTube has noticed that you have not yet accepted their cookies, and has blocked access. In order to get past this warning, you'll need to sign in to your Google account. You should only need to do this once.", closeButtonTitle: "OK")
+        alert.showInfo(Bundle.main.localizedString(forKey: "YouTube Cookies Consent", value: "YouTube Cookies Consent", table: "Localizeable"), subTitle: Bundle.main.localizedString(forKey: "YouTube has noticed that you have not yet accepted their cookies, and has blocked access. In order to get past this warning, you'll need to sign in to your Google account. You should only need to do this once.", value: "YouTube has noticed that you have not yet accepted their cookies, and has blocked access. In order to get past this warning, you'll need to sign in to your Google account. You should only need to do this once.", table: "Localizeable"), closeButtonTitle: Bundle.main.localizedString(forKey: "OK", value: "OK", table: "Localizeable"))
     }
     
     func consentFunctionWithHtmlData(htmlData data: String) {

@@ -120,8 +120,8 @@ class HomeView: BaseController {
                     self.stepper.steps.accept(AppStep.view(final))
                 }
                 
-                alert.showInfo("Youtube Link Detected!",
-                               subTitle: "We detected a Youtube link in your clipboard. Would you like to access this stream?")
+                alert.showInfo(Bundle.main.localizedString(forKey: "Youtube Link Detected!", value: "Youtube Link Detected!", table: "Localizeable"),
+                               subTitle: Bundle.main.localizedString(forKey: "We detected a Youtube link in your clipboard. Would you like to access this stream?", value: "We detected a Youtube link in your clipboard. Would you like to access this stream?", table: "Localizeable"))
             }
         }
     }
@@ -223,18 +223,18 @@ extension HomeView: UITableViewDelegate {
         return UIContextMenuConfiguration(identifier: identifier, previewProvider: makeThumbnailPreview) { _ in
         
             _ = UIAction(title: "Description", image: UIImage(systemName: "newspaper.fill")) { _ in
-                print("Description")
+                print(Bundle.main.localizedString(forKey: "Description", value: "Description", table: "Localizeable"))
                 print(self.model.output.description(for: indexPath.section, and: indexPath.row))
             }
             
-            let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
+            let shareAction = UIAction(title: Bundle.main.localizedString(forKey: "Share", value: "Share", table: "Localizeable"), image: UIImage(systemName: "square.and.arrow.up")) { _ in
                 let youtubeId = self.model.output.video(for: indexPath.section, and: indexPath.row)
                 let items = [URL(string: "https://www.youtube.com/watch?v=\(youtubeId)")!]
                 let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
                 self.present(ac, animated: true)
             }
         
-            let youtubeAction = UIAction(title: "Open in Youtube", image: UIImage(systemName: "play.rectangle.fill")) { _ in
+            let youtubeAction = UIAction(title: Bundle.main.localizedString(forKey: "Open in Youtube", value: "Open in Youtube", table: "Localizeable"), image: UIImage(systemName: "play.rectangle.fill")) { _ in
                 let youtubeId = self.model.output.video(for: indexPath.section, and: indexPath.row)
                 var youtubeUrl = URL(string: "youtube://\(youtubeId)")!
                 if UIApplication.shared.canOpenURL(youtubeUrl) {
