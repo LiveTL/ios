@@ -70,10 +70,10 @@
 "Let's Go!" = "Let's Go!";
 
 /* title of a popup that appears when we detect a youtube URL in the clipboard*/
-"Youtube Link Detected!" = "Youtube Link Detected!";
+"Youtube Link Detected!" = "YouTube Link Detected.";
 
 /* Explanation in the clipboard popup */
-"We detected a Youtube link in your clipboard. Would you like to access this stream?" = "We detected a Youtube link in your clipboard. Would you like to access this stream?";
+"We detected a Youtube link in your clipboard. Would you like to access this stream?" = "Stream from the YouTube link in your clipboard?";
 
 /* a button to access the description of a youtube video */
 "Description" = "Description";
@@ -82,7 +82,7 @@
 "Share" = "Share";
 
 /* a button that opens the video in the youtube app or youtube.com in safari*/
-"Open in Youtube" = "Open in Youtube";
+"Open in Youtube" = "Open in YouTube";
 
 /* a toggle to show all chat messages */
 "All Chat" = "All Chat";
