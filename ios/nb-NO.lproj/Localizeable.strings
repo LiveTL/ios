@@ -1,1 +1,166 @@
 
+
+
+/* Explination of hoy to bypass the cookie warning (make sure you include the fact that you NEED to sign in */
+"YouTube has noticed that you have not yet accepted their cookies, and has blocked access. In order to get past this warning, you'll need to sign in to your Google account. You should only need to do this once." = "YouTube har merket at du ikke har godtatt informasjonskapslene deres enda, og har blokkert tilgangen. For å komme forbi dette må du logge på med en Google-konto én gang.";
+
+/* explanition for the blocked user list */
+"These users are never shown, even if they translate a message" = "Disse brukerne vises aldri, selv når de oversetter en melding";
+
+/* explanition for the Allowed users list */
+"These users are always shown, even if they don't translate a message" = "Disse brukerne vises alltid, selv om de ikke oversetter en melding";
+
+/* toggle for enabling captions */
+"Caption Mode" = "Undertekstsmodus";
+
+/* A toggle that enables detection of youtube links in the clipboard */
+"Allow Clipboard Detection" = "Tillat oppdaging fra utklippstavlen";
+
+/* a toggle that will blur the thumbnails when they appear on the home screen */
+"Enable Thumbnail Blur Effect" = "Skru på tilsløring av miniatyrbilde";
+
+/* a toggle that will darken the thumbnails when they appear on the home screen */
+"Enable Thumbnail Darken Effect" = "Skru på skyggelegging av miniatyrbilde";
+
+/* a toggle that will enable thumbnail backgrounds on the home screen */
+"Enable Thumbnail Backgrounds" = "Skru på miniatyrbilde-bakgrunner";
+
+/* the title of a popup that appears when an error occurs */
+"An Error Occurred" = "En feil inntraff";
+
+/* a warning that audio will not play if the device is not in silent mode, in the event of an error*/
+"Audio will only play if device in not in silent mode." = "Lyd vil kun spilles hvis enheten ikke er i stillemodus.";
+
+/* a toggle to show all chat messages */
+"All Chat" = "All sludring";
+
+/* Explanation in the clipboard popup */
+"We detected a Youtube link in your clipboard. Would you like to access this stream?" = "S";
+
+/* a dismissal button that will advance a screen */
+"Let's Go!" = "Start";
+
+/* The header for the section of the homescreen that has streams that are currently live */
+"Live" = "Direkte";
+
+/* Error a user is presented when trying to watch a stream that we cannot open for some unknown reason */
+"This stream either has not started yet, is private, is member-only, or is not playable for some other reason." = "Denne strømmen har enten ikke starte enda, er privat, kun for medlemmer, eller kan ikke spilles uvist av hvilken grunn.";
+
+/* User-selectable Developer testing language filter */
+"Developer Tags" = "Utvikleretiketter";
+
+/* button that clears all caches other than the image cache */
+"Clear Other Caches" = "Tøm andre hurtiglager";
+
+/* button that clears the image cache */
+"Clear Image Cache" = "Tøm bildehurtiglager";
+
+/* section header of advanced settings */
+"Advanced Settings" = "Avanserte innstillinger";
+
+/* header for list of users that will always be prevented from appearing in the TL filter */
+"Blocked Users" = "Blokkerte brukere";
+
+/* placeholder for a username */
+"Username" = "Brukernavn";
+
+/* button that adds a user to a list */
+"Tap to Add User" = "Trykk for å legge til bruker";
+
+/* header for list of users that will always be included in the TL filter */
+"Allowed Users" = "Tillatte brukere";
+
+/* toggle for displaying timestamps in chat messages */
+"Show Timestamps" = "Vis tidsstempler";
+
+/* toggle for including Mod messages in the TL filter */
+"Mod Messages" = "Mod-meldinger";
+
+/* Placeholder for when no language is selected  */
+"No languages selected" = "Ingen språk valgt";
+
+/* header for list of selectable languages */
+"Languages" = "Språk";
+
+/* section header of message settings */
+"Message Settings" = "Meldingsinnstillinger";
+
+/* section header of app settings */
+"App Settings" = "Programinnstillinger";
+
+/* title of the settings screen */
+"Settings" = "Innstillinger";
+
+/* a dismiss button */
+"Save" = "Lagre";
+
+/* a message that appears when we are loading the chat */
+"Loading chat..." = "Laster inn sludring …";
+
+/* a placeholder for when we have not recieved any chat messages yet */
+"No messages yet" = "Ingen meldinger enda";
+
+/* a dismissal button that will go back a screen */
+"Go Back" = "Gå tilbake";
+
+/* a toggle that shows just TL messages */
+"LiveTL Mode" = "LiveTL-modus";
+
+/* a button that opens the video in the youtube app or youtube.com in safari*/
+"Open in Youtube" = "Åpne i YouTube";
+
+/* a button to share a youtube video */
+"Share" = "Del";
+
+/* a button to access the description of a youtube video */
+"Description" = "Beskrivelse";
+
+/* title of a popup that appears when we detect a youtube URL in the clipboard*/
+"Youtube Link Detected!" = "YouTube-lenke oppdaget.";
+
+/* A dismissal button */
+"OK" = "OK";
+
+/* Title of the Youtube cookie consent popup */
+"YouTube Cookies Consent" = "YouTube-informasjonskapselssamtykke";
+
+/* Header for the Org list */
+"Select Organization" = "Velg organisasjon";
+
+/* The title for the Orginization filter settings screen */
+"Organization Filter" = "Organisasjonsfilter";
+
+/* A Dismissal Button */
+"Done" = "Ferdig";
+
+/* A foot note at the bottom of the home screen that says that we get our stream information from holodex */
+"Stream data provided by Holodex. Results capped at 50." = "Strømmingsdata fra Holodex. Viser max. 50 resultater.";
+
+/* The header for the section of the homescreen that has streams that have already ended */
+"Ended" = "Slutt";
+
+/* The header for the section of the homescreen that has streams that are planed, but haven't started yet */
+"Upcoming" = "Kommende";
+
+/* User-selectable fr language filter */
+"French" = "Fransk";
+
+/* User-selectable ru language filter */
+"Russian" = "Russisk";
+
+/* User-selectable zh language filter */
+"Chinese" = "Kinesisk";
+
+/* User-selectable ko language filter */
+"Korean" = "Koreansk";
+
+/* User-selectable id language filter */
+"Indonesian" = "Indonesisk";
+
+/* User-selectable es language filter */
+"Spanish" = "Spansk";
+
+/* User-selectable ja language filter */
+"Japanese" = "Japansk";
+/* User-selectable en language filter */
+"English" = "Engelsk";
