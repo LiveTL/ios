@@ -224,7 +224,7 @@ extension HomeView: UITableViewDelegate {
         
             _ = UIAction(title: "Description", image: UIImage(systemName: "newspaper.fill")) { _ in
                 print(Bundle.main.localizedString(forKey: "Description", value: "Description", table: "Localizeable"))
-                print(self.model.output.description(for: indexPath.section, and: indexPath.row))
+                //print(self.model.output.description(for: indexPath.section, and: indexPath.row))
             }
             
             let shareAction = UIAction(title: Bundle.main.localizedString(forKey: "Share", value: "Share", table: "Localizeable"), image: UIImage(systemName: "square.and.arrow.up")) { _ in
