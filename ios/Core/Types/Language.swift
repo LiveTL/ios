@@ -23,22 +23,25 @@ let tokens: [LangToken] = [
     (start: "⁽", end: "₎")
 ]
 
+
+let LangDelims: [Character] = ["-", ":", "-"]
+
 enum TranslatedLanguageTag: String, CustomStringConvertible, CaseIterable {
     case en, jp, es, id, kr, zh, ru, fr
     case dev
     
     var description: String {
         switch self {
-        case .en: return "English"
-        case .jp: return "Japanese"
-        case .es: return "Spanish"
-        case .id: return "Indonesian"
-        case .kr: return "Korean"
-        case .zh: return "Chinese"
-        case .ru: return "Russian"
-        case .fr: return "French"
+        case .en: return Bundle.main.localizedString(forKey: "English", value: "English", table: "Localizeable")
+        case .jp: return Bundle.main.localizedString(forKey: "Japanese", value: "Japanese", table: "Localizeable")
+        case .es: return Bundle.main.localizedString(forKey: "Spanish", value: "Spanish", table: "Localizeable")
+        case .id: return Bundle.main.localizedString(forKey: "Indonesian", value: "Indonesian", table: "Localizeable")
+        case .kr: return Bundle.main.localizedString(forKey: "Korean", value: "Korean", table: "Localizeable")
+        case .zh: return Bundle.main.localizedString(forKey: "Chinese", value: "Chinese", table: "Localizeable")
+        case .ru: return Bundle.main.localizedString(forKey: "Russian", value: "Russian", table: "Localizeable")
+        case .fr: return Bundle.main.localizedString(forKey: "French", value: "French", table: "Localizeable")
             
-        case .dev: return "Developer Tags"
+        case .dev: return Bundle.main.localizedString(forKey: "Developer Tags", value: "Developer Tags", table: "Localizeable")
         }
     }
     

@@ -22,10 +22,14 @@ class AppFlow: Flow {
         guard let step = step as? AppStep else { return .none }
         
         switch step {
-        case .home        : return toHome()
-        case .view(let id): return toStreamView(id)
-        case .settings    : return toSettings()
-        case .settingsDone: return settingsDone()
+        case .home                   : return toHome()
+        case .view(let id)           : return toStreamView(id)
+        case .settings               : return toSettings()
+        case .settingsDone           : return settingsDone()
+        case .toConsent(let htmlData): return toConsent(htmlData)
+        case .consentDone            : return toConsentDone()
+        case .filter                 : return toFilter()
+        case .filterDone             : return filterDone()
         }
     }
     
@@ -51,7 +55,32 @@ class AppFlow: Flow {
     }
     private func settingsDone() -> FlowContributors {
         rootViewController.dismiss(animated: true, completion: nil)
+        return .none
+    }
+    private func toConsent(_ htmlData: String) -> FlowContributors {
+        //NOTE - ConsentViewController does not work correctly in simulator, use a real device!
+        let controller = ConsentViewController(stepper, services)
+        let navigation = UINavigationController(rootViewController: controller)
         
+        rootViewController.present(navigation, animated: true) {
+            controller.consentFunctionWithHtmlData(htmlData: htmlData)
+        }
+        
+        return .end(forwardToParentFlowWithStep: AppStep.home)
+    }
+    private func toConsentDone() -> FlowContributors {
+        rootViewController.dismiss(animated: true)
+        return .none
+    }
+    private func toFilter() -> FlowContributors {
+        let controller = FilterView(services, stepper: stepper)
+        let navigation = UINavigationController(rootViewController: controller)
+        rootViewController.present(navigation, animated: true, completion: nil)
+        
+        return .none
+    }
+    private func filterDone() -> FlowContributors {
+        rootViewController.dismiss(animated: true, completion: nil)
         return .none
     }
 }

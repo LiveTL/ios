@@ -12,14 +12,19 @@ abstract_target 'livetl' do
     pod 'Kingfisher'
     pod 'Neon'
     pod 'SCLAlertView'
-    pod 'XCDYouTubeKit', :git => 'https://github.com/Candygoblen123/XCDYouTubeKit'
+    pod 'XCDYouTubeKit', :git => 'https://github.com/Candygoblen123/XCDYouTubeKit', :branch => 'master'
     pod 'RxCocoa'
     pod 'RxDataSources'
     pod 'RxFlow'
     pod 'RxSwift'
     pod 'SwiftDate'
     pod 'SwiftyUserDefaults'
+    pod 'M3U8Kit'
 
     pod 'FLEX', :configuration => 'DEBUG'
+    
+    target 'iosUnitTests' do
+      inherit! :complete
+    end
   end
 end

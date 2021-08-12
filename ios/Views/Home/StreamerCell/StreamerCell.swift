@@ -10,10 +10,14 @@ import Neon
 import Kingfisher
 import SwiftDate
 
+
+
 class StreamerCell: UITableViewCell {
     static let identifier: String = "streamerCell"
     
     let icon: UIImageView = UIImageView()
+    
+    let thumbnail: UIImageView = UIImageView()
     
     let title  : UILabel = UILabel()
     let channel: UILabel = UILabel()
@@ -21,7 +25,12 @@ class StreamerCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        contentView.clipsToBounds = true
 
+        thumbnail.contentMode = .scaleAspectFill
+        contentView.addSubview(thumbnail)
+        
         contentView.addSubview(icon)
         
         title.font = .systemFont(ofSize: 18)
@@ -29,21 +38,40 @@ class StreamerCell: UITableViewCell {
         contentView.addSubview(title)
         
         channel.font = .systemFont(ofSize: 15)
-        channel.textColor = .secondaryLabel
+        channel.textColor = .secondaryLabel.withAlphaComponent(1.0)
         contentView.addSubview(channel)
         
         start.font = .systemFont(ofSize: 15)
-        start.textColor = .secondaryLabel
+        start.textColor = .secondaryLabel.withAlphaComponent(1.0)
         start.textAlignment = .right
         contentView.addSubview(start)
     }
     
-    func configure(with item: HTResponse.Streamer) {
+    func configure(with item: HTResponse.Streamer, services: AppServices) {
+        
         title.text = item.title
         channel.text = item.channel.name
-        start.text = item.live_schedule.toRelative(style: RelativeFormatter.defaultStyle())
+        start.text = item.start_scheduled.toRelative(style: RelativeFormatter.defaultStyle())
         
+        icon.kf.indicatorType = .activity
         icon.kf.setImage(with: item.channel.photo)
+
+        thumbnail.isHidden = !services.settings.thumbnails
+        
+        var processor: ImageProcessor
+        
+        if services.settings.thumbnailDarken {
+            processor = OverlayImageProcessor(overlay: .systemBackground, fraction: 0.4)
+        } else {
+            processor = OverlayImageProcessor(overlay: .systemBackground, fraction: 1)
+        }
+        
+        if services.settings.thumbnailBlur {
+            processor = processor |> BlurImageProcessor(blurRadius: 10.0)
+        }
+        
+        
+        self.thumbnail.kf.setImage(with: item.thumbnail!, options: [.processor(processor), .cacheOriginalImage])
     }
     
     override func layoutSubviews() {
@@ -57,6 +85,9 @@ class StreamerCell: UITableViewCell {
         
         channel.align(.toTheRightMatchingBottom, relativeTo: icon, padding: 10, width: width - 180, height: 18)
         start.alignAndFillWidth(align: .toTheRightCentered, relativeTo: channel, padding: 10, height: 18)
+        
+        thumbnail.fillSuperview()
+        thumbnail.clipsToBounds = true
     }
     
     required init?(coder: NSCoder) {
