@@ -11,6 +11,9 @@ protocol DisplayableMessage {
     var displayAuthor   : String { get }
     var displayTimestamp: String { get }
     var displayMessage  : [Message] { get }
+    var isMod           : Bool { get }
+    var isMember        : Bool { get }
+    var superchatData   : Superchat? { get }
     
     var sortTimestamp: Date { get }
 }

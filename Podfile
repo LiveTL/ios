@@ -20,6 +20,7 @@ abstract_target 'livetl' do
     pod 'SwiftDate'
     pod 'SwiftyUserDefaults'
     pod 'M3U8Kit'
+    pod 'FontAwesome.swift'
 
     pod 'FLEX', :configuration => 'DEBUG'
     

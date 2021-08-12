@@ -15,11 +15,13 @@ struct TranslatedMessage {
     
     let timestamp: Date
     let show     : Double
+    let superchat: Superchat?
     
     init?(from message: InjectedMessage) {
         self.author = Author(from: message.author)
         self.timestamp = message.timestamp
         self.show = message.showtime
+        self.superchat = message.superchat
         
         var m: String? = nil
         var l: [String]? = nil
@@ -91,6 +93,20 @@ extension TranslatedMessage: DisplayableMessage {
     var displayAuthor: String { author.name }
     var displayTimestamp: String { timestamp.toRelative(style: RelativeFormatter.twitterStyle()) }
     var displayMessage: [Message] { [.text(message)] }
+    var isMod: Bool { author.types.contains("moderator") }
+    var isMember: Bool {
+        if author.types.contains("new member") {
+            return true
+        } else {
+            for type in author.types {
+                if type.hasPrefix("member") {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    var superchatData: Superchat? { superchat }
     
     var sortTimestamp: Date { timestamp }
 }
