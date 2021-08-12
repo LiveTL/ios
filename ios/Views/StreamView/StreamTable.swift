@@ -21,7 +21,7 @@ class ChatTable: UITableView {
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         
-        emptyView.text = "No messages yet"
+        emptyView.text = Bundle.main.localizedString(forKey: "No messages yet", value: "No messages yet", table: "Localizeable")
         emptyView.textAlignment = .center
         emptyView.textColor = .secondaryLabel
         
@@ -68,7 +68,7 @@ class LoadingView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        label.text = "Loading chat..."
+        label.text = Bundle.main.localizedString(forKey: "Loading chat...", value: "Loading chat...", table: "Localizeable")
         label.textColor = .secondaryLabel
         label.textAlignment = .center
         addSubview(label)

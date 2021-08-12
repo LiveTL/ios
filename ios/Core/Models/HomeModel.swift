@@ -119,10 +119,10 @@ extension HTResponse {
         
         var rtr: [StreamerItemModel] = []
         
-        if !l.isEmpty { rtr.append(StreamerItemModel(title: "Live", items: l)) }
-        if !u.isEmpty { rtr.append(StreamerItemModel(title: "Upcoming", items: u)) }
-        if !e.isEmpty { rtr.append(StreamerItemModel(title: "Ended", items: e))}
-        rtr.append(StreamerItemModel(title: "Stream data provided by Holodex. Results capped at 50.", items: []))
+        if !l.isEmpty { rtr.append(StreamerItemModel(title: Bundle.main.localizedString(forKey: "Live", value: "Live", table: "Localizeable"), items: l)) }
+        if !u.isEmpty { rtr.append(StreamerItemModel(title: Bundle.main.localizedString(forKey: "Upcoming", value: "Upcoming", table: "Localizeable"), items: u)) }
+        if !e.isEmpty { rtr.append(StreamerItemModel(title: Bundle.main.localizedString(forKey: "Ended", value: "Ended", table: "Localizeable"), items: e))}
+        rtr.append(StreamerItemModel(title: Bundle.main.localizedString(forKey: "Stream data provided by Holodex. Results capped at 50.", value: "Stream data provided by Holodex. Results capped at 50.", table: "Localizeable"), items: []))
         
         return rtr
     }
