@@ -5,23 +5,23 @@
 //  Created by Mason Phillips on 3/25/21.
 //
 
-import UIKit
 import AVKit
+import M3U8Kit
+import Neon
 import RxCocoa
 import RxFlow
 import RxSwift
-import Neon
 import SCLAlertView
-import M3U8Kit
+import UIKit
 
 class StreamView: BaseController {
     var videoPlayer = AVPlayerViewController()
-    let videoView   = UIView(frame: .zero)
+    let videoView = UIView(frame: .zero)
     var player: AVPlayer? = AVPlayer(playerItem: nil)
     
     let chatTable = ChatTable(frame: .zero, style: .plain)
     let chatControl: UISegmentedControl
-    var caption: UILabel = UILabel()
+    var caption = UILabel()
     let captionFontSize: CGFloat = 17.0
     
     let model: StreamModelType
@@ -34,6 +34,7 @@ class StreamView: BaseController {
         b.setTitleTextAttributes([.font: UIFont(name: "FontAwesome5Pro-Solid", size: 20)!], for: .highlighted)
         return b
     }
+
     var rightButton: UIBarButtonItem {
         let b = UIBarButtonItem(title: "cogs", style: .plain, target: self, action: #selector(settings))
         b.setTitleTextAttributes([.font: UIFont(name: "FontAwesome5Pro-Solid", size: 20)!], for: .normal)
@@ -46,8 +47,8 @@ class StreamView: BaseController {
         settingsService = services.settings
         
         let actions = [
-            UIAction(title: "All Chat") { _ in return },
-            UIAction(title: "LiveTL Mode") { _ in return }
+            UIAction(title: "All Chat") { _ in },
+            UIAction(title: "LiveTL Mode") { _ in }
         ]
         chatControl = UISegmentedControl(frame: .zero, actions: actions)
         chatControl.selectedSegmentIndex = 0
@@ -57,6 +58,8 @@ class StreamView: BaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        settingsService.spotlightUser = nil
         
         model.output.errorRelay.compactMap { $0 }.subscribe(onNext: handle(_:)).disposed(by: bag)
         errorRelay.compactMap { $0 }.subscribe(onNext: handle(_:)).disposed(by: bag)
@@ -72,7 +75,7 @@ class StreamView: BaseController {
                     let m3u8 = try! M3U8PlaylistModel(url: item.streamURL!)
                     var streamURL: URL? = item.streamURL!
                     
-                    for i in 0..<m3u8.masterPlaylist.xStreamList.count {
+                    for i in 0 ..< m3u8.masterPlaylist.xStreamList.count {
                         if m3u8.masterPlaylist.xStreamList.xStreamInf(at: i)?.resolution == YouTubeResolution.auto.mediaResolution {
                             streamURL = m3u8.masterPlaylist.xStreamList.xStreamInf(at: i).m3u8URL()
                         }
@@ -94,7 +97,6 @@ class StreamView: BaseController {
         view.addSubview(videoView)
         videoPlayer.didMove(toParent: self)
         
-        
         caption.textColor = .white
         caption.font = .systemFont(ofSize: captionFontSize)
         caption.textAlignment = .center
@@ -109,7 +111,7 @@ class StreamView: BaseController {
         
         model.output.captionDriver.drive(onNext: { [self] item in
             if item.last != nil {
-                //remove emotes
+                // remove emotes
                 var fullMessage = String()
                 
                 for m in item.last!.displayMessage {
@@ -121,15 +123,15 @@ class StreamView: BaseController {
                     }
                 }
                 
-                //calculate view size
+                // calculate view size
                 let nsText = fullMessage as NSString
                 
                 let textSize = nsText.boundingRect(with: videoPlayer.view.frame.size, options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: captionFontSize)], context: nil).size
                 caption.frame.size = textSize
                 
-                caption.align(.underCentered, relativeTo: videoPlayer.view, padding: ((videoPlayer.view.height/8)*(-1)) - caption.height, width: caption.width, height: caption.height)
+                caption.align(.underCentered, relativeTo: videoPlayer.view, padding: ((videoPlayer.view.height/8) * (-1)) - caption.height, width: caption.width, height: caption.height)
                 
-                //update text
+                // update text
                 caption.text = fullMessage
             }
         }).disposed(by: bag)
@@ -140,7 +142,7 @@ class StreamView: BaseController {
             .disposed(by: bag)
         view.addSubview(chatControl)
         
-        model.output.chatDriver.drive(chatTable.rx.items(cellIdentifier: ChatCell.identifier, cellType: ChatCell.self)) { index, item, cell in
+        model.output.chatDriver.drive(chatTable.rx.items(cellIdentifier: ChatCell.identifier, cellType: ChatCell.self)) { _, item, cell in
             let ts = (self.model as? StreamModel)?.services.settings.timestamps ?? true
             cell.configure(item, useTimestamps: ts)
         }.disposed(by: bag)
@@ -168,6 +170,7 @@ class StreamView: BaseController {
         videoPlayer.player?.pause()
         videoPlayer.player = nil
         player = nil
+        settingsService.spotlightUser = nil
         stepper.steps.accept(AppStep.home)
     }
     
@@ -179,7 +182,7 @@ class StreamView: BaseController {
         let nserror = error as NSError
         
         if nserror.code == -6, let responseString = nserror.userInfo["consentHtmlData"] as? String {
-            self.closeStream()
+            closeStream()
             return stepper.steps.accept(AppStep.toConsent(responseString))
 //        } else if nserror.code == -2 && nserror.localizedDescription == "Join this channel to get access to members-only content like this video, and other exclusive perks." {
 //            let alert = SCLAlertView()
@@ -199,7 +202,7 @@ class StreamView: BaseController {
             alert.showError(Bundle.main.localizedString(forKey: "An Error Occurred", value: "An Error Occurred", table: "Localizeable"), subTitle: error.localizedDescription)
         }
         
-        //super.handle(error)
+        // super.handle(error)
     }
 
     override func viewWillLayoutSubviews() {
@@ -208,7 +211,7 @@ class StreamView: BaseController {
                 
         switch UIDevice.current.model {
         case "iPhone": view.width < view.height ? iPhoneLayoutPortrait() : iPhoneLayoutLandscape()
-        case "iPad"  : view.width < view.height ? iPadLayoutPortrait() : iPadLayoutLandscape()
+        case "iPad": view.width < view.height ? iPadLayoutPortrait() : iPadLayoutLandscape()
             
         default: break
         }
@@ -220,8 +223,7 @@ class StreamView: BaseController {
         let nsText = caption.text! as NSString
         let textSize = nsText.boundingRect(with: videoPlayer.view.frame.size, options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: captionFontSize)], context: nil).size
         caption.frame.size = textSize
-        caption.align(.underCentered, relativeTo: videoPlayer.view, padding: ((videoPlayer.view.height/8)*(-1)) - caption.height, width: caption.width, height: caption.height)
-        
+        caption.align(.underCentered, relativeTo: videoPlayer.view, padding: ((videoPlayer.view.height/8) * (-1)) - caption.height, width: caption.width, height: caption.height)
     }
     
     func iPhoneLayoutPortrait() {
@@ -233,6 +235,7 @@ class StreamView: BaseController {
         
         chatControl.align(.aboveCentered, relativeTo: chatTable, padding: 5, width: view.width - 10, height: 35)
     }
+
     func iPhoneLayoutLandscape() {
         videoView.anchorAndFillEdge(.left, xPad: 0, yPad: 0, otherSize: view.width * 0.65)
         
@@ -247,10 +250,10 @@ class StreamView: BaseController {
         chatTable.anchorAndFillEdge(.bottom, xPad: 0, yPad: 0, otherSize: view.height * 0.35)
         chatControl.align(.aboveCentered, relativeTo: chatTable, padding: 5, width: view.width - 10, height: 35)
     }
+
     func iPadLayoutLandscape() {
         videoView.anchorAndFillEdge(.left, xPad: 0, yPad: 0, otherSize: view.width * 0.7)
         chatTable.anchorInCorner(.bottomRight, xPad: 0, yPad: 0, width: view.width * 0.3, height: view.height - 85)
         chatControl.align(.aboveCentered, relativeTo: chatTable, padding: 2, width: view.width * 0.3, height: 35)
     }
 }
-

@@ -5,12 +5,12 @@
 //  Created by Mason Phillips on 4/5/21.
 //
 
-import UIKit
 import RxCocoa
 import RxSwift
+import UIKit
 
 class ChatTable: UITableView {
-    let emptyRelay   = BehaviorRelay<Bool>(value: true)
+    let emptyRelay = BehaviorRelay<Bool>(value: true)
     let loadingRelay = BehaviorRelay<Bool>(value: true)
     
     let loadingView = LoadingView()
@@ -30,11 +30,11 @@ class ChatTable: UITableView {
         estimatedRowHeight = 500
         rowHeight = Self.automaticDimension
         
-        Observable.combineLatest(loadingRelay, emptyRelay).subscribe(onNext: { (loading, empty) in
+        Observable.combineLatest(loadingRelay, emptyRelay).subscribe(onNext: { loading, empty in
             DispatchQueue.main.async {
                 if loading {
                     self.backgroundView = self.loadingView
-                } else if !loading && empty {
+                } else if !loading, empty {
                     self.backgroundView = self.emptyView
                 } else {
                     self.backgroundView = nil
@@ -56,6 +56,7 @@ class ChatTable: UITableView {
         }
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError()
     }
@@ -84,6 +85,7 @@ class LoadingView: UIView {
         label.alignAndFillWidth(align: .underCentered, relativeTo: loading, padding: 5, height: 18)
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError()
     }

@@ -21,6 +21,7 @@ extension DefaultsKeys {
     
     var always_users: DefaultsKey<[String]> { .init("always_shown_users", defaultValue: []) }
     var never_users : DefaultsKey<[String]> { .init("never_shown_users", defaultValue: []) }
+    var spotlightUser: DefaultsKey<String?> { .init("spotlight_user", defaultValue: nil)}
     
     var orgFilter   : DefaultsKey<Organization> { .init("org_filter", defaultValue: Organization.Hololive)}
 }
@@ -58,6 +59,9 @@ class SettingsService {
     
     @SwiftyUserDefault(keyPath: \.captions)
     var captions: Bool
+    
+    @SwiftyUserDefault(keyPath: \.spotlightUser)
+    var spotlightUser: String?
     
     var singleLanguage: TranslatedLanguageTag {
         get { return languages.first ?? .en }

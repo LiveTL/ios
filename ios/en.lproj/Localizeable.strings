@@ -170,3 +170,22 @@
 
 /* button that clears all caches other than the image cache */
 "Clear Other Caches" = "Clear Other Caches";
+
+/* Title for banner that displays whenever you block a user */
+"Blocked" = "Blocked";
+
+/* Description for a banner displayed when a user has been blocked. %@ is the username of the blocked user */
+"Translator %@ has been blocked." = "Translator %@ has been blocked.";
+
+/* Title for a banner that appears when you add a user to the filter */
+"Added" = "Added";
+
+/* description for a banner displayed when a user gets added to the filter. %@ is the username of the added user */
+"Translator %@ has been added to the translator filter." = "Translator %@ has been added to the translator filter.";
+
+/* title for a banner that appears when a user is pinned */
+"Pinned" = "Pinned";
+
+/* Description for a banner that appears when a user is pinned. %@ is the username of the added user */
+"Translator %@ has been pinned. You will only recieve translations from them until you close this stream." = "Translator %@ has been pinned. You will only recieve translations from them until you close this stream.";
+

@@ -5,15 +5,15 @@
 //  Created by Mason Phillips on 4/4/21.
 //
 
-import UIKit
 import FontAwesome_swift
+import UIKit
 
 class ChatCell: UITableViewCell {
     static let identifier: String = "chatCell"
 
-    @IBOutlet weak var author   : UILabel!
-    @IBOutlet weak var message  : UILabel!
-    @IBOutlet weak var timestamp: UILabel!
+    @IBOutlet var author: UILabel!
+    @IBOutlet var message: UILabel!
+    @IBOutlet var timestamp: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,7 +24,7 @@ class ChatCell: UITableViewCell {
         timestamp.text = useTimestamps ? item.displayTimestamp : ""
         
         if item.superchatData != nil {
-            //print(item.superchatData)
+            // print(item.superchatData)
             timestamp.text = item.superchatData?.amount
             timestamp.font = .boldSystemFont(ofSize: 17)
             timestamp.textColor = .label
@@ -39,7 +39,6 @@ class ChatCell: UITableViewCell {
             print("mod")
             author.textColor = UIColor(red: 99/255, green: 118/255, blue: 254/255, alpha: 1)
         }
-        
         
         let fullMessage = NSMutableAttributedString()
         
@@ -59,9 +58,8 @@ class ChatCell: UITableViewCell {
                     
                     fullMessage.append(string)
                 } catch {
-                    print("Hmm..., emote NSAttributedString failed. Must be on macOS.")
+                    // print("Hmm..., emote NSAttributedString failed. Must be on macOS.")
                 }
-                
             }
         }
         

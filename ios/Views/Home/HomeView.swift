@@ -5,16 +5,16 @@
 //  Created by Mason Phillips on 3/25/21.
 //
 
-import UIKit
+import Kingfisher
 import Neon
+import Network
 import RxCocoa
 import RxDataSources
 import RxFlow
 import RxSwift
 import SCLAlertView
-import Network
 import SwiftyUserDefaults
-import Kingfisher
+import UIKit
 
 class HomeView: BaseController {
     var rightButton: UIBarButtonItem {
@@ -53,6 +53,8 @@ class HomeView: BaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        services.settings.spotlightUser = nil
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(checkPasteboard),
@@ -183,48 +185,47 @@ extension HomeView: UITableViewDelegate {
 //
 //            return popoutView
             
-             let viewController = UIViewController()
-             let popoutView: UIView = UIView()
-             let imageView: UIImageView = UIImageView()
-             popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: 999)
-             //popoutView.clipsToBounds = true
+            let viewController = UIViewController()
+            let popoutView = UIView()
+            let imageView = UIImageView()
+            popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: 999)
+            // popoutView.clipsToBounds = true
 
-             imageView.kf.indicatorType = .activity
-             imageView.kf.setImage(with: model.output.thumbnail(for: indexPath.section, and: indexPath.row))
-             popoutView.addSubview(imageView)
-             imageView.anchorToEdge(.top, padding: 0, width: 333, height: 187)
+            imageView.kf.indicatorType = .activity
+            imageView.kf.setImage(with: model.output.thumbnail(for: indexPath.section, and: indexPath.row))
+            popoutView.addSubview(imageView)
+            imageView.anchorToEdge(.top, padding: 0, width: 333, height: 187)
 
-             let titleText = model.output.title(for: indexPath.section, and: indexPath.row)
-             let nsText = titleText as NSString?
-             let textSize = nsText?.boundingRect(with: popoutView.frame.size, options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)], context: nil).size
+            let titleText = model.output.title(for: indexPath.section, and: indexPath.row)
+            let nsText = titleText as NSString?
+            let textSize = nsText?.boundingRect(with: popoutView.frame.size, options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)], context: nil).size
 
-             let title = UILabel()
-             title.lineBreakMode = .byWordWrapping
-             title.numberOfLines = 0
-             title.text = titleText
-             title.font = .systemFont(ofSize: 18)
-             popoutView.addSubview(title)
+            let title = UILabel()
+            title.lineBreakMode = .byWordWrapping
+            title.numberOfLines = 0
+            title.text = titleText
+            title.font = .systemFont(ofSize: 18)
+            popoutView.addSubview(title)
 
-             title.sizeToFit()
-             title.align(.underCentered, relativeTo: imageView, padding: 10, width: 300, height: textSize?.height ?? 0)
-             title.leadingAnchor.constraint(equalTo: popoutView.safeAreaLayoutGuide.leadingAnchor, constant: 100).isActive = true
-             title.trailingAnchor.constraint(equalTo: popoutView.safeAreaLayoutGuide.trailingAnchor, constant: -100).isActive = true
-             title.layoutIfNeeded()
+            title.sizeToFit()
+            title.align(.underCentered, relativeTo: imageView, padding: 10, width: 300, height: textSize?.height ?? 0)
+            title.leadingAnchor.constraint(equalTo: popoutView.safeAreaLayoutGuide.leadingAnchor, constant: 100).isActive = true
+            title.trailingAnchor.constraint(equalTo: popoutView.safeAreaLayoutGuide.trailingAnchor, constant: -100).isActive = true
+            title.layoutIfNeeded()
 
-             let popoutHeight = title.height + imageView.height + 20
-             popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: popoutHeight)
-             viewController.view = popoutView
-             viewController.preferredContentSize = popoutView.frame.size
+            let popoutHeight = title.height + imageView.height + 20
+            popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: popoutHeight)
+            viewController.view = popoutView
+            viewController.preferredContentSize = popoutView.frame.size
 
-             return viewController
-             
+            return viewController
         }
     
         return UIContextMenuConfiguration(identifier: identifier, previewProvider: makeThumbnailPreview) { _ in
         
             _ = UIAction(title: "Description", image: UIImage(systemName: "newspaper.fill")) { _ in
                 print(Bundle.main.localizedString(forKey: "Description", value: "Description", table: "Localizeable"))
-                //print(self.model.output.description(for: indexPath.section, and: indexPath.row))
+                // print(self.model.output.description(for: indexPath.section, and: indexPath.row))
             }
             
             let shareAction = UIAction(title: Bundle.main.localizedString(forKey: "Share", value: "Share", table: "Localizeable"), image: UIImage(systemName: "square.and.arrow.up")) { _ in

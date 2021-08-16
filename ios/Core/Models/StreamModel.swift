@@ -5,7 +5,9 @@
 //  Created by Mason Phillips on 4/1/21.
 //
 
+import FontAwesome_swift
 import Foundation
+import NotificationBannerSwift
 import RxCocoa
 import RxFlow
 import RxSwift
@@ -15,42 +17,44 @@ import XCDYouTubeKit
 typealias ReplayEvent = (current: Double, id: String)
 
 protocol StreamModelType {
-    var input : StreamModelInput  { get }
+    var input: StreamModelInput { get }
     var output: StreamModelOutput { get }
 }
+
 protocol StreamModelInput {
     var chatControl: BehaviorRelay<ChatControlType> { get }
     var timeControl: BehaviorRelay<ReplayEvent> { get }
     
     func load(_ id: String)
 }
+
 protocol StreamModelOutput {
-    var errorRelay   : BehaviorRelay<Error?> { get }
+    var errorRelay: BehaviorRelay<Error?> { get }
 
     var loadingDriver: Driver<Bool> { get }
-    var emptyDriver  : Driver<Bool> { get }
-    var chatDriver   : Driver<[DisplayableMessage]> { get }
+    var emptyDriver: Driver<Bool> { get }
+    var chatDriver: Driver<[DisplayableMessage]> { get }
     var captionDriver: Driver<[DisplayableMessage]> { get }
-    var videoDriver  : Driver<XCDYouTubeVideo?> { get }
+    var videoDriver: Driver<XCDYouTubeVideo?> { get }
 }
 
 class StreamModel: BaseModel {
-    private let chatView: WKWebView = WKWebView(frame: .zero)
+    private let chatView = WKWebView(frame: .zero)
     
     private let playerRelay = BehaviorRelay<XCDYouTubeVideo?>(value: nil)
     
     private let controlRelay = BehaviorRelay<ChatControlType>(value: .allChat)
     
-    private let chatRelay       = BehaviorRelay<[DisplayableMessage]>(value: [])
-    private let liveRelay       = BehaviorRelay<[DisplayableMessage]>(value: [])
+    private let chatRelay = BehaviorRelay<[DisplayableMessage]>(value: [])
+    private let liveRelay = BehaviorRelay<[DisplayableMessage]>(value: [])
     private let translatedRelay = BehaviorRelay<[DisplayableMessage]>(value: [])
     
     private let loadingRelay = BehaviorRelay<Bool>(value: true)
-    private let emptyRelay   = BehaviorRelay<Bool>(value: true)
+    private let emptyRelay = BehaviorRelay<Bool>(value: true)
     
     private let chatURLRelay = BehaviorRelay<URL?>(value: nil)
     
-    private let replayRelay      = BehaviorRelay<Bool>(value: false)
+    private let replayRelay = BehaviorRelay<Bool>(value: false)
     private let replayEventRelay = BehaviorRelay<ReplayEvent>(value: (0.0, ""))
     
     override init(_ services: AppServices) {
@@ -73,8 +77,8 @@ class StreamModel: BaseModel {
         replayEventRelay
             .compactMap { $0.current }
             .sample(Observable<Int>.interval(.milliseconds(500), scheduler: MainScheduler.instance), defaultValue: 0.0)
-            .scan((0.0, false)) { (last, current) in
-                return (current, last.0 > current)
+            .scan((0.0, false)) { last, current in
+                (current, last.0 > current)
             }
             .filter { $0.1 }
             .subscribe(onNext: { _, _ in
@@ -82,7 +86,7 @@ class StreamModel: BaseModel {
                 self.translatedRelay.accept([])
                 self.chatRelay.accept([])
             }).disposed(by: bag)
-        Observable.combineLatest(controlRelay, liveRelay, translatedRelay).map { (control, live, translated) in
+        Observable.combineLatest(controlRelay, liveRelay, translatedRelay).map { control, live, translated in
             control == .allChat ? live : translated
         }
         .map { $0.sorted { $0.sortTimestamp > $1.sortTimestamp } }
@@ -91,7 +95,7 @@ class StreamModel: BaseModel {
 
         playerRelay.compactMap { $0 }
             .map { (id: $0.identifier, duration: $0.duration) }
-            .subscribe(onNext: self.loadChat)
+            .subscribe(onNext: loadChat)
             .disposed(by: bag)
         
         chatView.navigationDelegate = self
@@ -126,7 +130,7 @@ class StreamModel: BaseModel {
         request.map { $0.error }
             .map { error -> Error? in
                 guard let error = error as NSError? else { return nil }
-                if error.code == -2 && error.localizedDescription.isEmpty {
+                if error.code == -2, error.localizedDescription.isEmpty {
                     return NSError(domain: XCDYouTubeVideoErrorDomain, code: -2, userInfo: [
                         NSLocalizedDescriptionKey: "This stream either has not started yet, is private, is member-only, or is not playable for some other reason."
                     ])
@@ -136,6 +140,7 @@ class StreamModel: BaseModel {
             .bind(to: errorRelay)
             .disposed(by: bag)
     }
+
     private func loadChat(_ id: String, duration: Double) {
         let request = services.youtube.getYTChatURL(id, videoDuration: duration)
             .asObservable()
@@ -174,51 +179,85 @@ extension StreamModel: WKScriptMessageHandler {
     }
     
     func translate(_ message: InjectedMessage) -> DisplayableMessage? {
+        if services.settings.spotlightUser != nil {
+            if services.settings.spotlightUser == message.displayAuthor {
+                return message
+            } else {
+                return nil
+            }
+        }
+        
         if let translated = TranslatedMessage(from: message) {
             for lang in translated.languages {
                 if lang == "" { continue }
                 if services.settings.languages.map({ $0.tag }).contains(lang) ||
-                    services.settings.languages.map({ $0.description.lowercased().hasPrefix(lang) }).contains(Bool.init(true)) ||
-                    services.settings.languages.map({ $0.tag.lowercased().hasPrefix(lang) }).contains(Bool.init(true)),
-                   !services.settings.neverUsers.contains(translated.displayAuthor) {
+                    services.settings.languages.map({ $0.description.lowercased().hasPrefix(lang) }).contains(Bool(true)) ||
+                    services.settings.languages.map({ $0.tag.lowercased().hasPrefix(lang) }).contains(Bool(true)),
+                    !services.settings.neverUsers.contains(translated.displayAuthor)
+                {
                     return translated
                 }
             }
-            
         }
         
         if services.settings.alwaysUsers.contains(message.displayAuthor) {
             return message
         }
         
-        if services.settings.modMessages && message.author.types.map({ $0.lowercased() }).contains("mod") {
+        if services.settings.modMessages, message.author.types.map({ $0.lowercased() }).contains("mod") {
             return message
         }
         
         return nil
     }
 }
+
 extension StreamModel: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         loadingRelay.accept(true)
     }
+
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         loadingRelay.accept(false)
     }
+
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         errorRelay.accept(error)
     }
 }
+
 extension StreamModel: UITableViewDelegate {
     func handleFavoriteUser(at index: IndexPath) {
         let value = chatRelay.value[index.row]
         let author = value.displayAuthor
         services.settings.alwaysUsers.append(author)
+        
+        let leftView = UIImageView(image: UIImage.fontAwesomeIcon(code: "fa-star", style: .solid, textColor: .white, size: CGSize(width: 400, height: 400)))
+        let banner = FloatingNotificationBanner(title: Bundle.main.localizedString(forKey: "Added", value: "Added", table: "Localizeable"), subtitle: String(format: NSLocalizedString("Translator %@ has been added to the translator filter.", tableName: "Localizeable", comment: "a comment"), author), leftView: leftView, style: .success)
+        banner.haptic = BannerHaptic.light
+        banner.show(cornerRadius: 10, shadowBlurRadius: 15)
     }
+
     func handleMuteUser(at index: IndexPath) {
         let value = chatRelay.value[index.row]
         let author = value.displayAuthor
         services.settings.neverUsers.append(author)
+        
+        let leftView = UIImageView(image: UIImage.fontAwesomeIcon(code: "fa-comment-slash", style: .solid, textColor: .white, size: CGSize(width: 400, height: 400)))
+        let banner = FloatingNotificationBanner(title: Bundle.main.localizedString(forKey: "Blocked", value: "Blocked", table: "Localizeable"), subtitle: String(format: NSLocalizedString("Translator %@ has been blocked.", tableName: "Localizeable", comment: "a comment"), author), leftView: leftView, style: .danger)
+        banner.haptic = BannerHaptic.light
+        banner.show(cornerRadius: 10, shadowBlurRadius: 15)
+    }
+
+    func handleSpotlightUser(at index: IndexPath) {
+        let value = chatRelay.value[index.row]
+        let author = value.displayAuthor
+        services.settings.spotlightUser = author
+        
+        let leftView = UIImageView(image: UIImage.fontAwesomeIcon(code: "fa-comment-slash", style: .solid, textColor: .white, size: CGSize(width: 400, height: 400)))
+        let banner = FloatingNotificationBanner(title: Bundle.main.localizedString(forKey: "Pinned", value: "Pinned", table: "Localizeable"), subtitle: String(format: NSLocalizedString("Translator %@ has been pinned. From now on, you will only recieve translations from them until you close this stream.", tableName: "Localizeable", comment: "a comment"), author), leftView: leftView, style: .info)
+        banner.haptic = BannerHaptic.light
+        banner.show(cornerRadius: 10, shadowBlurRadius: 15)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -226,48 +265,56 @@ extension StreamModel: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let attrs: Dictionary<NSAttributedString.Key, Any> = [
+        let attrs: [NSAttributedString.Key: Any] = [
             .font: UIFont(name: "FontAwesome5Pro-Solid", size: 20)!,
             .foregroundColor: UIColor.white
         ]
         
-        let favorite = UIContextualAction(style: .normal, title: "") { [indexPath] (_, _, completion) in
+        let favorite = UIContextualAction(style: .normal, title: "") { [indexPath] _, _, completion in
             self.handleFavoriteUser(at: indexPath)
             completion(true)
         }
         favorite.image = "\u{f005}".image(withAttributes: attrs, size: CGSize(width: 25, height: 20))
         favorite.backgroundColor = .systemGreen
         
-        let mute = UIContextualAction(style: .normal, title: "") { [indexPath] (_, _, completion) in
+        let mute = UIContextualAction(style: .normal, title: "") { [indexPath] _, _, completion in
             self.handleMuteUser(at: indexPath)
             completion(true)
         }
         mute.image = "\u{f4b3}".image(withAttributes: attrs, size: CGSize(width: 25, height: 20))
         mute.backgroundColor = .systemRed
         
-        return UISwipeActionsConfiguration(actions: [favorite, mute])
+        let spotlight = UIContextualAction(style: .normal, title: "") { [indexPath] _, _, completion in
+            self.handleSpotlightUser(at: indexPath)
+            completion(true)
+        }
+        spotlight.image = UIImage.fontAwesomeIcon(code: "fa-thumbtack", style: .solid, textColor: .white, size: CGSize(width: 25, height: 20))
+        spotlight.backgroundColor = .systemBlue
+        
+        return UISwipeActionsConfiguration(actions: [favorite, spotlight, mute])
     }
 }
 
-
 extension StreamModel: StreamModelType {
-    var input : StreamModelInput  { self }
+    var input: StreamModelInput { self }
     var output: StreamModelOutput { self }
 }
+
 extension StreamModel: StreamModelInput {
     var timeControl: BehaviorRelay<ReplayEvent> { replayEventRelay }
     var chatControl: BehaviorRelay<ChatControlType> { controlRelay }
     
     func load(_ id: String) {
-        self.loadVideoPlayer(id)
+        loadVideoPlayer(id)
     }
 }
+
 extension StreamModel: StreamModelOutput {
     var loadingDriver: Driver<Bool> { loadingRelay.asDriver() }
-    var emptyDriver  : Driver<Bool> { chatRelay.map { $0.isEmpty }.asDriver(onErrorJustReturn: true) }
-    var chatDriver   : Driver<[DisplayableMessage]> { chatRelay.asDriver() }
+    var emptyDriver: Driver<Bool> { chatRelay.map { $0.isEmpty }.asDriver(onErrorJustReturn: true) }
+    var chatDriver: Driver<[DisplayableMessage]> { chatRelay.asDriver() }
     var captionDriver: Driver<[DisplayableMessage]> { translatedRelay.asDriver() }
-    var videoDriver  : Driver<XCDYouTubeVideo?> { playerRelay.asDriver() }
+    var videoDriver: Driver<XCDYouTubeVideo?> { playerRelay.asDriver() }
 }
 
 extension String {
