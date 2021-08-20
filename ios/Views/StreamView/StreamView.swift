@@ -18,6 +18,7 @@ class StreamView: BaseController {
     var videoPlayer = AVPlayerViewController()
     let videoView = UIView(frame: .zero)
     var player: AVPlayer? = AVPlayer(playerItem: nil)
+    var videoID: String = ""
     
     let chatTable = ChatTable(frame: .zero, style: .plain)
     let chatControl: UISegmentedControl
@@ -74,6 +75,7 @@ class StreamView: BaseController {
                 DispatchQueue.main.async { [self] in
                     let m3u8 = try! M3U8PlaylistModel(url: item.streamURL!)
                     var streamURL: URL? = item.streamURL!
+                    videoID = item.identifier
                     
                     for i in 0 ..< m3u8.masterPlaylist.xStreamList.count {
                         if m3u8.masterPlaylist.xStreamList.xStreamInf(at: i)?.resolution == YouTubeResolution.auto.mediaResolution {
@@ -181,19 +183,27 @@ class StreamView: BaseController {
     override func handle(_ error: Error) {
         let nserror = error as NSError
         
-        if nserror.code == -6, let responseString = nserror.userInfo["consentHtmlData"] as? String {
+        if nserror.code == -6, nserror.userInfo["consentHtmlData"] as? String != nil {
             closeStream()
-            return stepper.steps.accept(AppStep.toConsent(responseString))
-//        } else if nserror.code == -2 && nserror.localizedDescription == "Join this channel to get access to members-only content like this video, and other exclusive perks." {
-//            let alert = SCLAlertView()
-//            alert.addButton("Go Back") {
-//                self.closeStream()
-//            }
-//            alert.addButton("Sign In to Youtube") {
-//                // TODO: implement Sign in to Youtube
-//                self.closeStream()
-//            }
-//            alert.showInfo("Member Only Stream", subTitle: "It looks like you're trying to watch a member only stream. If you're already a member of this channel, you can sign into Youtube to watch it!")
+            return stepper.steps.accept(AppStep.toConsent(true))
+        } else if nserror.code == -2 && (nserror.localizedDescription.hasSuffix("Join this channel to get access to members-only content and other exclusive perks.") || nserror.localizedDescription == "Join this channel to get access to members-only content like this video, and other exclusive perks.") {
+            if settingsService.youtubeLogin == false {
+                let alert = SCLAlertView()
+                alert.addButton(Bundle.main.localizedString(forKey: "Go Back", value: "Go Back", table: "Localizeable")) {
+                    self.closeStream()
+                }
+                alert.addButton(Bundle.main.localizedString(forKey: "Sign in to YouTube", value: "Sign in to YouTube", table: "Localizeable")) {
+                    self.closeStream()
+                    return self.stepper.steps.accept(AppStep.toConsent(false))
+                }
+                alert.showInfo(Bundle.main.localizedString(forKey: "Member Only Stream", value: "Member Only Stream", table: "Localizeable"), subTitle: Bundle.main.localizedString(forKey: "It looks like you're trying to watch a member only stream. If you're already a member of this channel, you can sign into Youtube to watch it!", value: "It looks like you're trying to watch a member only stream. If you're already a member of this channel, you can sign into Youtube to watch it!", table: "Localizeable"))
+            } else if settingsService.youtubeLogin == true {
+                let alert = SCLAlertView()
+                alert.addButton(Bundle.main.localizedString(forKey: "Go Back", value: "Go Back", table: "Localizeable")) {
+                    self.closeStream()
+                }
+                alert.showError(Bundle.main.localizedString(forKey: "An Error Occurred", value: "An Error Occurred", table: "Localizeable"), subTitle: error.localizedDescription + " You'll need to join the channel from youtube.com or the YouTube app. If this is in error, try logging out and logging in again.")
+            }
         } else {
             let alert = SCLAlertView()
             alert.addButton(Bundle.main.localizedString(forKey: "Go Back", value: "Go Back", table: "Localizeable")) {
@@ -202,7 +212,7 @@ class StreamView: BaseController {
             alert.showError(Bundle.main.localizedString(forKey: "An Error Occurred", value: "An Error Occurred", table: "Localizeable"), subTitle: error.localizedDescription)
         }
         
-        // super.handle(error)
+        //super.handle(error)
     }
 
     override func viewWillLayoutSubviews() {

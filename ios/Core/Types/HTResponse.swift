@@ -11,8 +11,6 @@ import RxDataSources
 
 struct HTResponse: Decodable, Equatable {
     let items    : [Streamer]
-    //let upcoming: [Streamer]
-    //let ended   : [Streamer]
     
     struct Streamer: Decodable, Identifiable, Equatable {
         let id: String

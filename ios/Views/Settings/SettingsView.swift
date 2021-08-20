@@ -80,6 +80,29 @@ class SettingsView: FormViewController {
                 }
             }
             
+//            <<< ButtonRow("youtube_login") { row in
+//                row.title = Bundle.main.localizedString(forKey: "Log in to YouTube", value: "Log in to YouTube", table: "Localizeable")
+//                row.hidden = Condition(booleanLiteral: settings.youtubeLogin)
+//            }.onCellSelection { _, _ in
+//                self.settingsDone()
+//                self.stepper.steps.accept(AppStep.toConsent(false))
+//            }
+            
+            <<< ButtonRow("youtube_logout") { row in
+                row.title = Bundle.main.localizedString(forKey: "Log out of YouTube", value: "Log out of YouTube", table: "Localizeable")
+                row.hidden = Condition(booleanLiteral: !settings.youtubeLogin)
+            }.onCellSelection { _, row in
+                let cookieJar = HTTPCookieStorage.shared
+                for cookie in cookieJar.cookies! {
+                    cookieJar.deleteCookie(cookie)
+                }
+                self.settings.youtubeLogin = false
+                row.title = Bundle.main.localizedString(forKey: "Logged out of YouTube", value: "Logged out of YouTube", table: "Localizeable")
+                row.disabled = true
+                row.updateCell()
+                row.evaluateDisabled()
+            }
+            
             +++ Section(Bundle.main.localizedString(forKey: "Message Settings", value: "Message Settings", table: "Localizeable"))
         
             <<< MultipleSelectorRow<String>("lang_select") { row in

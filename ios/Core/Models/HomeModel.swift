@@ -7,24 +7,26 @@
 
 import Foundation
 import RxCocoa
+import RxDataSources
 import RxFlow
 import RxSwift
-import RxDataSources
 
 typealias Status = HTResponse.Streamer.LiveState
 
 protocol HomeModelType {
-    var input : HomeModelInput  { get }
+    var input: HomeModelInput { get }
     var output: HomeModelOutput { get }
 }
+
 protocol HomeModelInput {
     var refresh: BehaviorRelay<Void> { get }
     
     func loadStreamers(_ org: Organization)
 }
+
 protocol HomeModelOutput {
-    var streamersDriver  : Driver<HTResponse> { get }
-    var refreshDoneDriver: Driver<Bool>       { get }
+    var streamersDriver: Driver<HTResponse> { get }
+    var refreshDoneDriver: Driver<Bool> { get }
     
     func video(for section: Int, and id: Int) -> String
     func thumbnail(for section: Int, and index: Int) -> URL?

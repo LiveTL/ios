@@ -26,7 +26,7 @@ class AppFlow: Flow {
         case .view(let id)           : return toStreamView(id)
         case .settings               : return toSettings()
         case .settingsDone           : return settingsDone()
-        case .toConsent(let htmlData): return toConsent(htmlData)
+        case .toConsent(let showAlert): return toConsent(showAlert)
         case .consentDone            : return toConsentDone()
         case .filter                 : return toFilter()
         case .filterDone             : return filterDone()
@@ -57,13 +57,13 @@ class AppFlow: Flow {
         rootViewController.dismiss(animated: true, completion: nil)
         return .none
     }
-    private func toConsent(_ htmlData: String) -> FlowContributors {
+    private func toConsent(_ showAlert: Bool) -> FlowContributors {
         //NOTE - ConsentViewController does not work correctly in simulator, use a real device!
-        let controller = ConsentViewController(stepper, services)
+        let controller = ConsentViewController(stepper, services, showAlert: showAlert)
         let navigation = UINavigationController(rootViewController: controller)
         
         rootViewController.present(navigation, animated: true) {
-            controller.consentFunctionWithHtmlData(htmlData: htmlData)
+            controller.consentFunction()
         }
         
         return .end(forwardToParentFlowWithStep: AppStep.home)
