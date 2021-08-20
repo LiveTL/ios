@@ -254,8 +254,8 @@ extension StreamModel: UITableViewDelegate {
         let author = value.displayAuthor
         services.settings.spotlightUser = author
         
-        let leftView = UIImageView(image: UIImage.fontAwesomeIcon(code: "fa-comment-slash", style: .solid, textColor: .white, size: CGSize(width: 400, height: 400)))
-        let banner = FloatingNotificationBanner(title: Bundle.main.localizedString(forKey: "Pinned", value: "Pinned", table: "Localizeable"), subtitle: String(format: NSLocalizedString("Translator %@ has been pinned. From now on, you will only recieve translations from them until you close this stream.", tableName: "Localizeable", comment: "a comment"), author), leftView: leftView, style: .info)
+        let leftView = UIImageView(image: UIImage.fontAwesomeIcon(code: "fa-thumbtack", style: .solid, textColor: .white, size: CGSize(width: 400, height: 400)))
+        let banner = FloatingNotificationBanner(title: Bundle.main.localizedString(forKey: "Pinned", value: "Pinned", table: "Localizeable"), subtitle: String(format: NSLocalizedString("Translator %@ has been pinned. You will only recieve translations from them until you close this stream.", tableName: "Localizeable", comment: "a comment"), author), leftView: leftView, style: .info)
         banner.haptic = BannerHaptic.light
         banner.show(cornerRadius: 10, shadowBlurRadius: 15)
     }

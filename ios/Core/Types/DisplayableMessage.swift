@@ -29,11 +29,11 @@ extension DisplayableMessage {
 
 enum Message: Decodable {
     case text(_ str: String)
-    case emote(_ url: URL)
+    case emote(_ url: URL,_ emojiId: String?)
 
     enum CodingKeys: String, CodingKey {
         case type
-        case src, text
+        case src, text, emojiId
     }
 
     init(from decoder: Decoder) throws {
@@ -42,7 +42,8 @@ enum Message: Decodable {
 
         if msgType == "emote" {
             let url = try container.decode(URL.self, forKey: .src)
-            self = .emote(url)
+            let emojiId = try container.decode(String?.self, forKey: .emojiId) ?? nil
+            self = .emote(url, emojiId)
         } else if msgType == "text" {
             let str = try container.decode(String.self, forKey: .text)
             self = .text(str)
