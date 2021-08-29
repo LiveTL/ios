@@ -26,6 +26,8 @@ protocol StreamModelInput {
     var timeControl: BehaviorRelay<ReplayEvent> { get }
     
     func load(_ id: String)
+    func loadPreviewChat(_ id: String, duration: Double)
+    func getMetadata(_ id: String)
 }
 
 protocol StreamModelOutput {
@@ -36,6 +38,7 @@ protocol StreamModelOutput {
     var chatDriver: Driver<[DisplayableMessage]> { get }
     var captionDriver: Driver<[DisplayableMessage]> { get }
     var videoDriver: Driver<XCDYouTubeVideo?> { get }
+    var metaDriver: Driver<HoloDexResponse?> { get }
 }
 
 class StreamModel: BaseModel {
@@ -53,6 +56,9 @@ class StreamModel: BaseModel {
     private let emptyRelay = BehaviorRelay<Bool>(value: true)
     
     private let chatURLRelay = BehaviorRelay<URL?>(value: nil)
+    private let mchadRoomRelay = BehaviorRelay<MchadRoom?>(value: nil)
+    private let mchadScriptRelay = BehaviorRelay<[MchadScript?]>(value: [])
+    private let metadataRelay = BehaviorRelay<HoloDexResponse?>(value: nil)
     
     private let replayRelay = BehaviorRelay<Bool>(value: false)
     private let replayEventRelay = BehaviorRelay<ReplayEvent>(value: (0.0, ""))
@@ -140,11 +146,46 @@ class StreamModel: BaseModel {
             .bind(to: errorRelay)
             .disposed(by: bag)
     }
+    
+    func getVideoMeta(_ id: String) {
+        let meta = services.holodex.getMetadata(id)
+            .asObservable()
+            .materialize()
+        
+        meta.map { $0.element }
+            .bind(to: metadataRelay)
+            .disposed(by: bag)
+    }
 
     private func loadChat(_ id: String, duration: Double) {
         let request = services.youtube.getYTChatURL(id, videoDuration: duration)
             .asObservable()
             .materialize()
+        
+        let mchad = services.mchad.getMchadRoom(id: id, duration: duration)
+            .asObservable()
+            .materialize()
+        
+        mchadRoomRelay.compactMap { $0 }
+            .subscribe(onNext: { room in
+                self.services.mchad.getMchadArchiveTls(id, room: room)
+                    .asObservable()
+                    .materialize()
+                    .subscribe(onNext: { messages in
+                        if messages.element != nil {
+                            self.translatedRelay.accept(messages.element as! [DisplayableMessage])
+                        }
+                    })
+                    .disposed(by: self.bag)
+            })
+            .disposed(by: bag)
+        
+//        mchad.map { $0.element?.first }
+//            .bind(to: mchadRoomRelay)
+//            .disposed(by: bag)
+//        mchad.map { $0.error }
+//            .bind(to: errorRelay)
+//            .disposed(by: bag)
         
         request.map { $0.element }
             .bind(to: chatURLRelay)
@@ -307,6 +348,12 @@ extension StreamModel: StreamModelInput {
     func load(_ id: String) {
         loadVideoPlayer(id)
     }
+    func loadPreviewChat(_ id: String, duration: Double) {
+        loadChat(id, duration: duration)
+    }
+    func getMetadata(_ id: String) {
+        getVideoMeta(id)
+    }
 }
 
 extension StreamModel: StreamModelOutput {
@@ -315,6 +362,7 @@ extension StreamModel: StreamModelOutput {
     var chatDriver: Driver<[DisplayableMessage]> { chatRelay.asDriver() }
     var captionDriver: Driver<[DisplayableMessage]> { translatedRelay.asDriver() }
     var videoDriver: Driver<XCDYouTubeVideo?> { playerRelay.asDriver() }
+    var metaDriver: Driver<HoloDexResponse?> { metadataRelay.asDriver() }
 }
 
 extension String {

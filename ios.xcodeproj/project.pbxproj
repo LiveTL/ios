@@ -14,8 +14,11 @@
 		361CEECB26AE51D400B0558E /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F826A64C370005E6FC /* HomeModel.swift */; };
 		361CEECD26AE527B00B0558E /* MediaResoulution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361CEECC26AE527B00B0558E /* MediaResoulution.swift */; };
 		362A546226CB00FF0027A14E /* Localizeable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3652A47F26C20E7C003DA76B /* Localizeable.strings */; };
+		365045ED26D5A7F900AD6214 /* MchadServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365045EC26D5A7F900AD6214 /* MchadServices.swift */; };
+		365045EF26D5B03900AD6214 /* MchadTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365045EE26D5B03900AD6214 /* MchadTypes.swift */; };
+		36C224DB26D197CD00982BB1 /* FilterViewSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C224DA26D197CD00982BB1 /* FilterViewSwiftUI.swift */; };
 		36CB58DE26C57F5F0002B8AF /* Superchat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CB58DD26C57F5F0002B8AF /* Superchat.swift */; };
-		36E6C1FA26A71DF600C2B08C /* HTResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F026A64C370005E6FC /* HTResponse.swift */; };
+		36E6C1FA26A71DF600C2B08C /* HoloDexResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F026A64C370005E6FC /* HoloDexResponse.swift */; };
 		36E6C1FB26A71DF600C2B08C /* TranslatedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F226A64C370005E6FC /* TranslatedMessage.swift */; };
 		36E6C1FC26A71DF600C2B08C /* YouTubeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35FE26A64C370005E6FC /* YouTubeService.swift */; };
 		36E6C1FD26A71DF600C2B08C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F526A64C370005E6FC /* BaseView.swift */; };
@@ -36,7 +39,7 @@
 		36EF360226A64C370005E6FC /* Organizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35ED26A64C370005E6FC /* Organizations.swift */; };
 		36EF360326A64C370005E6FC /* InjectedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35EE26A64C370005E6FC /* InjectedMessage.swift */; };
 		36EF360426A64C370005E6FC /* ChatControlType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35EF26A64C370005E6FC /* ChatControlType.swift */; };
-		36EF360526A64C370005E6FC /* HTResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F026A64C370005E6FC /* HTResponse.swift */; };
+		36EF360526A64C370005E6FC /* HoloDexResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F026A64C370005E6FC /* HoloDexResponse.swift */; };
 		36EF360626A64C370005E6FC /* DisplayableMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F126A64C370005E6FC /* DisplayableMessage.swift */; };
 		36EF360726A64C370005E6FC /* TranslatedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F226A64C370005E6FC /* TranslatedMessage.swift */; };
 		36EF360826A64C370005E6FC /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EF35F426A64C370005E6FC /* BaseModel.swift */; };
@@ -117,13 +120,16 @@
 /* Begin PBXFileReference section */
 		361772A3269CEE5500F0C6E7 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		361CEECC26AE527B00B0558E /* MediaResoulution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResoulution.swift; sourceTree = "<group>"; };
+		365045EC26D5A7F900AD6214 /* MchadServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MchadServices.swift; sourceTree = "<group>"; };
+		365045EE26D5B03900AD6214 /* MchadTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MchadTypes.swift; sourceTree = "<group>"; };
 		3652A47E26C20E7C003DA76B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizeable.strings; sourceTree = "<group>"; };
+		36C224DA26D197CD00982BB1 /* FilterViewSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewSwiftUI.swift; sourceTree = "<group>"; };
 		36CB58DD26C57F5F0002B8AF /* Superchat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Superchat.swift; sourceTree = "<group>"; };
 		36EF35EC26A64C370005E6FC /* Language.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		36EF35ED26A64C370005E6FC /* Organizations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organizations.swift; sourceTree = "<group>"; };
 		36EF35EE26A64C370005E6FC /* InjectedMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectedMessage.swift; sourceTree = "<group>"; };
 		36EF35EF26A64C370005E6FC /* ChatControlType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatControlType.swift; sourceTree = "<group>"; };
-		36EF35F026A64C370005E6FC /* HTResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTResponse.swift; sourceTree = "<group>"; };
+		36EF35F026A64C370005E6FC /* HoloDexResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoloDexResponse.swift; sourceTree = "<group>"; };
 		36EF35F126A64C370005E6FC /* DisplayableMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayableMessage.swift; sourceTree = "<group>"; };
 		36EF35F226A64C370005E6FC /* TranslatedMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslatedMessage.swift; sourceTree = "<group>"; };
 		36EF35F426A64C370005E6FC /* BaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
@@ -203,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				361772A3269CEE5500F0C6E7 /* FilterView.swift */,
+				36C224DA26D197CD00982BB1 /* FilterViewSwiftUI.swift */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -235,11 +242,12 @@
 				36EF35ED26A64C370005E6FC /* Organizations.swift */,
 				36EF35EE26A64C370005E6FC /* InjectedMessage.swift */,
 				36EF35EF26A64C370005E6FC /* ChatControlType.swift */,
-				36EF35F026A64C370005E6FC /* HTResponse.swift */,
+				36EF35F026A64C370005E6FC /* HoloDexResponse.swift */,
 				36EF35F126A64C370005E6FC /* DisplayableMessage.swift */,
 				36EF35F226A64C370005E6FC /* TranslatedMessage.swift */,
 				361CEECC26AE527B00B0558E /* MediaResoulution.swift */,
 				36CB58DD26C57F5F0002B8AF /* Superchat.swift */,
+				365045EE26D5B03900AD6214 /* MchadTypes.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -278,6 +286,7 @@
 				36EF35FE26A64C370005E6FC /* YouTubeService.swift */,
 				36EF35FF26A64C370005E6FC /* AppServices.swift */,
 				36EF360026A64C370005E6FC /* SettingsService.swift */,
+				365045EC26D5A7F900AD6214 /* MchadServices.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -670,7 +679,7 @@
 				36FD3ED226978CBF00EAAF51 /* StreamTable.swift in Sources */,
 				36FD3EB5269781D900EAAF51 /* iosUnitTests.swift in Sources */,
 				36FD3ED026978CBB00EAAF51 /* StreamerCell.swift in Sources */,
-				36E6C1FA26A71DF600C2B08C /* HTResponse.swift in Sources */,
+				36E6C1FA26A71DF600C2B08C /* HoloDexResponse.swift in Sources */,
 				36FD3ED626978D0300EAAF51 /* AppDelegate.swift in Sources */,
 				36E6C20926A71DF600C2B08C /* BaseModel.swift in Sources */,
 				36E6C20026A71DF600C2B08C /* HoloDexServices.swift in Sources */,
@@ -710,9 +719,12 @@
 				36EF360426A64C370005E6FC /* ChatControlType.swift in Sources */,
 				361772A4269CEE5500F0C6E7 /* FilterView.swift in Sources */,
 				361CEECD26AE527B00B0558E /* MediaResoulution.swift in Sources */,
+				365045EF26D5B03900AD6214 /* MchadTypes.swift in Sources */,
 				36EF360A26A64C370005E6FC /* StreamModel.swift in Sources */,
 				36EF360626A64C370005E6FC /* DisplayableMessage.swift in Sources */,
 				665774D8260C80F700072F30 /* StreamerCell.swift in Sources */,
+				36C224DB26D197CD00982BB1 /* FilterViewSwiftUI.swift in Sources */,
+				365045ED26D5A7F900AD6214 /* MchadServices.swift in Sources */,
 				36EF360D26A64C370005E6FC /* AppStep.swift in Sources */,
 				36EF361126A64C370005E6FC /* SettingsService.swift in Sources */,
 				36EF360E26A64C370005E6FC /* HoloDexServices.swift in Sources */,
@@ -726,7 +738,7 @@
 				36EF360826A64C370005E6FC /* BaseModel.swift in Sources */,
 				36EF361026A64C370005E6FC /* AppServices.swift in Sources */,
 				6636808B261983B500125A76 /* ChatCell.swift in Sources */,
-				36EF360526A64C370005E6FC /* HTResponse.swift in Sources */,
+				36EF360526A64C370005E6FC /* HoloDexResponse.swift in Sources */,
 				665774AE260C6ECE00072F30 /* HomeView.swift in Sources */,
 				36EF360926A64C370005E6FC /* BaseView.swift in Sources */,
 				36EF360F26A64C370005E6FC /* YouTubeService.swift in Sources */,

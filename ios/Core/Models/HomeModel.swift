@@ -11,7 +11,7 @@ import RxDataSources
 import RxFlow
 import RxSwift
 
-typealias Status = HTResponse.Streamer.LiveState
+typealias Status = HoloDexResponse.Streamer.LiveState
 
 protocol HomeModelType {
     var input: HomeModelInput { get }
@@ -25,11 +25,12 @@ protocol HomeModelInput {
 }
 
 protocol HomeModelOutput {
-    var streamersDriver: Driver<HTResponse> { get }
+    var streamersDriver: Driver<HoloDexResponse> { get }
     var refreshDoneDriver: Driver<Bool> { get }
     
     func video(for section: Int, and id: Int) -> String
     func thumbnail(for section: Int, and index: Int) -> URL?
+    func backupThumbnail(for section: Int, and index: Int) -> URL?
     func title(for section: Int, and index: Int) -> String?
     func description(for section: Int, and index: Int) -> String?
 }
@@ -37,7 +38,7 @@ protocol HomeModelOutput {
 class HomeModel: BaseModel {
     let refresh = BehaviorRelay<Void>(value: ())
     
-    private let streamers    = BehaviorRelay<HTResponse?>(value: nil)
+    private let streamers    = BehaviorRelay<HoloDexResponse?>(value: nil)
     private let refreshState = BehaviorRelay<Bool>(value: false)
     
     override init(_ services: AppServices) {
@@ -76,7 +77,7 @@ extension HomeModel: HomeModelOutput {
         return r[section].items[index].title
     }
     
-    var streamersDriver: Driver<HTResponse> {
+    var streamersDriver: Driver<HoloDexResponse> {
         return streamers
             .compactMap { $0 }
             .asDriver(onErrorJustReturn: .default())
@@ -87,16 +88,21 @@ extension HomeModel: HomeModelOutput {
     
     func video(for section: Int, and index: Int) -> String {
         let r = streamers.value!.sections()
+        //return "x1EZYh8aGwA"
         return r[section].items[index].id
     }
     func thumbnail(for section: Int, and index: Int) -> URL? {
         let r = streamers.value!.sections()
         return r[section].items[index].thumbnail
     }
+    func backupThumbnail(for section: Int, and index: Int) -> URL? {
+        let r = streamers.value!.sections()
+        return r[section].items[index].backupThumbnail
+    }
 }
 
 struct StreamerItemModel: SectionModelType {
-    typealias Item = HTResponse.Streamer
+    typealias Item = HoloDexResponse.Streamer
     
     var title: String
     var items: [Item]
@@ -112,7 +118,7 @@ struct StreamerItemModel: SectionModelType {
     }
 }
 
-extension HTResponse {
+extension HoloDexResponse {
     func sections() -> [StreamerItemModel] {
         
         let l = items.filter { $0.status == .live }.sorted { $0.start_scheduled > $1.start_scheduled }

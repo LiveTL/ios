@@ -14,6 +14,9 @@ PODS:
   - RxCocoa (6.2.0):
     - RxRelay (= 6.2.0)
     - RxSwift (= 6.2.0)
+  - RxCombine (2.0.1):
+    - RxRelay (~> 6)
+    - RxSwift (~> 6)
   - RxDataSources (5.0.0):
     - Differentiator (~> 5.0)
     - RxCocoa (~> 6.0)
@@ -40,6 +43,7 @@ DEPENDENCIES:
   - Neon
   - NotificationBannerSwift (~> 3.0.0)
   - RxCocoa
+  - RxCombine
   - RxDataSources
   - RxFlow
   - RxSwift
@@ -61,6 +65,7 @@ SPEC REPOS:
     - Neon
     - NotificationBannerSwift
     - RxCocoa
+    - RxCombine
     - RxDataSources
     - RxFlow
     - RxRelay
@@ -92,6 +97,7 @@ SPEC CHECKSUMS:
   Neon: 7fb5a9327e7e57911843f608e08f4893a74deaf9
   NotificationBannerSwift: 7021be2338f8f29cf424b0aca43da462bf9e2a1a
   RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
+  RxCombine: 74cd98f7bb1d908eff3758d13651917fc296adb3
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
   RxFlow: fa434215aca391d10d4d5048c0a035c9502b3666
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
@@ -102,6 +108,6 @@ SPEC CHECKSUMS:
   SwiftyUserDefaults: 63f80248cf5bfb3458825d9a78f2eb7e1293a040
   XCDYouTubeKit: b120aced3d8638ffb570c5450cddb5a1dac448c7
 
-PODFILE CHECKSUM: b1080584d0e60e69aac89e095500e6da86191325
+PODFILE CHECKSUM: bd3025cc71699ad0300e7ce21de6683a7ce4a10a
 
 COCOAPODS: 1.10.1

@@ -15,6 +15,7 @@ import RxSwift
 import SCLAlertView
 import SwiftyUserDefaults
 import UIKit
+import FontAwesome_swift
 
 class HomeView: BaseController {
     var rightButton: UIBarButtonItem {
@@ -38,7 +39,7 @@ class HomeView: BaseController {
     let model: HomeModelType
     let services: AppServices
     
-    override init(_ stepper: RxFlow.Stepper, _ services: AppServices) {
+    override init(_ stepper: Stepper, _ services: AppServices) {
         model = HomeModel(services)
         self.services = services
         super.init(stepper, services)
@@ -79,7 +80,8 @@ class HomeView: BaseController {
         let thumbnailsObserver = Defaults.observe(\.thumbnails) { _ in self.reload() }
         let blurObserver = Defaults.observe(\.thumbnailBlur) { _ in self.reload() }
         let darkenObserver = Defaults.observe(\.thumbnailDarken) { _ in self.reload() }
-        observers.append(contentsOf: [orgObserver, thumbnailsObserver, blurObserver, darkenObserver])
+        let engNameObserver = Defaults.observe(\.englishNames) { _ in self.reload() }
+        observers.append(contentsOf: [orgObserver, thumbnailsObserver, blurObserver, darkenObserver, engNameObserver])
         
         refresh.rx.controlEvent(.valueChanged).bind(to: model.input.refresh).disposed(by: bag)
         model.output.refreshDoneDriver.drive(refresh.rx.isRefreshing).disposed(by: bag)
@@ -192,7 +194,15 @@ extension HomeView: UITableViewDelegate {
             // popoutView.clipsToBounds = true
 
             imageView.kf.indicatorType = .activity
-            imageView.kf.setImage(with: model.output.thumbnail(for: indexPath.section, and: indexPath.row))
+            imageView.kf.setImage(with: model.output.thumbnail(for: indexPath.section, and: indexPath.row)) { result in
+                switch result {
+                case .failure(_): do {
+                    imageView.kf.setImage(with: self.model.output.backupThumbnail(for: indexPath.section, and: indexPath.row))
+                }
+                case .success(_):
+                    break
+                }
+            }
             popoutView.addSubview(imageView)
             imageView.anchorToEdge(.top, padding: 0, width: 333, height: 187)
 
@@ -235,7 +245,7 @@ extension HomeView: UITableViewDelegate {
                 self.present(ac, animated: true)
             }
         
-            let youtubeAction = UIAction(title: Bundle.main.localizedString(forKey: "Open in Youtube", value: "Open in Youtube", table: "Localizeable"), image: UIImage(systemName: "play.rectangle.fill")) { _ in
+            let youtubeAction = UIAction(title: Bundle.main.localizedString(forKey: "Open in Youtube", value: "Open in Youtube", table: "Localizeable"), image: UIImage.fontAwesomeIcon(name: .youtube, style: .brands, textColor: .white, size: CGSize(width: 24, height: 31.5))) { _ in
                 let youtubeId = self.model.output.video(for: indexPath.section, and: indexPath.row)
                 var youtubeUrl = URL(string: "youtube://\(youtubeId)")!
                 if UIApplication.shared.canOpenURL(youtubeUrl) {

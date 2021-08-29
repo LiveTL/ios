@@ -71,6 +71,15 @@ class SettingsView: FormViewController {
                 }
             }
             
+            <<< SwitchRow("english_names") { row in
+                row.title = Bundle.main.localizedString(forKey: "Use English Channel Names", value: "Use English Channel Names", table: "Localizeable")
+                row.value = self.settings.englishNames
+            }.onChange { row in
+                if let value = row.value {
+                    self.settings.englishNames = value
+                }
+            }
+            
             <<< SwitchRow("clipboard_enabled") { row in
                 row.title = Bundle.main.localizedString(forKey: "Allow Clipboard Detection", value: "Allow Clipboard Detection", table: "Localizeable")
                 row.value = self.settings.clipboard

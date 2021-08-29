@@ -78,9 +78,24 @@ struct TranslatedMessage {
         self.languages = lang
     }
     
+    init(from mchad: MchadScript, room: MchadRoom) {
+        
+        self.author = Author(from: room)
+        self.message = mchad.Stext
+        self.languages = [room.Tags]
+        self.timestamp = mchad.Stime
+        self.show = mchad.Stime.timeIntervalSince1970
+        self.superchat = nil
+    }
+    
     struct Author {
         let name : String
         let types: [String]
+        
+        init(from archiveRoom: MchadRoom) {
+            self.name = archiveRoom.Room!
+            self.types = ["mchad"]
+        }
         
         init(from author: InjectedMessage.Author) {
             self.name = author.name
@@ -109,6 +124,7 @@ extension TranslatedMessage: DisplayableMessage {
     var superchatData: Superchat? { superchat }
     
     var sortTimestamp: Date { timestamp }
+    var showTimestamp: Double { show }
 }
 
 extension String {

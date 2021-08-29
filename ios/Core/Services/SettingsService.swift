@@ -19,6 +19,7 @@ extension DefaultsKeys {
     var thumbnailBlur: DefaultsKey<Bool> { .init("thumbnail_blur_enabled", defaultValue: false) }
     var thumbnailDarken: DefaultsKey<Bool> { .init("thumbnail_darken_enabled", defaultValue: true) }
     var youtubeLogin: DefaultsKey<Bool> { .init("youtube_login", defaultValue: false) }
+    var englishNames: DefaultsKey<Bool> { .init("english_names", defaultValue: false)}
     
     var always_users: DefaultsKey<[String]> { .init("always_shown_users", defaultValue: []) }
     var never_users: DefaultsKey<[String]> { .init("never_shown_users", defaultValue: []) }
@@ -66,6 +67,9 @@ class SettingsService {
     
     @SwiftyUserDefault(keyPath: \.youtubeLogin)
     var youtubeLogin: Bool
+    
+    @SwiftyUserDefault(keyPath: \.englishNames)
+    var englishNames: Bool
     
     var singleLanguage: TranslatedLanguageTag {
         get { return languages.first ?? .en }

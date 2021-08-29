@@ -9,8 +9,9 @@ import Foundation
 
 class AppServices {
     let holodex = HoloDexServices()
-    let youtube   = YouTubeService()
-    let settings  = SettingsService()
-    
+    let youtube = YouTubeService()
+    let mchad = MchadServices()
+    let settings = SettingsService()
+
     init() {}
 }
