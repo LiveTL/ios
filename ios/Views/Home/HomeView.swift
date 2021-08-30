@@ -245,7 +245,7 @@ extension HomeView: UITableViewDelegate {
                 self.present(ac, animated: true)
             }
         
-            let youtubeAction = UIAction(title: Bundle.main.localizedString(forKey: "Open in Youtube", value: "Open in Youtube", table: "Localizeable"), image: UIImage.fontAwesomeIcon(name: .youtube, style: .brands, textColor: .white, size: CGSize(width: 24, height: 31.5))) { _ in
+            let youtubeAction = UIAction(title: Bundle.main.localizedString(forKey: "Open in Youtube", value: "Open in Youtube", table: "Localizeable"), image: UIImage.fontAwesomeIcon(name: .youtube, style: .brands, textColor: .label, size: CGSize(width: 24, height: 31.5))) { _ in
                 let youtubeId = self.model.output.video(for: indexPath.section, and: indexPath.row)
                 var youtubeUrl = URL(string: "youtube://\(youtubeId)")!
                 if UIApplication.shared.canOpenURL(youtubeUrl) {

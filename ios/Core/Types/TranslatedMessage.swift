@@ -10,7 +10,7 @@ import SwiftDate
 
 struct TranslatedMessage {
     let author: Author
-    let message: String
+    let message: [Message]
     let languages: [String]
     
     let timestamp: Date
@@ -23,7 +23,7 @@ struct TranslatedMessage {
         self.show = message.showtime
         self.superchat = message.superchat
         
-        var m: String? = nil
+        var m: [Message?] = []
         var l: [String]? = nil
         
         if case let .text(s) = message.messages.first {
@@ -53,8 +53,14 @@ struct TranslatedMessage {
                 
                 
                 let mStart = s.index(after: end)
-                m = String(s[mStart..<s.endIndex]).trimmingCharacters(in: [" ", "-", ":"])
+                m.append(Message.text(String(s[mStart..<s.endIndex]).trimmingCharacters(in: [" ", "-", ":"])))
                 l = finalLang
+                
+                for item in message.messages {
+                    if item != message.messages.first {
+                        m.append(item)
+                    }
+                }
                 break
             }
             for delim in LangDelims {
@@ -67,13 +73,17 @@ struct TranslatedMessage {
                 
                 guard TranslatedLanguageTag.allCases.map({ $0.tag }).contains(lang) else { continue }
                 let mStart = s.index(after: end)
-                m = String(s[mStart..<s.endIndex]).trimmingCharacters(in: [" ", "-", ":"])
+                m[0] = Message.text(String(s[mStart..<s.endIndex]).trimmingCharacters(in: [" ", "-", ":"]))
                 l = [lang]
                 break
             }
         }
         
-        guard let lang = l, let mess = m else { return nil }
+        guard let lang = l else { return nil }
+        if m.first == nil {
+            return nil
+        }
+        let mess = m.compactMap({ $0 })
         self.message = mess
         self.languages = lang
     }
@@ -81,7 +91,7 @@ struct TranslatedMessage {
     init(from mchad: MchadScript, room: MchadRoom) {
         
         self.author = Author(from: room)
-        self.message = mchad.Stext
+        self.message = [Message.text(mchad.Stext)]
         self.languages = [room.Tags]
         self.timestamp = mchad.Stime
         self.show = mchad.Stime.timeIntervalSince1970
@@ -107,7 +117,7 @@ struct TranslatedMessage {
 extension TranslatedMessage: DisplayableMessage {
     var displayAuthor: String { author.name }
     var displayTimestamp: String { timestamp.toRelative(style: RelativeFormatter.twitterStyle()) }
-    var displayMessage: [Message] { [.text(message)] }
+    var displayMessage: [Message] { message }
     var isMod: Bool { author.types.contains("moderator") }
     var isMember: Bool {
         if author.types.contains("new member") {
