@@ -53,14 +53,13 @@ class ChatCell: UITableViewCell {
                         let am = NSAttributedString(string: id!)
                         fullMessage.append(am)
                     } else {
-                        let html = " <img src=\"\(u.absoluteString)\" /> "
+                        let html = " <img src=\"\(u.deletingPathExtension().appendingPathExtension("png").absoluteString)\" width=\"24\" height=\"24\" /> "
                         let data = Data(html.utf8)
 
                         do {
                             let string = try NSAttributedString(data: data, options: [
                                 .documentType: NSAttributedString.DocumentType.html
                             ], documentAttributes: nil)
-
                             fullMessage.append(string)
                         } catch {
                             // Hmmm... emote NSAttributedString failed. Must be on macOS.
