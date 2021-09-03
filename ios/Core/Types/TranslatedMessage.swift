@@ -134,7 +134,7 @@ extension TranslatedMessage: DisplayableMessage {
     var superchatData: Superchat? { superchat }
     
     var sortTimestamp: Date { timestamp }
-    var showTimestamp: Double { show }
+    var showTimestamp: Date { Date(timeIntervalSinceNow: show/1000) }
 }
 
 extension String {

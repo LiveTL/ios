@@ -48,6 +48,7 @@ class StreamModel: BaseModel {
     
     private let controlRelay = BehaviorRelay<ChatControlType>(value: .allChat)
     
+    private let rawChatRelay = BehaviorRelay<[DisplayableMessage]>(value: [])
     private let chatRelay = BehaviorRelay<[DisplayableMessage]>(value: [])
     private let liveRelay = BehaviorRelay<[DisplayableMessage]>(value: [])
     private let translatedRelay = BehaviorRelay<[DisplayableMessage]>(value: [])
@@ -91,14 +92,27 @@ class StreamModel: BaseModel {
                 self.liveRelay.accept([])
                 self.translatedRelay.accept([])
                 self.chatRelay.accept([])
+                self.rawChatRelay.accept([])
             }).disposed(by: bag)
         Observable.combineLatest(controlRelay, liveRelay, translatedRelay).map { control, live, translated in
             control == .allChat ? live : translated
         }
         .map { $0.sorted { $0.sortTimestamp > $1.sortTimestamp } }
-        .bind(to: chatRelay)
+        .bind(to: rawChatRelay)
         .disposed(by: bag)
-
+        
+        Observable<Int>.timer(.milliseconds(0), period: .milliseconds(500), scheduler: MainScheduler.asyncInstance)
+            .subscribe { _ in
+                var messageQueue = self.rawChatRelay.value
+                var sendMessages: [DisplayableMessage] = self.chatRelay.value
+                print("\(messageQueue.first?.showTimestamp) <= \(Date())")
+                while messageQueue.first?.showTimestamp ?? Date.distantPast >= Date() {
+                    sendMessages.append(messageQueue.first!)
+                    messageQueue.removeFirst()
+                            
+                    self.chatRelay.accept(sendMessages)
+                }
+            }.disposed(by: bag)
         playerRelay.compactMap { $0 }
             .map { (id: $0.identifier, duration: $0.duration) }
             .subscribe(onNext: loadChat)
@@ -180,12 +194,12 @@ class StreamModel: BaseModel {
             })
             .disposed(by: bag)
         
-//        mchad.map { $0.element?.first }
-//            .bind(to: mchadRoomRelay)
-//            .disposed(by: bag)
-//        mchad.map { $0.error }
-//            .bind(to: errorRelay)
-//            .disposed(by: bag)
+        mchad.map { $0.element?.first }
+            .bind(to: mchadRoomRelay)
+            .disposed(by: bag)
+        mchad.map { $0.error }
+            .bind(to: errorRelay)
+            .disposed(by: bag)
         
         request.map { $0.element }
             .bind(to: chatURLRelay)
@@ -348,9 +362,11 @@ extension StreamModel: StreamModelInput {
     func load(_ id: String) {
         loadVideoPlayer(id)
     }
+
     func loadPreviewChat(_ id: String, duration: Double) {
         loadChat(id, duration: duration)
     }
+
     func getMetadata(_ id: String) {
         getVideoMeta(id)
     }
