@@ -5,16 +5,17 @@
 //  Created by Mason Phillips on 3/25/21.
 //
 
-import UIKit
+import Kingfisher
 import Neon
+import Network
 import RxCocoa
 import RxDataSources
 import RxFlow
 import RxSwift
 import SCLAlertView
-import Network
 import SwiftyUserDefaults
-import Kingfisher
+import UIKit
+import FontAwesome_swift
 
 class HomeView: BaseController {
     var rightButton: UIBarButtonItem {
@@ -38,7 +39,7 @@ class HomeView: BaseController {
     let model: HomeModelType
     let services: AppServices
     
-    override init(_ stepper: RxFlow.Stepper, _ services: AppServices) {
+    override init(_ stepper: Stepper, _ services: AppServices) {
         model = HomeModel(services)
         self.services = services
         super.init(stepper, services)
@@ -53,6 +54,8 @@ class HomeView: BaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        services.settings.spotlightUser = nil
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(checkPasteboard),
@@ -77,7 +80,8 @@ class HomeView: BaseController {
         let thumbnailsObserver = Defaults.observe(\.thumbnails) { _ in self.reload() }
         let blurObserver = Defaults.observe(\.thumbnailBlur) { _ in self.reload() }
         let darkenObserver = Defaults.observe(\.thumbnailDarken) { _ in self.reload() }
-        observers.append(contentsOf: [orgObserver, thumbnailsObserver, blurObserver, darkenObserver])
+        let engNameObserver = Defaults.observe(\.englishNames) { _ in self.reload() }
+        observers.append(contentsOf: [orgObserver, thumbnailsObserver, blurObserver, darkenObserver, engNameObserver])
         
         refresh.rx.controlEvent(.valueChanged).bind(to: model.input.refresh).disposed(by: bag)
         model.output.refreshDoneDriver.drive(refresh.rx.isRefreshing).disposed(by: bag)
@@ -183,48 +187,55 @@ extension HomeView: UITableViewDelegate {
 //
 //            return popoutView
             
-             let viewController = UIViewController()
-             let popoutView: UIView = UIView()
-             let imageView: UIImageView = UIImageView()
-             popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: 999)
-             //popoutView.clipsToBounds = true
+            let viewController = UIViewController()
+            let popoutView = UIView()
+            let imageView = UIImageView()
+            popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: 999)
+            // popoutView.clipsToBounds = true
 
-             imageView.kf.indicatorType = .activity
-             imageView.kf.setImage(with: model.output.thumbnail(for: indexPath.section, and: indexPath.row))
-             popoutView.addSubview(imageView)
-             imageView.anchorToEdge(.top, padding: 0, width: 333, height: 187)
+            imageView.kf.indicatorType = .activity
+            imageView.kf.setImage(with: model.output.thumbnail(for: indexPath.section, and: indexPath.row)) { result in
+                switch result {
+                case .failure(_): do {
+                    imageView.kf.setImage(with: self.model.output.backupThumbnail(for: indexPath.section, and: indexPath.row))
+                }
+                case .success(_):
+                    break
+                }
+            }
+            popoutView.addSubview(imageView)
+            imageView.anchorToEdge(.top, padding: 0, width: 333, height: 187)
 
-             let titleText = model.output.title(for: indexPath.section, and: indexPath.row)
-             let nsText = titleText as NSString?
-             let textSize = nsText?.boundingRect(with: popoutView.frame.size, options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)], context: nil).size
+            let titleText = model.output.title(for: indexPath.section, and: indexPath.row)
+            let nsText = titleText as NSString?
+            let textSize = nsText?.boundingRect(with: popoutView.frame.size, options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)], context: nil).size
 
-             let title = UILabel()
-             title.lineBreakMode = .byWordWrapping
-             title.numberOfLines = 0
-             title.text = titleText
-             title.font = .systemFont(ofSize: 18)
-             popoutView.addSubview(title)
+            let title = UILabel()
+            title.lineBreakMode = .byWordWrapping
+            title.numberOfLines = 0
+            title.text = titleText
+            title.font = .systemFont(ofSize: 18)
+            popoutView.addSubview(title)
 
-             title.sizeToFit()
-             title.align(.underCentered, relativeTo: imageView, padding: 10, width: 300, height: textSize?.height ?? 0)
-             title.leadingAnchor.constraint(equalTo: popoutView.safeAreaLayoutGuide.leadingAnchor, constant: 100).isActive = true
-             title.trailingAnchor.constraint(equalTo: popoutView.safeAreaLayoutGuide.trailingAnchor, constant: -100).isActive = true
-             title.layoutIfNeeded()
+            title.sizeToFit()
+            title.align(.underCentered, relativeTo: imageView, padding: 10, width: 300, height: textSize?.height ?? 0)
+            title.leadingAnchor.constraint(equalTo: popoutView.safeAreaLayoutGuide.leadingAnchor, constant: 100).isActive = true
+            title.trailingAnchor.constraint(equalTo: popoutView.safeAreaLayoutGuide.trailingAnchor, constant: -100).isActive = true
+            title.layoutIfNeeded()
 
-             let popoutHeight = title.height + imageView.height + 20
-             popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: popoutHeight)
-             viewController.view = popoutView
-             viewController.preferredContentSize = popoutView.frame.size
+            let popoutHeight = title.height + imageView.height + 20
+            popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: popoutHeight)
+            viewController.view = popoutView
+            viewController.preferredContentSize = popoutView.frame.size
 
-             return viewController
-             
+            return viewController
         }
     
         return UIContextMenuConfiguration(identifier: identifier, previewProvider: makeThumbnailPreview) { _ in
         
             _ = UIAction(title: "Description", image: UIImage(systemName: "newspaper.fill")) { _ in
                 print(Bundle.main.localizedString(forKey: "Description", value: "Description", table: "Localizeable"))
-                print(self.model.output.description(for: indexPath.section, and: indexPath.row))
+                // print(self.model.output.description(for: indexPath.section, and: indexPath.row))
             }
             
             let shareAction = UIAction(title: Bundle.main.localizedString(forKey: "Share", value: "Share", table: "Localizeable"), image: UIImage(systemName: "square.and.arrow.up")) { _ in
@@ -234,7 +245,7 @@ extension HomeView: UITableViewDelegate {
                 self.present(ac, animated: true)
             }
         
-            let youtubeAction = UIAction(title: Bundle.main.localizedString(forKey: "Open in Youtube", value: "Open in Youtube", table: "Localizeable"), image: UIImage(systemName: "play.rectangle.fill")) { _ in
+            let youtubeAction = UIAction(title: Bundle.main.localizedString(forKey: "Open in Youtube", value: "Open in Youtube", table: "Localizeable"), image: UIImage.fontAwesomeIcon(name: .youtube, style: .brands, textColor: .label, size: CGSize(width: 24, height: 31.5))) { _ in
                 let youtubeId = self.model.output.video(for: indexPath.section, and: indexPath.row)
                 var youtubeUrl = URL(string: "youtube://\(youtubeId)")!
                 if UIApplication.shared.canOpenURL(youtubeUrl) {

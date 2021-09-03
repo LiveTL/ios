@@ -77,3 +77,5 @@ enum TranslatedLanguageTag: String, CustomStringConvertible, CaseIterable {
         }
     }
 }
+
+extension TranslatedLanguageTag: Decodable {}

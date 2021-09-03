@@ -5,16 +5,16 @@
 //  Created by Mason Phillips on 3/25/21.
 //
 
-import UIKit
 import Eureka
+import Kingfisher
 import RxFlow
 import RxSwift
-import Kingfisher
 import SwiftyUserDefaults
+import UIKit
 
 class SettingsView: FormViewController {
     let services: AppServices
-    let stepper : Stepper
+    let stepper: Stepper
     let bag = DisposeBag()
     
     var settings: SettingsService { services.settings }
@@ -50,9 +50,9 @@ class SettingsView: FormViewController {
             <<< SwitchRow("thumbnail_darken_enabled") { row in
                 row.title = Bundle.main.localizedString(forKey: "Enable Thumbnail Darken Effect", value: "Enable Thumbnail Darken Effect", table: "Localizeable")
                 row.value = self.settings.thumbnailDarken
-                row.hidden = Condition.function(["thumbnails_enabled"], { form in
-                    return !((form.rowBy(tag: "thumbnails_enabled") as? SwitchRow)?.value ?? false)
-                })
+                row.hidden = Condition.function(["thumbnails_enabled"]) { form in
+                    !((form.rowBy(tag: "thumbnails_enabled") as? SwitchRow)?.value ?? false)
+                }
             }.onChange { row in
                 if let value = row.value {
                     self.settings.thumbnailDarken = value
@@ -62,12 +62,21 @@ class SettingsView: FormViewController {
             <<< SwitchRow("thumbnail_blur_enabled") { row in
                 row.title = Bundle.main.localizedString(forKey: "Enable Thumbnail Blur Effect", value: "Enable Thumbnail Blur Effect", table: "Localizeable")
                 row.value = self.settings.thumbnailBlur
-                row.hidden = Condition.function(["thumbnails_enabled"], { form in
-                    return !((form.rowBy(tag: "thumbnails_enabled") as? SwitchRow)?.value ?? false)
-                })
+                row.hidden = Condition.function(["thumbnails_enabled"]) { form in
+                    !((form.rowBy(tag: "thumbnails_enabled") as? SwitchRow)?.value ?? false)
+                }
             }.onChange { row in
                 if let value = row.value {
                     self.settings.thumbnailBlur = value
+                }
+            }
+            
+            <<< SwitchRow("english_names") { row in
+                row.title = Bundle.main.localizedString(forKey: "Use English Channel Names", value: "Use English Channel Names", table: "Localizeable")
+                row.value = self.settings.englishNames
+            }.onChange { row in
+                if let value = row.value {
+                    self.settings.englishNames = value
                 }
             }
             
@@ -80,21 +89,44 @@ class SettingsView: FormViewController {
                 }
             }
             
+//            <<< ButtonRow("youtube_login") { row in
+//                row.title = Bundle.main.localizedString(forKey: "Log in to YouTube", value: "Log in to YouTube", table: "Localizeable")
+//                row.hidden = Condition(booleanLiteral: settings.youtubeLogin)
+//            }.onCellSelection { _, _ in
+//                self.settingsDone()
+//                self.stepper.steps.accept(AppStep.toConsent(false))
+//            }
+            
+            <<< ButtonRow("youtube_logout") { row in
+                row.title = Bundle.main.localizedString(forKey: "Log out of YouTube", value: "Log out of YouTube", table: "Localizeable")
+                row.hidden = Condition(booleanLiteral: !settings.youtubeLogin)
+            }.onCellSelection { _, row in
+                let cookieJar = HTTPCookieStorage.shared
+                for cookie in cookieJar.cookies! {
+                    cookieJar.deleteCookie(cookie)
+                }
+                self.settings.youtubeLogin = false
+                row.title = Bundle.main.localizedString(forKey: "Logged out of YouTube", value: "Logged out of YouTube", table: "Localizeable")
+                row.disabled = true
+                row.updateCell()
+                row.evaluateDisabled()
+            }
+            
             +++ Section(Bundle.main.localizedString(forKey: "Message Settings", value: "Message Settings", table: "Localizeable"))
         
             <<< MultipleSelectorRow<String>("lang_select") { row in
-                row.options = TranslatedLanguageTag.allCases.map { $0.description }
-                row.value = Set(settings.languages.map { $0.description })
-                row.title = Bundle.main.localizedString(forKey: "Languages", value: "Languages", table: "Localizeable")
-                row.noValueDisplayText = Bundle.main.localizedString(forKey: "No languages selected", value: "No languages selected", table: "Localizeable")
-                row.displayValueFor = { values -> String? in
-                    values.map { $0.map { $0.description } }?.joined(separator: ", ")
-                }
-            }.onChange { row in
-                if let value = row.value {
-                    self.settings.languages = Array(value).compactMap { TranslatedLanguageTag($0) }
-                }
+            row.options = TranslatedLanguageTag.allCases.map { $0.description }
+            row.value = Set(settings.languages.map { $0.description })
+            row.title = Bundle.main.localizedString(forKey: "Languages", value: "Languages", table: "Localizeable")
+            row.noValueDisplayText = Bundle.main.localizedString(forKey: "No languages selected", value: "No languages selected", table: "Localizeable")
+            row.displayValueFor = { values -> String? in
+                values.map { $0.map { $0.description } }?.joined(separator: ", ")
             }
+        }.onChange { row in
+            if let value = row.value {
+                self.settings.languages = Array(value).compactMap { TranslatedLanguageTag($0) }
+            }
+        }
         
             <<< SwitchRow("mod_enabled") { row in
                 row.title = Bundle.main.localizedString(forKey: "Mod Messages", value: "Mod Messages", table: "Localizeable")
@@ -129,25 +161,25 @@ class SettingsView: FormViewController {
                 
                 section.tag = "always_users_section"
                 
-                section.addButtonProvider = { section in
-                    return ButtonRow(){
+                section.addButtonProvider = { _ in
+                    ButtonRow {
                         $0.title = Bundle.main.localizedString(forKey: "Tap to Add User", value: "Tap to Add User", table: "Localizeable")
                     }
                 }
-                section.multivaluedRowToInsertAt = { index in
-                    return AccountRow() {
+                section.multivaluedRowToInsertAt = { _ in
+                    AccountRow {
                         $0.placeholder = Bundle.main.localizedString(forKey: "Username", value: "Username", table: "Localizeable")
                     }
                 }
                 
                 for user in settings.alwaysUsers {
-                    section <<< AccountRow() {
+                    section <<< AccountRow {
                         $0.placeholder = Bundle.main.localizedString(forKey: "Username", value: "Username", table: "Localizeable")
                         $0.value = user
                     }
                 }
                 
-                section <<< AccountRow() {
+                section <<< AccountRow {
                     $0.placeholder = Bundle.main.localizedString(forKey: "Username", value: "Username", table: "Localizeable")
                 }
             }
@@ -157,25 +189,25 @@ class SettingsView: FormViewController {
                                    footer: Bundle.main.localizedString(forKey: "These users are never shown, even if they translate a message", value: "These users are never shown, even if they translate a message", table: "Localizeable")) { section in
                 section.tag = "never_users_section"
                 
-                section.addButtonProvider = { section in
-                    return ButtonRow(){
+                section.addButtonProvider = { _ in
+                    ButtonRow {
                         $0.title = Bundle.main.localizedString(forKey: "Tap to Add User", value: "Tap to Add User", table: "Localizeable")
                     }
                 }
-                section.multivaluedRowToInsertAt = { index in
-                    return AccountRow() {
+                section.multivaluedRowToInsertAt = { _ in
+                    AccountRow {
                         $0.placeholder = Bundle.main.localizedString(forKey: "Username", value: "Username", table: "Localizeable")
                     }
                 }
                 
                 for user in settings.neverUsers {
-                    section <<< AccountRow() {
+                    section <<< AccountRow {
                         $0.placeholder = Bundle.main.localizedString(forKey: "Username", value: "Username", table: "Localizeable")
                         $0.value = user
                     }
                 }
                 
-                section <<< AccountRow() {
+                section <<< AccountRow {
                     $0.placeholder = Bundle.main.localizedString(forKey: "Username", value: "Username", table: "Localizeable")
                 }
             }
@@ -190,7 +222,7 @@ class SettingsView: FormViewController {
                         row.title = Bundle.main.localizedString(forKey: "Clear Image Cache", value: "Clear Image Cache", table: "Localizeable")
                     }
                 }
-            }.onCellSelection() { _ , row  in
+            }.onCellSelection { _, row in
                 KingfisherManager.shared.cache.clearCache()
                 row.title = Bundle.main.localizedString(forKey: "Clear Image Cache", value: "Clear Image Cache", table: "Localizeable") + " (0.0 MB)"
                 row.updateCell()
@@ -198,40 +230,25 @@ class SettingsView: FormViewController {
         
             <<< ButtonRow("clear_other_cashe") { row in
                 row.title = Bundle.main.localizedString(forKey: "Clear Other Caches", value: "Clear Other Caches", table: "Localizeable")
-            }.onCellSelection() { _ , row  in
+            }.onCellSelection { _, _ in
                 URLCache.shared.removeAllCachedResponses()
             }
     }
     
-    
-//    func getCacheSize() -> String {
-//        var sizeOut: String = ""
-//
-//        ImageCache.default.calculateDiskStorageSize { result in
-//            switch result {
-//            case .success(let size):
-//                sizeOut = "(\(Double(size) / 1024 / 1024) MB)"
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-//
-//        return sizeOut
-//    }
-    
     @objc func settingsDone() {
         let values = form.values()
         
-        if let always = values["always_users_section"] as? Array<String> {
+        if let always = values["always_users_section"] as? [String] {
             settings.alwaysUsers = always
         }
-        if let never = values["never_users_section"] as? Array<String> {
+        if let never = values["never_users_section"] as? [String] {
             settings.neverUsers = never
         }
         
         stepper.steps.accept(AppStep.settingsDone)
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }

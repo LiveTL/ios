@@ -5,24 +5,27 @@
 //  Created by Mason Phillips on 4/6/21.
 //
 
+import Combine
 import Foundation
 import SwiftyUserDefaults
-import Combine
 
 extension DefaultsKeys {
-    var languages   : DefaultsKey<[TranslatedLanguageTag]> { .init("languages", defaultValue: [.en]) }
+    var languages: DefaultsKey<[TranslatedLanguageTag]> { .init("languages", defaultValue: [.en]) }
     var mod_messages: DefaultsKey<Bool> { .init("mod_messages_enabled", defaultValue: true) }
-    var timestamps  : DefaultsKey<Bool> { .init("timestamps_enabled", defaultValue: true) }
-    var captions    : DefaultsKey<Bool> { .init("captions_enabled", defaultValue: true)}
-    var clipboard   : DefaultsKey<Bool> { .init("clipboard_enabled", defaultValue: false) }
-    var thumbnails  : DefaultsKey<Bool> { .init("thumbnails_enabled", defaultValue: true)}
-    var thumbnailBlur: DefaultsKey<Bool> { .init("thumbnail_blur_enabled", defaultValue: false)}
-    var thumbnailDarken: DefaultsKey<Bool> { .init("thumbnail_darken_enabled", defaultValue: true)}
+    var timestamps: DefaultsKey<Bool> { .init("timestamps_enabled", defaultValue: true) }
+    var captions: DefaultsKey<Bool> { .init("captions_enabled", defaultValue: true) }
+    var clipboard: DefaultsKey<Bool> { .init("clipboard_enabled", defaultValue: false) }
+    var thumbnails: DefaultsKey<Bool> { .init("thumbnails_enabled", defaultValue: true) }
+    var thumbnailBlur: DefaultsKey<Bool> { .init("thumbnail_blur_enabled", defaultValue: false) }
+    var thumbnailDarken: DefaultsKey<Bool> { .init("thumbnail_darken_enabled", defaultValue: true) }
+    var youtubeLogin: DefaultsKey<Bool> { .init("youtube_login", defaultValue: false) }
+    var englishNames: DefaultsKey<Bool> { .init("english_names", defaultValue: false)}
     
     var always_users: DefaultsKey<[String]> { .init("always_shown_users", defaultValue: []) }
-    var never_users : DefaultsKey<[String]> { .init("never_shown_users", defaultValue: []) }
+    var never_users: DefaultsKey<[String]> { .init("never_shown_users", defaultValue: []) }
+    var spotlightUser: DefaultsKey<String?> { .init("spotlight_user", defaultValue: nil) }
     
-    var orgFilter   : DefaultsKey<Organization> { .init("org_filter", defaultValue: Organization.Hololive)}
+    var orgFilter: DefaultsKey<Organization> { .init("org_filter", defaultValue: Organization.Hololive) }
 }
 
 class SettingsService {
@@ -58,6 +61,15 @@ class SettingsService {
     
     @SwiftyUserDefault(keyPath: \.captions)
     var captions: Bool
+    
+    @SwiftyUserDefault(keyPath: \.spotlightUser)
+    var spotlightUser: String?
+    
+    @SwiftyUserDefault(keyPath: \.youtubeLogin)
+    var youtubeLogin: Bool
+    
+    @SwiftyUserDefault(keyPath: \.englishNames)
+    var englishNames: Bool
     
     var singleLanguage: TranslatedLanguageTag {
         get { return languages.first ?? .en }

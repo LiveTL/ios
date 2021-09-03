@@ -101,7 +101,8 @@ const messageReceiveCallback = async(response) => {
                         } else if (run.emoji) {
                             runs.push({
                                 type: 'emote',
-                                src: run.emoji.image.thumbnails[0].url
+                                src: run.emoji.image.thumbnails[0].url,
+                                emojiId: run.emoji.emojiId
                             });
                         }
                     });

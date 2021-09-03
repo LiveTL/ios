@@ -47,10 +47,15 @@ class StreamerCell: UITableViewCell {
         contentView.addSubview(start)
     }
     
-    func configure(with item: HTResponse.Streamer, services: AppServices) {
+    func configure(with item: HoloDexResponse.Streamer, services: AppServices) {
         
         title.text = item.title
-        channel.text = item.channel.name
+        if services.settings.englishNames {
+            channel.text = item.channel.english_name
+        } else {
+            channel.text = item.channel.name
+        }
+        
         start.text = item.start_scheduled.toRelative(style: RelativeFormatter.defaultStyle())
         
         icon.kf.indicatorType = .activity
@@ -71,7 +76,15 @@ class StreamerCell: UITableViewCell {
         }
         
         
-        self.thumbnail.kf.setImage(with: item.thumbnail!, options: [.processor(processor), .cacheOriginalImage])
+        self.thumbnail.kf.setImage(with: item.thumbnail!, options: [.processor(processor), .cacheOriginalImage]) { result in
+            switch result {
+            case .failure(_): do {
+                self.thumbnail.kf.setImage(with: item.backupThumbnail!, options: [.processor(processor), .cacheOriginalImage])
+            }
+            case .success(_):
+                break
+            }
+        }
     }
     
     override func layoutSubviews() {

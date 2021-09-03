@@ -10,18 +10,20 @@ import SwiftDate
 
 struct TranslatedMessage {
     let author: Author
-    let message: String
+    let message: [Message]
     let languages: [String]
     
     let timestamp: Date
     let show     : Double
+    let superchat: Superchat?
     
     init?(from message: InjectedMessage) {
         self.author = Author(from: message.author)
         self.timestamp = message.timestamp
         self.show = message.showtime
+        self.superchat = message.superchat
         
-        var m: String? = nil
+        var m: [Message?] = []
         var l: [String]? = nil
         
         if case let .text(s) = message.messages.first {
@@ -51,8 +53,14 @@ struct TranslatedMessage {
                 
                 
                 let mStart = s.index(after: end)
-                m = String(s[mStart..<s.endIndex]).trimmingCharacters(in: [" ", "-", ":"])
+                m.append(Message.text(String(s[mStart..<s.endIndex]).trimmingCharacters(in: [" ", "-", ":"])))
                 l = finalLang
+                
+                for item in message.messages {
+                    if item != message.messages.first {
+                        m.append(item)
+                    }
+                }
                 break
             }
             for delim in LangDelims {
@@ -65,20 +73,39 @@ struct TranslatedMessage {
                 
                 guard TranslatedLanguageTag.allCases.map({ $0.tag }).contains(lang) else { continue }
                 let mStart = s.index(after: end)
-                m = String(s[mStart..<s.endIndex]).trimmingCharacters(in: [" ", "-", ":"])
+                m[0] = Message.text(String(s[mStart..<s.endIndex]).trimmingCharacters(in: [" ", "-", ":"]))
                 l = [lang]
                 break
             }
         }
         
-        guard let lang = l, let mess = m else { return nil }
+        guard let lang = l else { return nil }
+        if m.first == nil {
+            return nil
+        }
+        let mess = m.compactMap({ $0 })
         self.message = mess
         self.languages = lang
+    }
+    
+    init(from mchad: MchadScript, room: MchadRoom) {
+        
+        self.author = Author(from: room)
+        self.message = [Message.text(mchad.Stext)]
+        self.languages = [room.Tags]
+        self.timestamp = mchad.Stime
+        self.show = mchad.Stime.timeIntervalSince1970
+        self.superchat = nil
     }
     
     struct Author {
         let name : String
         let types: [String]
+        
+        init(from archiveRoom: MchadRoom) {
+            self.name = archiveRoom.Room!
+            self.types = ["mchad"]
+        }
         
         init(from author: InjectedMessage.Author) {
             self.name = author.name
@@ -90,9 +117,24 @@ struct TranslatedMessage {
 extension TranslatedMessage: DisplayableMessage {
     var displayAuthor: String { author.name }
     var displayTimestamp: String { timestamp.toRelative(style: RelativeFormatter.twitterStyle()) }
-    var displayMessage: [Message] { [.text(message)] }
+    var displayMessage: [Message] { message }
+    var isMod: Bool { author.types.contains("moderator") }
+    var isMember: Bool {
+        if author.types.contains("new member") {
+            return true
+        } else {
+            for type in author.types {
+                if type.hasPrefix("member") {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    var superchatData: Superchat? { superchat }
     
     var sortTimestamp: Date { timestamp }
+    var showTimestamp: Double { show }
 }
 
 extension String {

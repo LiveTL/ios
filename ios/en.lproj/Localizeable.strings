@@ -61,7 +61,7 @@
 "YouTube Cookies Consent" = "YouTube Cookies Consent";
 
 /* Explination of hoy to bypass the cookie warning (make sure you include the fact that you NEED to sign in */
-"YouTube has noticed that you have not yet accepted their cookies, and has blocked access. In order to get past this warning, you'll need to sign in to your Google account. You should only need to do this once." = "YouTube has noticed that you have not yet accepted their cookies, and has blocked access. In order to get past this warning, you'll need to sign in to your Google account. You should only need to do this once.";
+"YouTube has noticed that you have not yet accepted their cookies, and has blocked access. In order to get past this warning, you'll need to sign in to your Google account. You should only need to do this once. Once you have signed in, press done." = "YouTube has noticed that you have not yet accepted their cookies, and has blocked access. In order to get past this warning, you'll need to sign in to your Google account. You should only need to do this once. Once you have signed in, press done.";
 
 /* A dismissal button */
 "OK" = "OK";
@@ -170,3 +170,33 @@
 
 /* button that clears all caches other than the image cache */
 "Clear Other Caches" = "Clear Other Caches";
+
+/* Title for banner that displays whenever you block a user */
+"Blocked" = "Blocked";
+
+/* Description for a banner displayed when a user has been blocked. %@ is the username of the blocked user */
+"Translator %@ has been blocked." = "Translator %@ has been blocked.";
+
+/* Title for a banner that appears when you add a user to the filter */
+"Added" = "Added";
+
+/* description for a banner displayed when a user gets added to the filter. %@ is the username of the added user */
+"Translator %@ has been added to the translator filter." = "Translator %@ has been added to the translator filter.";
+
+/* title for a banner that appears when a user is pinned */
+"Pinned" = "Pinned";
+
+/* Description for a banner that appears when a user is pinned. %@ is the username of the added user */
+"Translator %@ has been pinned. You will only recieve translations from them until you close this stream." = "Translator %@ has been pinned. You will only recieve translations from them until you close this stream.";
+
+/* a button that leads the user to the youtube sign in page */
+"Sign in to YouTube" = "Sign in to YouTube";
+
+/* the title for a popup that appears when a user tries to watch a mamber only stream without signing in */
+"Member Only Stream" = "Member Only Stream";
+
+/* a description for the member only stream popup */
+"It looks like you're trying to watch a member only stream. If you're already a member of this channel, you can sign into Youtube to watch it!" = "It looks like you're trying to watch a member only stream. If you're already a member of this channel, you can sign into Youtube to watch it!";
+
+/* a setting to enable english channel names */
+"Use English Channel Names" = "Use English Channel Names";

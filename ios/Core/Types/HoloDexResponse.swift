@@ -1,5 +1,5 @@
 //
-//  HTResponse.swift
+//  HoloDexResponse.swift
 //  ios
 //
 //  Created by Mason Phillips on 3/25/21.
@@ -7,18 +7,20 @@
 
 import Foundation
 import RxDataSources
+import XCDYouTubeKit
 
 
-struct HTResponse: Decodable, Equatable {
+struct HoloDexResponse: Decodable, Equatable {
     let items    : [Streamer]
-    //let upcoming: [Streamer]
-    //let ended   : [Streamer]
     
-    struct Streamer: Decodable, Identifiable, Equatable {
+    struct Streamer: Decodable, Identifiable, Equatable, Hashable {
         let id: String
         let title: String
         var thumbnail: URL? {
             return URL(string: "https://i.ytimg.com/vi/\(id)/maxresdefault.jpg")
+        }
+        var backupThumbnail: URL? {
+            return URL(string: "https://i.ytimg.com/vi/\(id)/mqdefault.jpg")
         }
         let type: String
         let published_at: Date
@@ -34,7 +36,7 @@ struct HTResponse: Decodable, Equatable {
             case new, upcoming, live, past, missing
         }
         
-        struct Channel: Decodable {
+        struct Channel: Decodable, Hashable {
             let id: String
             let name: String
             let type: String
@@ -47,7 +49,7 @@ struct HTResponse: Decodable, Equatable {
         }
     }
     
-    static func ==(l: HTResponse, r: HTResponse) -> Bool {
+    static func ==(l: HoloDexResponse, r: HoloDexResponse) -> Bool {
         return
             l.items.elementsEqual(r.items) //&&
             //l.upcoming.elementsEqual(r.upcoming) &&

@@ -12,6 +12,7 @@ abstract_target 'livetl' do
     pod 'Kingfisher'
     pod 'Neon'
     pod 'SCLAlertView'
+    pod 'NotificationBannerSwift', '~> 3.0.0'
     pod 'XCDYouTubeKit', :git => 'https://github.com/Candygoblen123/XCDYouTubeKit', :branch => 'master'
     pod 'RxCocoa'
     pod 'RxDataSources'
@@ -20,6 +21,8 @@ abstract_target 'livetl' do
     pod 'SwiftDate'
     pod 'SwiftyUserDefaults'
     pod 'M3U8Kit'
+    pod 'FontAwesome.swift'
+    pod 'RxCombine'
 
     pod 'FLEX', :configuration => 'DEBUG'
     
