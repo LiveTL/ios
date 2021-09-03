@@ -26,6 +26,7 @@ class StreamView: BaseController {
     var waitRoom = false
     let waitTimeText = UILabel()
     let waitTimeScheduled = UILabel()
+    var videoLoaded: Bool = false
     
     let chatTable = ChatTable(frame: .zero, style: .plain)
     let chatControl: UISegmentedControl
@@ -92,6 +93,7 @@ class StreamView: BaseController {
                         }
                     }
                     let playerItem = AVPlayerItem(url: streamURL!)
+                    videoLoaded = true
                     
                     player?.replaceCurrentItem(with: playerItem)
                     videoPlayer.player = player
@@ -199,57 +201,65 @@ class StreamView: BaseController {
     override func handle(_ error: Error) {
         let nserror = error as NSError
         
-//        if nserror.code == -2, waitRoom == false {
-//            waitRoom = true
-//            waitRoomView.kf.setImage(with: URL(string: "https://i.ytimg.com/vi/\(videoID)/maxresdefault.jpg"), options: [.cacheOriginalImage]) { result in
-//                switch result {
-//                case .failure: do {
-//                    self.waitRoomView.kf.setImage(with: URL(string: "https://i.ytimg.com/vi/\(self.videoID)/mqdefault.jpg"), options: [.cacheOriginalImage])
-//                    }
-//                case .success:
-//                    break
-//                }
-//            }
-//            // Get Timestamp
-//            let startStringTimestamp = nserror.userInfo["startTimestamp"] as! String
-//            let startTimestamp = Date(timeIntervalSince1970: Double(startStringTimestamp)!)
-//            let interval = DateInterval(start: Date(), end: startTimestamp)
-//
-//            // Create Countdown Timer
-//            let countDown = Int(interval.duration)
-//            Observable<Int>.timer(.seconds(0), period: .seconds(1), scheduler: MainScheduler.instance)
-//                .take(countDown + 1)
-//                .subscribe(onNext: { timePassed in
-//                    let count = countDown - timePassed
-//                    let h = String(format: "%02d", count / 3600)
-//                    let m = String(format: "%02d", (count % 3600) / 60)
-//                    let s = String(format: "%02d", (count % 3600) % 60)
-//                    var timer = "\(m):\(s)"
-//                    if h != "00" {
-//                        timer = "\(h):\(timer)"
-//                    }
-//                    self.waitTimeText.text = "Live in " + timer
-//
-//                }, onCompleted: {
-//                    self.waitTimeText.text = "Waiting on stream to start"
-//                })
-//                .disposed(by: bag)
-//            waitTimeText.font = .systemFont(ofSize: 19)
-//            waitTimeText.textColor = .white
-//
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateStyle = .long
-//            dateFormatter.timeStyle = .medium
-//            dateFormatter.timeZone = .current
-//            dateFormatter.locale = .current
-//            waitTimeScheduled.text = dateFormatter.string(from: startTimestamp)
-//            waitTimeScheduled.font = .systemFont(ofSize: 15)
-//            waitTimeScheduled.textColor = .white
-//
-//            waitRoomTextView.addSubview(waitTimeText)
-//            waitRoomTextView.addSubview(waitTimeScheduled)
-//            model.input.loadPreviewChat(videoID, duration: 0)
-//        }
+        if nserror.code == -2, waitRoom == false {
+            waitRoom = true
+            waitRoomView.kf.setImage(with: URL(string: "https://i.ytimg.com/vi/\(videoID)/maxresdefault.jpg"), options: [.cacheOriginalImage]) { result in
+                switch result {
+                case .failure: do {
+                    self.waitRoomView.kf.setImage(with: URL(string: "https://i.ytimg.com/vi/\(self.videoID)/mqdefault.jpg"), options: [.cacheOriginalImage])
+                    }
+                case .success:
+                    break
+                }
+            }
+            // Get Timestamp
+            let startStringTimestamp = nserror.userInfo["startTimestamp"] as! String
+            let startTimestamp = Date(timeIntervalSince1970: Double(startStringTimestamp)!)
+            let interval = DateInterval(start: Date(), end: startTimestamp)
+            
+            // try to load the video until it loads
+            Observable<Int>.timer(.seconds(0), period: .seconds(10), scheduler: MainScheduler.instance)
+                .take(until: { _ in self.videoLoaded })
+                .subscribe(onNext: {_ in self.load(self.videoID)}, onCompleted: {
+                            print("Video loaded")
+                    
+                })
+                .disposed(by: bag)
+            
+            // Create Countdown Timer
+            let countDown = Int(interval.duration)
+            Observable<Int>.timer(.seconds(0), period: .seconds(1), scheduler: MainScheduler.instance)
+                .take(countDown + 1)
+                .subscribe(onNext: { timePassed in
+                    let count = countDown - timePassed
+                    let h = String(format: "%02d", count / 3600)
+                    let m = String(format: "%02d", (count % 3600) / 60)
+                    let s = String(format: "%02d", (count % 3600) % 60)
+                    var timer = "\(m):\(s)"
+                    if h != "00" {
+                        timer = "\(h):\(timer)"
+                    }
+                    self.waitTimeText.text = "Live in " + timer
+                }, onCompleted: {
+                    self.waitTimeText.text = "Waiting on stream to start..."
+                })
+                .disposed(by: bag)
+            waitTimeText.font = .systemFont(ofSize: 19)
+            waitTimeText.textColor = .white
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .long
+            dateFormatter.timeStyle = .medium
+            dateFormatter.timeZone = .current
+            dateFormatter.locale = .current
+            waitTimeScheduled.text = dateFormatter.string(from: startTimestamp)
+            waitTimeScheduled.font = .systemFont(ofSize: 15)
+            waitTimeScheduled.textColor = .white
+
+            waitRoomTextView.addSubview(waitTimeText)
+            waitRoomTextView.addSubview(waitTimeScheduled)
+            model.input.loadPreviewChat(videoID, duration: 0)
+        }
         
         if nserror.code == -6, nserror.userInfo["consentHtmlData"] as? String != nil {
             closeStream()
@@ -272,7 +282,7 @@ class StreamView: BaseController {
                 }
                 alert.showError(Bundle.main.localizedString(forKey: "An Error Occurred", value: "An Error Occurred", table: "Localizeable"), subTitle: error.localizedDescription + " You'll need to join the channel from youtube.com or the YouTube app. If this is in error, try logging out and logging in again.")
             }
-        } else { //if !nserror.localizedDescription.starts(with: "This live event will begin in")  {
+        } else if !nserror.localizedDescription.starts(with: "This live event will begin in")  {
             let alert = SCLAlertView()
             alert.addButton(Bundle.main.localizedString(forKey: "Go Back", value: "Go Back", table: "Localizeable")) {
                 self.closeStream()
