@@ -18,6 +18,9 @@ import UIKit
 import FontAwesome_swift
 
 class HomeView: BaseController {
+    var popoutWidth: CGFloat = 333
+    var popoutImageHeight: CGFloat = 187
+    
     var rightButton: UIBarButtonItem {
         let b = UIBarButtonItem(title: "cogs", style: .plain, target: self, action: #selector(settings))
         b.setTitleTextAttributes([.font: UIFont(name: "FontAwesome5Pro-Solid", size: 20)!], for: .normal)
@@ -148,6 +151,13 @@ class HomeView: BaseController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
+        switch UIDevice.current.model {
+        case "iPhone": view.width < view.height ? iPhoneLayoutPortrait() : iPhoneLayoutLandscape()
+        case "iPad": view.width < view.height ? iPadLayoutPortrait() : iPadLayoutLandscape()
+            
+        default: break
+        }
+        
         table.fillSuperview(left: 5, right: 5, top: 15, bottom: 5)
     }
 }
@@ -190,7 +200,7 @@ extension HomeView: UITableViewDelegate {
             let viewController = UIViewController()
             let popoutView = UIView()
             let imageView = UIImageView()
-            popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: 999)
+            popoutView.frame = CGRect(x: 0, y: 0, width: popoutWidth, height: 999)
             // popoutView.clipsToBounds = true
 
             imageView.kf.indicatorType = .activity
@@ -204,7 +214,7 @@ extension HomeView: UITableViewDelegate {
                 }
             }
             popoutView.addSubview(imageView)
-            imageView.anchorToEdge(.top, padding: 0, width: 333, height: 187)
+            imageView.anchorToEdge(.top, padding: 0, width: popoutWidth, height: popoutImageHeight)
 
             let titleText = model.output.title(for: indexPath.section, and: indexPath.row)
             let nsText = titleText as NSString?
@@ -218,13 +228,13 @@ extension HomeView: UITableViewDelegate {
             popoutView.addSubview(title)
 
             title.sizeToFit()
-            title.align(.underCentered, relativeTo: imageView, padding: 10, width: 300, height: textSize?.height ?? 0)
+            title.align(.underCentered, relativeTo: imageView, padding: 10, width: popoutWidth - 30, height: textSize?.height ?? 0)
             title.leadingAnchor.constraint(equalTo: popoutView.safeAreaLayoutGuide.leadingAnchor, constant: 100).isActive = true
             title.trailingAnchor.constraint(equalTo: popoutView.safeAreaLayoutGuide.trailingAnchor, constant: -100).isActive = true
             title.layoutIfNeeded()
 
             let popoutHeight = title.height + imageView.height + 20
-            popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: popoutHeight)
+            popoutView.frame = CGRect(x: 0, y: 0, width: popoutWidth, height: popoutHeight)
             viewController.view = popoutView
             viewController.preferredContentSize = popoutView.frame.size
 
@@ -257,5 +267,25 @@ extension HomeView: UITableViewDelegate {
             }
             return UIMenu(title: "", image: nil, children: [shareAction, youtubeAction])
         }
+    }
+    
+    func iPhoneLayoutPortrait() {
+        popoutWidth = 333
+        popoutImageHeight = 187
+    }
+
+    func iPhoneLayoutLandscape() {
+        popoutWidth = 262
+        popoutImageHeight = 147
+    }
+    
+    func iPadLayoutPortrait() {
+        popoutWidth = 340
+        popoutImageHeight = 191
+    }
+
+    func iPadLayoutLandscape() {
+        popoutWidth = 343
+        popoutImageHeight = 192
     }
 }
