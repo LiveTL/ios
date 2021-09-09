@@ -48,5 +48,5 @@ extension InjectedMessage: DisplayableMessage {
     var superchatData: Superchat? { superchat }
 
     var sortTimestamp: Date { timestamp }
-    var showTimestamp: Date { Date(timeIntervalSinceNow: showtime/1000) }
+    var showTimestamp: Date { Date(timeIntervalSince1970: showtime / 1000) }
 }

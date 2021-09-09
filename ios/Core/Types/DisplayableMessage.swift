@@ -55,6 +55,4 @@ enum Message: Decodable {
     }
 }
 
-extension Message: Equatable {
-    
-}
+extension Message: Equatable {}

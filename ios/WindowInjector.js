@@ -57,14 +57,19 @@ const messageReceiveCallback = async(response) => {
             console.debug('Response was invalid', response);
             return;
         }
+        console.log("Hello world");
+        
         (
             response.continuationContents.liveChatContinuation.actions || []
         ).forEach((action, i) => {
             try {
                 let currentElement = action.addChatItemAction;
+                const offsetMs = response.continuationContents?.liveChatContinuation.continuations[0].timedContinuationData?.timeoutMs || response.continuationContents?.liveChatContinuation.continuations[0].invalidationContinuationData?.timeoutMs;
+                
                 if (action.replayChatItemAction != null) {
                     const thisAction = action.replayChatItemAction.actions[0];
                     currentElement = thisAction.addChatItemAction;
+                    offsetMs = action.replayChatItemAction.videoOffsetTimeMsec;
                 }
                 currentElement = (currentElement || {}).item;
                 if (!currentElement) {
@@ -120,8 +125,7 @@ const messageReceiveCallback = async(response) => {
                     index: i,
                     messages: runs,
                     timestamp: Math.round(parseInt(timestampUsec) / 1000),
-                    showtime: isReplay ? getMillis(timestampText, timestampUsec)
-                        : date.getTime() - (timestampUsec / 1000)
+                    showtime: isReplay ? offsetMs : (timestampUsec / 1000) + offsetMs + 2000
                 };
                 if (currentElement.liveChatPaidMessageRenderer) {
                     item.superchat = {
