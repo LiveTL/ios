@@ -38,14 +38,17 @@ protocol HomeModelOutput {
 class HomeModel: BaseModel {
     let refresh = BehaviorRelay<Void>(value: ())
     
-    private let streamers    = BehaviorRelay<HoloDexResponse?>(value: nil)
+    private var streamers    = BehaviorRelay<HoloDexResponse?>(value: nil)
+    private let liveStreamers    = BehaviorRelay<HoloDexResponse?>(value: nil)
+    private let upStreamers    = BehaviorRelay<HoloDexResponse?>(value: nil)
+    private let pastStreamers    = BehaviorRelay<HoloDexResponse?>(value: nil)
     private let refreshState = BehaviorRelay<Bool>(value: false)
     
     override init(_ services: AppServices) {
         super.init(services)
         
         refresh.subscribe(onNext: { _ in self.loadStreamers(services.settings.orgFilter) }).disposed(by: bag)
-        streamers.compactMap { $0 }.distinctUntilChanged()
+        liveStreamers.compactMap { $0 }.distinctUntilChanged()
             .map { _ in false }
             .bind(to: refreshState)
             .disposed(by: bag)
@@ -53,8 +56,28 @@ class HomeModel: BaseModel {
     
     func loadStreamers(_ org: Organization) {
         refreshState.accept(true)
-        services.holodex.streamers(org.description)
+        services.holodex.streamers(org.description, status: "live")
             .asObservable()
+            .bind(to: liveStreamers)
+            .disposed(by: bag)
+        services.holodex.streamers(org.description, status: "upcoming")
+            .asObservable()
+            .bind(to: upStreamers)
+            .disposed(by: bag)
+        services.holodex.streamers(org.description, status: "past")
+            .asObservable()
+            .bind(to: pastStreamers)
+            .disposed(by: bag)
+        
+        Observable.combineLatest(liveStreamers, upStreamers, pastStreamers)
+            .asObservable()
+            .map({ live, upcoming, past -> HoloDexResponse in
+                var combined: [HoloDexResponse.Streamer] = []
+                combined.append(contentsOf: live?.items ?? [])
+                combined.append(contentsOf: upcoming?.items ?? [])
+                combined.append(contentsOf: past?.items ?? [])
+                return HoloDexResponse(items: combined)
+            })
             .bind(to: streamers)
             .disposed(by: bag)
     }
@@ -88,7 +111,7 @@ extension HomeModel: HomeModelOutput {
     
     func video(for section: Int, and index: Int) -> String {
         let r = streamers.value!.sections()
-        //return "x1EZYh8aGwA"
+        //return "kWTVKNhRmfg"
         return r[section].items[index].id
     }
     func thumbnail(for section: Int, and index: Int) -> URL? {
@@ -123,14 +146,14 @@ extension HoloDexResponse {
         
         let l = items.filter { $0.status == .live }.sorted { $0.start_scheduled > $1.start_scheduled }
         let u = items.filter { $0.status == .upcoming }.sorted { $0.start_scheduled < $1.start_scheduled }
-        let e = items.filter { $0.status == .past }.sorted { $0.start_scheduled > $1.start_scheduled }
+        let e = items.filter { $0.status == .past && $0.start_scheduled <= Date() }.sorted { $0.start_scheduled > $1.start_scheduled }
         
         var rtr: [StreamerItemModel] = []
         
         if !l.isEmpty { rtr.append(StreamerItemModel(title: Bundle.main.localizedString(forKey: "Live", value: "Live", table: "Localizeable"), items: l)) }
         if !u.isEmpty { rtr.append(StreamerItemModel(title: Bundle.main.localizedString(forKey: "Upcoming", value: "Upcoming", table: "Localizeable"), items: u)) }
         if !e.isEmpty { rtr.append(StreamerItemModel(title: Bundle.main.localizedString(forKey: "Ended", value: "Ended", table: "Localizeable"), items: e))}
-        rtr.append(StreamerItemModel(title: Bundle.main.localizedString(forKey: "Stream data provided by Holodex. Results capped at 50.", value: "Stream data provided by Holodex. Results capped at 50.", table: "Localizeable"), items: []))
+        rtr.append(StreamerItemModel(title: Bundle.main.localizedString(forKey: "Stream data provided by Holodex.", value: "Stream data provided by Holodex.", table: "Localizeable"), items: []))
         
         return rtr
     }

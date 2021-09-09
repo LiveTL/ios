@@ -12,9 +12,9 @@ import RxSwift
 struct HoloDexServices {
     init() {}
 
-    func streamers(_ org: String) -> Single<HoloDexResponse> {
+    func streamers(_ org: String, status: String) -> Single<HoloDexResponse> {
         return Single.create { observer in
-            let url = URL(string: "https://holodex.net/api/v2/videos?status=live%2Cupcoming%2Cpast&lang=all&type=stream&include=description%2Clive_info&org=\(org.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "Hololive")&sort=start_scheduled&order=desc&limit=50&offset=0&paginated=%3Cempty%3E&max_upcoming_hours=48")!
+            let url = URL(string: "https://holodex.net/api/v2/videos?status=\(status)&lang=all&type=stream&include=description%2Clive_info&org=\(org.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "Hololive")&sort=start_scheduled&order=desc&limit=50&offset=0&paginated=%3Cempty%3E&max_upcoming_hours=48")!
             let task = URLSession.shared.dataTask(with: url) { response, _, error in
                 if let response = response {
                     do {
