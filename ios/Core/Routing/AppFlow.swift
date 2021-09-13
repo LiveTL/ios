@@ -8,6 +8,7 @@
 import UIKit
 import RxCocoa
 import RxFlow
+import Kingfisher
 
 class AppFlow: Flow {
     var root: Presentable {
@@ -24,6 +25,7 @@ class AppFlow: Flow {
         switch step {
         case .home                   : return toHome()
         case .view(let id)           : return toStreamView(id)
+        case .streamDone             : return streamViewDone()
         case .settings               : return toSettings()
         case .settingsDone           : return settingsDone()
         case .toConsent(let showAlert): return toConsent(showAlert)
@@ -35,14 +37,21 @@ class AppFlow: Flow {
     
     private func toHome() -> FlowContributors {
         let controller = HomeView(stepper, services)
-        rootViewController.setViewControllers([controller], animated: true)
-        
+        rootViewController.pushViewController(controller, animated: true)
+        //rootViewController.setViewControllers([controller], animated: true)
+
         return .none
     }
     private func toStreamView(_ id: String) -> FlowContributors {
         let controller = StreamView(stepper, services)
         controller.load(id)
-        rootViewController.setViewControllers([controller], animated: true)
+        KingfisherManager.shared.cache.clearMemoryCache()
+        rootViewController.pushViewController(controller, animated: true)
+        
+        return .none
+    }
+    private func streamViewDone() -> FlowContributors {
+        rootViewController.popViewController(animated: true)
         
         return .none
     }

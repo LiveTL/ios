@@ -191,7 +191,7 @@ class StreamView: BaseController {
         videoPlayer.player = nil
         player = nil
         settingsService.spotlightUser = nil
-        stepper.steps.accept(AppStep.home)
+        stepper.steps.accept(AppStep.streamDone)
     }
     
     @objc func settings() {
@@ -201,7 +201,7 @@ class StreamView: BaseController {
     override func handle(_ error: Error) {
         let nserror = error as NSError
         
-        if nserror.code == -2, waitRoom == false {
+        if nserror.code == -2, let startStringTimestamp = nserror.userInfo["startTimestamp"] as? String, waitRoom == false {
             waitRoom = true
             waitRoomView.kf.setImage(with: URL(string: "https://i.ytimg.com/vi/\(videoID)/maxresdefault.jpg"), options: [.cacheOriginalImage]) { result in
                 switch result {
@@ -213,7 +213,7 @@ class StreamView: BaseController {
                 }
             }
             // Get Timestamp
-            let startStringTimestamp = nserror.userInfo["startTimestamp"] as! String
+            //let startStringTimestamp = nserror.userInfo["startTimestamp"] as! String
             let startTimestamp = Date(timeIntervalSince1970: Double(startStringTimestamp)!)
             let interval = DateInterval(start: Date(), end: startTimestamp)
             
@@ -363,3 +363,5 @@ class StreamView: BaseController {
         chatControl.align(.aboveCentered, relativeTo: chatTable, padding: 2, width: view.width * 0.3, height: 35)
     }
 }
+
+

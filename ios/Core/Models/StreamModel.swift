@@ -98,17 +98,18 @@ class StreamModel: BaseModel {
             control == .allChat ? live : translated
         }
         .map { $0.sorted { $0.sortTimestamp > $1.sortTimestamp } }
-        .bind(to: rawChatRelay)
+        //.bind(to: rawChatRelay)
+        .bind(to: chatRelay)
         .disposed(by: bag)
         
-        Observable.combineLatest(Observable<Int>.timer(.milliseconds(500), scheduler: MainScheduler.instance), rawChatRelay)
-            .map { _, chat -> [DisplayableMessage] in
-                var f = chat.filter { $0.showTimestamp <= Date() }
-                f.append(contentsOf: self.chatRelay.value)
-                return f
-            }
-            .map { $0.sorted { $0.showTimestamp > $1.showTimestamp } }
-            .bind(to: chatRelay).disposed(by: bag)
+//        Observable.combineLatest(Observable<Int>.timer(.milliseconds(500), scheduler: MainScheduler.instance), rawChatRelay)
+//            .map { _, chat -> [DisplayableMessage] in
+//                var f = chat.filter { $0.showTimestamp <= Date() }
+//                f.append(contentsOf: self.chatRelay.value)
+//                return f
+//            }
+//            .map { $0.sorted { $0.showTimestamp > $1.showTimestamp } }
+//            .bind(to: chatRelay).disposed(by: bag)
         
         playerRelay.compactMap { $0 }
             .map { (id: $0.identifier, duration: $0.duration) }

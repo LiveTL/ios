@@ -11,6 +11,7 @@ import RxFlow
 enum AppStep: Step {
     case home
     case view(_ id: String)
+    case streamDone
     case settings, settingsDone
     case filter, filterDone
     case toConsent(_ showAlert: Bool), consentDone
