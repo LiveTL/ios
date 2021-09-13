@@ -48,7 +48,7 @@ class HomeModel: BaseModel {
         super.init(services)
         
         refresh.subscribe(onNext: { _ in self.loadStreamers(services.settings.orgFilter) }).disposed(by: bag)
-        liveStreamers.compactMap { $0 }.distinctUntilChanged()
+        liveStreamers.compactMap { $0 }//.distinctUntilChanged()
             .map { _ in false }
             .bind(to: refreshState)
             .disposed(by: bag)

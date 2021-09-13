@@ -64,7 +64,6 @@ class HomeView: BaseController {
                                                selector: #selector(checkPasteboard),
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
-        
         view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = rightButton
         navigationItem.leftBarButtonItem = leftButton
@@ -86,6 +85,7 @@ class HomeView: BaseController {
         let engNameObserver = Defaults.observe(\.englishNames) { _ in self.reload() }
         observers.append(contentsOf: [orgObserver, thumbnailsObserver, blurObserver, darkenObserver, engNameObserver])
         
+        refresh.addTarget(self, action: #selector(reload), for: .valueChanged)
         refresh.rx.controlEvent(.valueChanged).bind(to: model.input.refresh).disposed(by: bag)
         model.output.refreshDoneDriver.drive(refresh.rx.isRefreshing).disposed(by: bag)
         
@@ -95,6 +95,7 @@ class HomeView: BaseController {
             .map { $0.sections() }
             .drive(table.rx.items(dataSource: dataSource))
             .disposed(by: bag)
+        table.addSubview(refresh)
         view.addSubview(table)
         
         model.input.loadStreamers(services.settings.orgFilter)
@@ -141,7 +142,7 @@ class HomeView: BaseController {
         stepper.steps.accept(AppStep.filter)
     }
     
-    private func reload() {
+    @objc private func reload() {
         model.input.refresh.accept(())
         DispatchQueue.main.async {
             self.navigationItem.title = "\(self.services.settings.orgFilter.short)Dex"
@@ -287,5 +288,11 @@ extension HomeView: UITableViewDelegate {
     func iPadLayoutLandscape() {
         popoutWidth = 343
         popoutImageHeight = 192
+    }
+}
+
+extension HomeView: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
