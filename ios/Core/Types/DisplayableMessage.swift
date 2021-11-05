@@ -16,7 +16,7 @@ protocol DisplayableMessage {
     var superchatData   : Superchat? { get }
     
     var sortTimestamp: Date { get }
-    var showTimestamp: Date { get }
+    
 }
 
 extension DisplayableMessage {

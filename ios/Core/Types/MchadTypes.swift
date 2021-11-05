@@ -20,7 +20,13 @@ struct MchadRoom: Decodable {
     let Downloadable: Bool?
 }
 
+struct MchadIncoming: Decodable {
+    let flag: String?
+    let content: MchadScript
+}
+
 struct MchadScript: Decodable {
+    let _id: String
     let Stime: Date
     let Stext: String
     let CC: String?

@@ -14,23 +14,23 @@ struct TranslatedMessage {
     let languages: [String]
     
     let timestamp: Date
-    let show     : Double
+    let show: Double
     let superchat: Superchat?
     
     init?(from message: InjectedMessage) {
         self.author = Author(from: message.author)
         self.timestamp = message.timestamp
-        self.show = message.showtime
+        self.show = 0
         self.superchat = message.superchat
         
         var m: [Message?] = []
-        var l: [String]? = nil
+        var l: [String]?
         
-        if case let .text(s) = message.messages.first {
+        if case .text(let s) = message.messages.first {
             for token in tokens {
                 guard
                     let begin = s.firstIndex(of: token.start),
-                    let end   = s.firstIndex(of: token.end)
+                    let end = s.firstIndex(of: token.end)
                 else { continue }
                 
                 guard begin < end else { continue }
@@ -43,14 +43,12 @@ struct TranslatedMessage {
                 
                 do {
                     for splitLang in try lang.split(usingRegex: "\\W+") {
-                        guard TranslatedLanguageTag.allCases.map({ $0.tag }).contains(splitLang) || TranslatedLanguageTag.allCases.map({ $0.description.lowercased().hasPrefix(splitLang) }).contains(Bool.init(true)) || TranslatedLanguageTag.allCases.map({ $0.tag.lowercased().hasPrefix(splitLang) }).contains(Bool.init(true)) else { continue }
+                        guard TranslatedLanguageTag.allCases.map({ $0.tag }).contains(splitLang) || TranslatedLanguageTag.allCases.map({ $0.description.lowercased().hasPrefix(splitLang) }).contains(Bool(true)) || TranslatedLanguageTag.allCases.map({ $0.tag.lowercased().hasPrefix(splitLang) }).contains(Bool(true)) else { continue }
                         finalLang.append(splitLang)
                     }
                 } catch {
                     print("Whoops")
                 }
-                
-                
                 
                 let mStart = s.index(after: end)
                 m.append(Message.text(String(s[mStart..<s.endIndex]).trimmingCharacters(in: [" ", "-", ":"])))
@@ -83,13 +81,12 @@ struct TranslatedMessage {
         if m.first == nil {
             return nil
         }
-        let mess = m.compactMap({ $0 })
+        let mess = m.compactMap { $0 }
         self.message = mess
         self.languages = lang
     }
     
     init(from mchad: MchadScript, room: MchadRoom) {
-        
         self.author = Author(from: room)
         self.message = [Message.text(mchad.Stext)]
         self.languages = [room.Tags]
@@ -99,7 +96,7 @@ struct TranslatedMessage {
     }
     
     struct Author {
-        let name : String
+        let name: String
         let types: [String]
         
         init(from archiveRoom: MchadRoom) {
@@ -131,22 +128,23 @@ extension TranslatedMessage: DisplayableMessage {
         }
         return false
     }
+
     var superchatData: Superchat? { superchat }
     
     var sortTimestamp: Date { timestamp }
-    var showTimestamp: Date { Date(timeIntervalSinceNow: show/1000) }
+    var showTimestamp: Double { show }
 }
 
 extension String {
     func split(usingRegex pattern: String) throws -> [String] {
-        //### Crashes when you pass invalid `pattern`
+        // ### Crashes when you pass invalid `pattern`
         let regex = try NSRegularExpression(pattern: pattern)
         let matches = regex.matches(in: self, range: NSRange(0..<utf16.count))
-        let ranges = try [startIndex..<startIndex] + matches.map{
+        let ranges = try [startIndex..<startIndex] + matches.map {
             guard let test = Range($0.range, in: self) else { throw TypeError.badType }
             return test
         } + [endIndex..<endIndex]
-        return (0...matches.count).map {String(self[ranges[$0].upperBound..<ranges[$0+1].lowerBound])}
+        return (0 ... matches.count).map { String(self[ranges[$0].upperBound..<ranges[$0 + 1].lowerBound]) }
     }
 }
 

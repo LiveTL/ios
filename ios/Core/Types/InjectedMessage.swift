@@ -17,7 +17,6 @@ struct MessageChunk: Decodable {
 struct InjectedMessage: Decodable {
     let author: Author
     let messages: [Message]
-    let showtime: Double
     let timestamp: Date
     let superchat: Superchat?
 
@@ -45,8 +44,9 @@ extension InjectedMessage: DisplayableMessage {
         }
         return false
     }
+
     var superchatData: Superchat? { superchat }
 
     var sortTimestamp: Date { timestamp }
-    var showTimestamp: Date { Date(timeIntervalSince1970: showtime / 1000) }
+  
 }

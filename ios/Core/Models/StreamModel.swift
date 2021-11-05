@@ -48,7 +48,6 @@ class StreamModel: BaseModel {
     
     private let controlRelay = BehaviorRelay<ChatControlType>(value: .allChat)
     
-    private let rawChatRelay = BehaviorRelay<[DisplayableMessage]>(value: [])
     private let chatRelay = BehaviorRelay<[DisplayableMessage]>(value: [])
     private let liveRelay = BehaviorRelay<[DisplayableMessage]>(value: [])
     private let translatedRelay = BehaviorRelay<[DisplayableMessage]>(value: [])
@@ -58,7 +57,7 @@ class StreamModel: BaseModel {
     
     private let chatURLRelay = BehaviorRelay<URL?>(value: nil)
     private let mchadRoomRelay = BehaviorRelay<MchadRoom?>(value: nil)
-    private let mchadScriptRelay = BehaviorRelay<[MchadScript?]>(value: [])
+    private let mchadScriptRelay = BehaviorRelay<[DisplayableMessage]>(value: [])
     private let metadataRelay = BehaviorRelay<HoloDexResponse?>(value: nil)
     
     private let replayRelay = BehaviorRelay<Bool>(value: false)
@@ -92,24 +91,13 @@ class StreamModel: BaseModel {
                 self.liveRelay.accept([])
                 self.translatedRelay.accept([])
                 self.chatRelay.accept([])
-                self.rawChatRelay.accept([])
             }).disposed(by: bag)
         Observable.combineLatest(controlRelay, liveRelay, translatedRelay).map { control, live, translated in
             control == .allChat ? live : translated
         }
         .map { $0.sorted { $0.sortTimestamp > $1.sortTimestamp } }
-        //.bind(to: rawChatRelay)
         .bind(to: chatRelay)
         .disposed(by: bag)
-        
-//        Observable.combineLatest(Observable<Int>.timer(.milliseconds(500), scheduler: MainScheduler.instance), rawChatRelay)
-//            .map { _, chat -> [DisplayableMessage] in
-//                var f = chat.filter { $0.showTimestamp <= Date() }
-//                f.append(contentsOf: self.chatRelay.value)
-//                return f
-//            }
-//            .map { $0.sorted { $0.showTimestamp > $1.showTimestamp } }
-//            .bind(to: chatRelay).disposed(by: bag)
         
         playerRelay.compactMap { $0 }
             .map { (id: $0.identifier, duration: $0.duration) }
@@ -174,30 +162,33 @@ class StreamModel: BaseModel {
             .asObservable()
             .materialize()
         
-        let mchad = services.mchad.getMchadRoom(id: id, duration: duration)
+//        let mchad = services.mchad.getMchadRoom(id: id, duration: duration)
+//            .asObservable()
+//            .materialize()
+//            .subscribe(onNext: { room in
+//                self.services.mchad.getMchadLiveTls(id, room: room.element!)
+//                    .asObservable()
+//                    .materialize()
+//                    .subscribe(onNext: { messages in
+//                        if messages.element != nil {
+//                            let push = [messages.element]
+//                            self.mchadScriptRelay.accept(push as! [DisplayableMessage])
+//                        }
+//                    })
+//                    .disposed(by: self.bag)
+//            })
+//            .disposed(by: bag)
+        
+        services.mchad.getMchadLiveTls(id, room: nil)
             .asObservable()
             .materialize()
-        
-        mchadRoomRelay.compactMap { $0 }
-            .subscribe(onNext: { room in
-                self.services.mchad.getMchadArchiveTls(id, room: room)
-                    .asObservable()
-                    .materialize()
-                    .subscribe(onNext: { messages in
-                        if messages.element != nil {
-                            self.translatedRelay.accept(messages.element as! [DisplayableMessage])
-                        }
-                    })
-                    .disposed(by: self.bag)
+            .subscribe(onNext: { messages in
+                if messages.element != nil {
+                    let push = [messages.element]
+                    self.mchadScriptRelay.accept(push as! [DisplayableMessage])
+                }
             })
-            .disposed(by: bag)
-        
-        mchad.map { $0.element?.first }
-            .bind(to: mchadRoomRelay)
-            .disposed(by: bag)
-        mchad.map { $0.error }
-            .bind(to: errorRelay)
-            .disposed(by: bag)
+           
         
         request.map { $0.element }
             .bind(to: chatURLRelay)
