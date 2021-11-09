@@ -179,15 +179,15 @@ class StreamModel: BaseModel {
 //            })
 //            .disposed(by: bag)
         
-        services.mchad.getMchadLiveTls(id, room: nil)
-            .asObservable()
-            .materialize()
-            .subscribe(onNext: { messages in
-                if messages.element != nil {
-                    let push = [messages.element]
-                    self.mchadScriptRelay.accept(push as! [DisplayableMessage])
-                }
-            })
+//        services.mchad.getMchadLiveTls(id, room: nil)
+//            .asObservable()
+//            .materialize()
+//            .subscribe(onNext: { messages in
+//                if messages.element != nil {
+//                    let push = [messages.element]
+//                    self.mchadScriptRelay.accept(push as! [DisplayableMessage])
+//                }
+//            })
            
         
         request.map { $0.element }
