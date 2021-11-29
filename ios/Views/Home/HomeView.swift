@@ -172,6 +172,10 @@ extension HomeView: UITableViewDelegate {
         let vid = model.output.video(for: indexPath.section, and: indexPath.row)
         stepper.steps.accept(AppStep.view(vid))
     }
+    
+    private func tableView(_ tableView: UITableView, didEndDisplaying cell: StreamerCell, forRowAt indexPath: IndexPath) {
+        cell.thumbnail.kf.cancelDownloadTask()
+    }
 
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let index = indexPath.row
