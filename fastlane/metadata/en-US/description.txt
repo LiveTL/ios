@@ -1,0 +1,12 @@
+Get live translations for YouTube streams, crowdsourced from bilingual viewers!
+Have you ever wanted live translations for HoloLive/Vtuber streams? Well, look no further than LiveTL!
+
+LiveTL (Live TransLate) is an app that separates translations from regular chat messages in YouTube streams. It includes the following features:
+* Filter translations for your language (messages tagged with [en], es -, etc.)
+* Select your favorite translators
+* Block spammers polluting translations
+* Clean interface
+* Archived stream (VOD) support
+* Custom user/mod filters
+* Dark mode
+* Plus much, much more!

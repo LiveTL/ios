@@ -1,0 +1,9 @@
+- Caption mode
+- Streamer backgrounds: see a thumbnail background for each streamer when selecting their name from the home list! Screenshot below. (You can also add a blur effect, or turn them off entirely)
+- Filter by org: check out streamers from different orgs, like VShojo or NijiSanji
+- peek n’ pop thumbnails in the Home Screen
+- open in YouTube functionality 
+- Share youtube links directly from the app
+- improved TL filter (it should now be consistent with the extension) 
+- Cookie Consent: For users that YouTube requires cookies for (europe), get a prompt to accept cookies from Google.
+- fixed a bug where videos would start to play with no way to stop them if you closed out of the video before it finished loading

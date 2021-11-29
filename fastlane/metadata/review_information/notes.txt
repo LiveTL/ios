@@ -1,0 +1,1 @@
+To start testing, open the YouTube app or YouTube in Safari, select a live stream, and either copy the link or open the share extension and select "Translate in LiveTL"
