@@ -14,7 +14,7 @@ struct HoloDexServices {
 
     func streamers(_ org: String, status: String) -> Single<HoloDexResponse> {
         return Single.create { observer in
-            let url = URL(string: "https://staging.holodex.net/api/v2/videos?status=\(status)&lang=all&type=stream&include=description%2Clive_info&org=\(org.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "Hololive")&sort=start_scheduled&order=desc&limit=50&offset=0&paginated=%3Cempty%3E&max_upcoming_hours=48")!
+            let url = URL(string: "https://holodex.net/api/v2/videos?status=\(status)&lang=all&type=stream&include=description%2Clive_info&org=\(org.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "Hololive")&sort=start_scheduled&order=desc&limit=50&offset=0&paginated=%3Cempty%3E&max_upcoming_hours=48")!
             
             var request = URLRequest(url: url)
             request.setValue(ProcessInfo.processInfo.environment["HOLODEX_API_KEY"]!, forHTTPHeaderField: "X-APIKEY")
