@@ -76,6 +76,10 @@
 		665774B4260C6EFE00072F30 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774B3260C6EFE00072F30 /* SettingsView.swift */; };
 		665774D8260C80F700072F30 /* StreamerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665774D7260C80F700072F30 /* StreamerCell.swift */; };
 		667DBAB52616D47400D46E69 /* WindowInjector.js in Resources */ = {isa = PBXBuildFile; fileRef = 667DBAB42616D47400D46E69 /* WindowInjector.js */; };
+		669120D227548F3F003E1D9E /* Superchat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CB58DD26C57F5F0002B8AF /* Superchat.swift */; };
+		669120D327548F4D003E1D9E /* MchadServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365045EC26D5A7F900AD6214 /* MchadServices.swift */; };
+		669120D427548F5B003E1D9E /* MchadTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365045EE26D5B03900AD6214 /* MchadTypes.swift */; };
+		669120D527548F88003E1D9E /* MediaResoulution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361CEECC26AE527B00B0558E /* MediaResoulution.swift */; };
 		66A0428E261F98CA00EB5896 /* Font Awesome 5 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66A04289261F98CA00EB5896 /* Font Awesome 5 Brands-Regular-400.otf */; };
 		66A0428F261F98CA00EB5896 /* Font Awesome 5 Pro-Light-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66A0428A261F98CA00EB5896 /* Font Awesome 5 Pro-Light-300.otf */; };
 		66A04290261F98CA00EB5896 /* Font Awesome 5 Duotone-Solid-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66A0428B261F98CA00EB5896 /* Font Awesome 5 Duotone-Solid-900.otf */; };
@@ -677,6 +681,7 @@
 				361CEECB26AE51D400B0558E /* HomeModel.swift in Sources */,
 				36E6C20826A71DF600C2B08C /* ChatControlType.swift in Sources */,
 				36FD3ED226978CBF00EAAF51 /* StreamTable.swift in Sources */,
+				669120D227548F3F003E1D9E /* Superchat.swift in Sources */,
 				36FD3EB5269781D900EAAF51 /* iosUnitTests.swift in Sources */,
 				36FD3ED026978CBB00EAAF51 /* StreamerCell.swift in Sources */,
 				36E6C1FA26A71DF600C2B08C /* HoloDexResponse.swift in Sources */,
@@ -684,6 +689,7 @@
 				36E6C20926A71DF600C2B08C /* BaseModel.swift in Sources */,
 				36E6C20026A71DF600C2B08C /* HoloDexServices.swift in Sources */,
 				36E6C20526A71DF600C2B08C /* InjectedMessage.swift in Sources */,
+				669120D427548F5B003E1D9E /* MchadTypes.swift in Sources */,
 				36E6C20126A71DF600C2B08C /* Language.swift in Sources */,
 				36E6C20726A71DF600C2B08C /* Organizations.swift in Sources */,
 				36FD3ED526978CCD00EAAF51 /* SettingsView.swift in Sources */,
@@ -698,6 +704,8 @@
 				36FD3ED326978CC200EAAF51 /* ChatCell.swift in Sources */,
 				36E6C20326A71DF600C2B08C /* AppFlow.swift in Sources */,
 				36E6C20226A71DF600C2B08C /* StreamModel.swift in Sources */,
+				669120D327548F4D003E1D9E /* MchadServices.swift in Sources */,
+				669120D527548F88003E1D9E /* MediaResoulution.swift in Sources */,
 				36E6C20A26A71DF600C2B08C /* AppServices.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -842,7 +850,7 @@
 				CODE_SIGN_ENTITLEMENTS = "yt-extension/yt-extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = RJNC97Y8QD;
+				DEVELOPMENT_TEAM = 6S4L29QT59;
 				INFOPLIST_FILE = "yt-extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -851,7 +859,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "app.livetl-dev.ios.yt-extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.livetl.ios.yt-extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -866,7 +874,7 @@
 				CODE_SIGN_ENTITLEMENTS = "yt-extension/yt-extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = RJNC97Y8QD;
+				DEVELOPMENT_TEAM = 6S4L29QT59;
 				INFOPLIST_FILE = "yt-extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -875,7 +883,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "app.livetl-dev.ios.yt-extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.livetl.ios.yt-extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1012,7 +1020,7 @@
 				CODE_SIGN_ENTITLEMENTS = ios/ios.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = RJNC97Y8QD;
+				DEVELOPMENT_TEAM = 6S4L29QT59;
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1020,7 +1028,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "app.livetl-dev.ios";
+				PRODUCT_BUNDLE_IDENTIFIER = app.livetl.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1040,7 +1048,7 @@
 				CODE_SIGN_ENTITLEMENTS = ios/ios.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = RJNC97Y8QD;
+				DEVELOPMENT_TEAM = 6S4L29QT59;
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1048,7 +1056,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "app.livetl-dev.ios";
+				PRODUCT_BUNDLE_IDENTIFIER = app.livetl.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;

@@ -1,10 +1,10 @@
 PODS:
   - Differentiator (5.0.0)
-  - Eureka (5.3.3)
-  - FLEX (4.4.1)
+  - Eureka (5.3.4)
+  - FLEX (4.6.1)
   - FontAwesome.swift (1.9.1)
-  - FontBlaster (5.1.3)
-  - Kingfisher (6.3.1)
+  - FontBlaster (5.2.0)
+  - Kingfisher (7.1.1)
   - M3U8Kit (1.0.2)
   - MarqueeLabel (4.0.5)
   - Neon (0.4.0)
@@ -21,7 +21,7 @@ PODS:
     - Differentiator (~> 5.0)
     - RxCocoa (~> 6.0)
     - RxSwift (~> 6.0)
-  - RxFlow (2.12.2):
+  - RxFlow (2.12.4):
     - RxCocoa (>= 6.0.0)
     - RxSwift (>= 6.0.0)
   - RxRelay (6.2.0):
@@ -87,11 +87,11 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
-  Eureka: e6d720290c56bb23333ad1a0e020b2a98a0e9a43
-  FLEX: 7ca2c8cd3a435ff501ff6d2f2141e9bdc934eaab
+  Eureka: 60cf058f86a8fb3ed26165ba5292b9850361b0a6
+  FLEX: bbc55d197f87d7cde2454c3981aa47069b694144
   FontAwesome.swift: 6b52cb7be66eacd28cbfaa0ca7ffd0de4a186a1d
-  FontBlaster: 5bbc2d94d5731e9bad4f46172e58b1106af99516
-  Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
+  FontBlaster: b848e9d7b0ed2f2b3ebaf5b83458eb4ff9ba0764
+  Kingfisher: f738f9c4a3415823b8e2985d10aa2d6a9f37bc4d
   M3U8Kit: 6a0d55ba2e62e146f34f53276d7c3aa78ed4fc00
   MarqueeLabel: 00cc0bcd087111dca575878b3531af980559707d
   Neon: 7fb5a9327e7e57911843f608e08f4893a74deaf9
@@ -99,7 +99,7 @@ SPEC CHECKSUMS:
   RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
   RxCombine: 74cd98f7bb1d908eff3758d13651917fc296adb3
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
-  RxFlow: fa434215aca391d10d4d5048c0a035c9502b3666
+  RxFlow: 03a73c83fb8f183107074b40ab2544c668583f73
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
