@@ -71,7 +71,7 @@ struct TranslatedMessage {
                 
                 guard TranslatedLanguageTag.allCases.map({ $0.tag }).contains(lang) else { continue }
                 let mStart = s.index(after: end)
-                m[0] = Message.text(String(s[mStart..<s.endIndex]).trimmingCharacters(in: [" ", "-", ":"]))
+                m.append(Message.text(String(s[mStart..<s.endIndex]).trimmingCharacters(in: [" ", "-", ":"])))
                 l = [lang]
                 break
             }
