@@ -1,3 +1,5 @@
 git_url "git@github.com:MatrixSenpai/fastlane_data"
 type "appstore"
 app_identifier ["app.livetl.ios", "app.livetl.ios.yt-extension"]
+generate_apple_certs false
+verbose true
