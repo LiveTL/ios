@@ -6,6 +6,7 @@ platform :ios do
   lane :release do
     match(readonly: true, type: "development")
     match(readonly: true, type: "appstore")
+    sigh
     increment_build_number(xcodeproj: "ios.xcodeproj")
     build_app(workspace: "ios.xcworkspace", scheme: "ios")
     upload_to_testflight
