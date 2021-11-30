@@ -57,11 +57,13 @@ const messageReceiveCallback = async(response) => {
             console.debug('Response was invalid', response);
             return;
         }
+        
         (
             response.continuationContents.liveChatContinuation.actions || []
         ).forEach((action, i) => {
             try {
                 let currentElement = action.addChatItemAction;
+                
                 if (action.replayChatItemAction != null) {
                     const thisAction = action.replayChatItemAction.actions[0];
                     currentElement = thisAction.addChatItemAction;
@@ -120,8 +122,7 @@ const messageReceiveCallback = async(response) => {
                     index: i,
                     messages: runs,
                     timestamp: Math.round(parseInt(timestampUsec) / 1000),
-                    showtime: isReplay ? getMillis(timestampText, timestampUsec)
-                        : date.getTime() - (timestampUsec / 1000)
+                    showtime: isReplay ? getMillis(timestampText, timestampUsec) : date.getTime() - (timestampUsec / 1000)
                 };
                 if (currentElement.liveChatPaidMessageRenderer) {
                     item.superchat = {

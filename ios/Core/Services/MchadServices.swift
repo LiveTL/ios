@@ -12,8 +12,8 @@ import RxSwift
 struct MchadServices {
     init() {}
     
-    func getMchadRoom(id: String, duration: Double) -> Single<[MchadRoom]> {
-        return Single.create { observer in
+    func getMchadRoom(id: String, duration: Double) -> Observable<MchadRoom> {
+        return Observable.create { observer in
             let request: URLRequest
             if duration > 0 {
                 // is replay
@@ -22,18 +22,23 @@ struct MchadServices {
                 request = URLRequest(url: URL(string: "https://repo.mchatx.org/Room?link=YT_\(id)")!)
             }
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
-                if let data = data, let room = String(data: data, encoding: .utf8) {
+                if let data = data {
                     do {
-                        //print(room)
+                        
                         let decoder = JSONDecoder()
                         let json = try decoder.decode([MchadRoom].self, from: data)
-                        observer(.success(json))
+                        if !json.isEmpty {
+                            for room in json {
+                                observer.onNext(room)
+                            }
+                        } else {
+                            print("No mchad room")
+                        }
                     } catch {
-                        print(error)
-                        //observer(.failure(error))
+                        observer.onError(error)
                     }
                 } else if let error = error {
-                    observer(.failure(error))
+                    observer.onError(error)
                 }
             }
             task.resume()
@@ -44,54 +49,89 @@ struct MchadServices {
         }
     }
     
-    func getMchadArchiveTls(_ id: String, room: MchadRoom) -> Single<[TranslatedMessage?]> {
+    func getMchadArchiveOffset(_ room: MchadRoom) -> Single<Double> {
         Single.create { observer in
-            let bag = DisposeBag()
-            let meta = BehaviorRelay<HoloDexResponse?>(value: nil)
-            let start = BehaviorRelay<Date?>(value: nil)
-            
             var request = URLRequest(url: URL(string: "https://repo.mchatx.org/Archive")!)
             request.httpMethod = "POST"
             request.addValue("application/json, text/plain, */*", forHTTPHeaderField: "Accept")
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            
+
             let jsonObject = NSMutableDictionary()
             jsonObject.setValue(room.Link, forKey: "link")
             let jsonData: NSData
             do {
                 jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: JSONSerialization.WritingOptions()) as NSData
                 request.httpBody = jsonData as Data?
-            } catch  {
+            } catch {
                 print(error)
             }
-            
+
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                if let data = data {
+                    do {
+                        let decoder = JSONDecoder()
+
+                        let json = try decoder.decode([MchadScript].self, from: data)
+                        if (json.first(where: { $0.Stext == "--- Stream Starts ---" })?.Stime) != nil {
+                            let offset = json.first(where: { $0.Stext == "--- Stream Starts ---" })!.Stime
+
+                            observer(.success(offset))
+                        }
+                    } catch {
+                        print(error)
+                        observer(.failure(error))
+                    }
+                } else if let error = error {
+                    print(error)
+                    observer(.failure(error))
+                }
+            }
+            task.resume()
+
+            return Disposables.create {
+                task.cancel()
+            }
+        }
+    }
+    
+    func getMchadArchiveTls(_ room: MchadRoom) -> Single<([TranslatedMessage], MchadRoom)> {
+        Single.create { observer in
+            var request = URLRequest(url: URL(string: "https://repo.mchatx.org/Archive")!)
+            request.httpMethod = "POST"
+            request.addValue("application/json, text/plain, */*", forHTTPHeaderField: "Accept")
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+            let jsonObject = NSMutableDictionary()
+            jsonObject.setValue(room.Link, forKey: "link")
+            let jsonData: NSData
+            do {
+                jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: JSONSerialization.WritingOptions()) as NSData
+                request.httpBody = jsonData as Data?
+            } catch {
+                print(error)
+            }
+
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
                 if let data = data {
                     do {
                         let decoder = JSONDecoder()
                         let json = try decoder.decode([MchadScript].self, from: data)
-                        
-                        if let startTime = json.first(where: { $0.Stext == "--- Stream Starts ---"})?.Stime {
+                        if json.first != nil {
                             let messages = json.map { TranslatedMessage(from: $0, room: room) }
-                            
-                            observer(.success(messages))
-                        } else if let startTime = json.first?.Stime {
-                            
-                        } else {
-                            let startTime = Date.distantPast
+
+                            observer(.success((messages, room)))
                         }
-                        //observer(.success(json))
                     } catch {
-                        //observer(.failure(error))
                         print(error)
+                        observer(.failure(error))
                     }
                 } else if let error = error {
                     print(error)
-                    //observer(.failure(error))
+                    observer(.failure(error))
                 }
             }
             task.resume()
-            
+
             return Disposables.create {
                 task.cancel()
             }

@@ -18,6 +18,9 @@ import UIKit
 import FontAwesome_swift
 
 class HomeView: BaseController {
+    var popoutWidth: CGFloat = 333
+    var popoutImageHeight: CGFloat = 187
+    
     var rightButton: UIBarButtonItem {
         let b = UIBarButtonItem(title: "cogs", style: .plain, target: self, action: #selector(settings))
         b.setTitleTextAttributes([.font: UIFont(name: "FontAwesome5Pro-Solid", size: 20)!], for: .normal)
@@ -61,7 +64,6 @@ class HomeView: BaseController {
                                                selector: #selector(checkPasteboard),
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
-        
         view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = rightButton
         navigationItem.leftBarButtonItem = leftButton
@@ -83,6 +85,7 @@ class HomeView: BaseController {
         let engNameObserver = Defaults.observe(\.englishNames) { _ in self.reload() }
         observers.append(contentsOf: [orgObserver, thumbnailsObserver, blurObserver, darkenObserver, engNameObserver])
         
+        refresh.addTarget(self, action: #selector(reload), for: .valueChanged)
         refresh.rx.controlEvent(.valueChanged).bind(to: model.input.refresh).disposed(by: bag)
         model.output.refreshDoneDriver.drive(refresh.rx.isRefreshing).disposed(by: bag)
         
@@ -92,6 +95,7 @@ class HomeView: BaseController {
             .map { $0.sections() }
             .drive(table.rx.items(dataSource: dataSource))
             .disposed(by: bag)
+        table.addSubview(refresh)
         view.addSubview(table)
         
         model.input.loadStreamers(services.settings.orgFilter)
@@ -138,7 +142,7 @@ class HomeView: BaseController {
         stepper.steps.accept(AppStep.filter)
     }
     
-    private func reload() {
+    @objc private func reload() {
         model.input.refresh.accept(())
         DispatchQueue.main.async {
             self.navigationItem.title = "\(self.services.settings.orgFilter.short)Dex"
@@ -147,6 +151,13 @@ class HomeView: BaseController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        
+        switch UIDevice.current.model {
+        case "iPhone": view.width < view.height ? iPhoneLayoutPortrait() : iPhoneLayoutLandscape()
+        case "iPad": view.width < view.height ? iPadLayoutPortrait() : iPadLayoutLandscape()
+            
+        default: break
+        }
         
         table.fillSuperview(left: 5, right: 5, top: 15, bottom: 5)
     }
@@ -160,6 +171,10 @@ extension HomeView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vid = model.output.video(for: indexPath.section, and: indexPath.row)
         stepper.steps.accept(AppStep.view(vid))
+    }
+    
+    private func tableView(_ tableView: UITableView, didEndDisplaying cell: StreamerCell, forRowAt indexPath: IndexPath) {
+        cell.thumbnail.kf.cancelDownloadTask()
     }
 
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
@@ -190,7 +205,7 @@ extension HomeView: UITableViewDelegate {
             let viewController = UIViewController()
             let popoutView = UIView()
             let imageView = UIImageView()
-            popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: 999)
+            popoutView.frame = CGRect(x: 0, y: 0, width: popoutWidth, height: 999)
             // popoutView.clipsToBounds = true
 
             imageView.kf.indicatorType = .activity
@@ -204,7 +219,7 @@ extension HomeView: UITableViewDelegate {
                 }
             }
             popoutView.addSubview(imageView)
-            imageView.anchorToEdge(.top, padding: 0, width: 333, height: 187)
+            imageView.anchorToEdge(.top, padding: 0, width: popoutWidth, height: popoutImageHeight)
 
             let titleText = model.output.title(for: indexPath.section, and: indexPath.row)
             let nsText = titleText as NSString?
@@ -218,13 +233,13 @@ extension HomeView: UITableViewDelegate {
             popoutView.addSubview(title)
 
             title.sizeToFit()
-            title.align(.underCentered, relativeTo: imageView, padding: 10, width: 300, height: textSize?.height ?? 0)
+            title.align(.underCentered, relativeTo: imageView, padding: 10, width: popoutWidth - 30, height: textSize?.height ?? 0)
             title.leadingAnchor.constraint(equalTo: popoutView.safeAreaLayoutGuide.leadingAnchor, constant: 100).isActive = true
             title.trailingAnchor.constraint(equalTo: popoutView.safeAreaLayoutGuide.trailingAnchor, constant: -100).isActive = true
             title.layoutIfNeeded()
 
             let popoutHeight = title.height + imageView.height + 20
-            popoutView.frame = CGRect(x: 0, y: 0, width: 333, height: popoutHeight)
+            popoutView.frame = CGRect(x: 0, y: 0, width: popoutWidth, height: popoutHeight)
             viewController.view = popoutView
             viewController.preferredContentSize = popoutView.frame.size
 
@@ -257,5 +272,31 @@ extension HomeView: UITableViewDelegate {
             }
             return UIMenu(title: "", image: nil, children: [shareAction, youtubeAction])
         }
+    }
+    
+    func iPhoneLayoutPortrait() {
+        popoutWidth = 333
+        popoutImageHeight = 187
+    }
+
+    func iPhoneLayoutLandscape() {
+        popoutWidth = 262
+        popoutImageHeight = 147
+    }
+    
+    func iPadLayoutPortrait() {
+        popoutWidth = 340
+        popoutImageHeight = 191
+    }
+
+    func iPadLayoutLandscape() {
+        popoutWidth = 343
+        popoutImageHeight = 192
+    }
+}
+
+extension HomeView: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

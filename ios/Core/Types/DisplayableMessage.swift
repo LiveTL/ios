@@ -14,9 +14,10 @@ protocol DisplayableMessage {
     var isMod           : Bool { get }
     var isMember        : Bool { get }
     var superchatData   : Superchat? { get }
+    var isMchad         : Bool { get }
     
     var sortTimestamp: Date { get }
-    var showTimestamp: Double { get }
+    
 }
 
 extension DisplayableMessage {
@@ -55,6 +56,4 @@ enum Message: Decodable {
     }
 }
 
-extension Message: Equatable {
-    
-}
+extension Message: Equatable {}

@@ -85,6 +85,8 @@ class StreamerCell: UITableViewCell {
                 break
             }
         }
+        
+        self.setNeedsLayout()
     }
     
     override func layoutSubviews() {

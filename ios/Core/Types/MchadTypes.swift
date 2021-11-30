@@ -20,8 +20,15 @@ struct MchadRoom: Decodable {
     let Downloadable: Bool?
 }
 
+struct MchadIncoming: Decodable {
+    let flag: String?
+    let content: MchadScript
+}
+
 struct MchadScript: Decodable {
-    let Stime: Date
+    let _id: String?
+    let Stime: Double
+    var Stimestamp: Date { Date() } //Doesn't matter, never shown to the user, just for sorting
     let Stext: String
     let CC: String?
     let OC: String?

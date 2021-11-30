@@ -17,7 +17,6 @@ struct MessageChunk: Decodable {
 struct InjectedMessage: Decodable {
     let author: Author
     let messages: [Message]
-    let showtime: Double
     let timestamp: Date
     let superchat: Superchat?
 
@@ -29,6 +28,7 @@ struct InjectedMessage: Decodable {
 }
 
 extension InjectedMessage: DisplayableMessage {
+    var isMchad: Bool { false }
     var displayAuthor: String { author.name }
     var displayTimestamp: String { timestamp.toRelative(style: RelativeFormatter.twitterStyle()) }
     var displayMessage: [Message] { messages }
@@ -45,8 +45,9 @@ extension InjectedMessage: DisplayableMessage {
         }
         return false
     }
+
     var superchatData: Superchat? { superchat }
 
     var sortTimestamp: Date { timestamp }
-    var showTimestamp: Double { showtime }
+  
 }

@@ -22,15 +22,25 @@ class ChatCell: UITableViewCell {
     func configure(_ item: DisplayableMessage, useTimestamps: Bool) {
         author.text = item.displayAuthor
         timestamp.text = useTimestamps ? item.displayTimestamp : ""
+        if item.isMchad {
+            timestamp.text = "Mchad"
+        }
+        
+        // This should reset the cell, so we aviod duplicate superchats and members
+        timestamp.font = .systemFont(ofSize: 17)
+        timestamp.textColor = .secondaryLabel
+        contentView.layer.cornerRadius = 0
+        contentView.backgroundColor = .clear
+        author.textColor = .secondaryLabel
 
         if item.superchatData != nil {
-            // print(item.superchatData)
             timestamp.text = item.superchatData?.amount
             timestamp.font = .boldSystemFont(ofSize: 17)
             timestamp.textColor = .label
             contentView.layer.cornerRadius = 10
             contentView.backgroundColor = item.superchatData?.UIcolor
         }
+        
 
         if item.isMember {
             author.textColor = UIColor(red: 44/255, green: 166/255, blue: 63/255, alpha: 1)
@@ -47,13 +57,17 @@ class ChatCell: UITableViewCell {
             case .text(let s):
                 let am = NSAttributedString(string: s)
                 fullMessage.append(am)
-            case .emote(let u, let id):
+            case .emote(var u, let id):
                 if id != nil {
                     if id!.isSingleEmoji {
                         let am = NSAttributedString(string: id!)
                         fullMessage.append(am)
                     } else {
-                        let html = " <img src=\"\(u.deletingPathExtension().appendingPathExtension("png").absoluteString)\" width=\"24\" height=\"24\" /> "
+                        if u.pathExtension == "svg" {
+                            u.deletePathExtension()
+                            u.appendPathExtension("png")
+                        }
+                        let html = " <img src=\"\(u.absoluteString)\" width=\"24\" height=\"24\"/> "
                         let data = Data(html.utf8)
 
                         do {
@@ -69,6 +83,7 @@ class ChatCell: UITableViewCell {
             }
         }
 
+        // print("\(item.displayAuthor): \(item.displayMessage)")
         message.attributedText = fullMessage
     }
 }
