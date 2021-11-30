@@ -18,7 +18,7 @@ platform :ios do
       workspace: "ios.xcworkspace", 
       scheme: "ios",
       xcargs: {
-        PROVISIONING_PROFILE_SPECIFIER: ENV["sigh_#{ENV['APP_IDENTIFIER']}_#{signing_type}"]
+        PROVISIONING_PROFILE_SPECIFIER: ENV["sigh_#{ENV['APP_IDENTIFIER']}_appstore"]
       }
     )
     update_code_signing_settings(
