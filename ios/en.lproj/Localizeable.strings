@@ -200,3 +200,6 @@
 
 /* a setting to enable english channel names */
 "Use English Channel Names" = "Use English Channel Names";
+
+/* a button that takes you to the About LiveTL screen */
+"About LiveTL" = "About LiveTL";

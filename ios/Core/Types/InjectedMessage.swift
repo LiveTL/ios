@@ -28,6 +28,7 @@ struct InjectedMessage: Decodable {
 }
 
 extension InjectedMessage: DisplayableMessage {
+    var isMchad: Bool { false }
     var displayAuthor: String { author.name }
     var displayTimestamp: String { timestamp.toRelative(style: RelativeFormatter.twitterStyle()) }
     var displayMessage: [Message] { messages }

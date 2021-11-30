@@ -14,6 +14,7 @@ protocol DisplayableMessage {
     var isMod           : Bool { get }
     var isMember        : Bool { get }
     var superchatData   : Superchat? { get }
+    var isMchad         : Bool { get }
     
     var sortTimestamp: Date { get }
     

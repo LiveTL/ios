@@ -26,8 +26,9 @@ struct MchadIncoming: Decodable {
 }
 
 struct MchadScript: Decodable {
-    let _id: String
-    let Stime: Date
+    let _id: String?
+    let Stime: Double
+    var Stimestamp: Date { Date() } //Doesn't matter, never shown to the user, just for sorting
     let Stext: String
     let CC: String?
     let OC: String?

@@ -22,6 +22,9 @@ class ChatCell: UITableViewCell {
     func configure(_ item: DisplayableMessage, useTimestamps: Bool) {
         author.text = item.displayAuthor
         timestamp.text = useTimestamps ? item.displayTimestamp : ""
+        if item.isMchad {
+            timestamp.text = "Mchad"
+        }
         
         // This should reset the cell, so we aviod duplicate superchats and members
         timestamp.font = .systemFont(ofSize: 17)
@@ -37,6 +40,7 @@ class ChatCell: UITableViewCell {
             contentView.layer.cornerRadius = 10
             contentView.backgroundColor = item.superchatData?.UIcolor
         }
+        
 
         if item.isMember {
             author.textColor = UIColor(red: 44/255, green: 166/255, blue: 63/255, alpha: 1)

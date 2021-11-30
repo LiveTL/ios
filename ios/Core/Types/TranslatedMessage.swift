@@ -13,9 +13,10 @@ struct TranslatedMessage {
     let message: [Message]
     let languages: [String]
     
-    let timestamp: Date
+    var timestamp: Date
     let show: Double
     let superchat: Superchat?
+    let isMchad: Bool
     
     init?(from message: InjectedMessage) {
         self.author = Author(from: message.author)
@@ -84,15 +85,17 @@ struct TranslatedMessage {
         let mess = m.compactMap { $0 }
         self.message = mess
         self.languages = lang
+        self.isMchad = false
     }
     
     init(from mchad: MchadScript, room: MchadRoom) {
         self.author = Author(from: room)
         self.message = [Message.text(mchad.Stext)]
         self.languages = [room.Tags]
-        self.timestamp = mchad.Stime
-        self.show = mchad.Stime.timeIntervalSince1970
+        self.timestamp = mchad.Stimestamp
+        self.show = mchad.Stime
         self.superchat = nil
+        self.isMchad = true
     }
     
     struct Author {
