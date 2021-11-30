@@ -10,7 +10,10 @@ platform :ios do
 
     increment_build_number(xcodeproj: "ios.xcodeproj")
 
-    disable_automatic_code_signing(path: "ios.xcodeproj")
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      path: "ios.xcodeproj"
+    )
     build_app(
       workspace: "ios.xcworkspace", 
       scheme: "ios",
@@ -18,7 +21,10 @@ platform :ios do
         PROVISIONING_PROFILE_SPECIFIER: ENV["sigh_#{ENV['APP_IDENTIFIER']}_#{signing_type}"]
       }
     )
-    enable_automatic_code_signing(path: "ios.xcodeproj")
+    update_code_signing_settings(
+      use_automatic_signing: true,
+      path: "ios.xcodeproj"
+    )
 
     upload_to_testflight
   end
