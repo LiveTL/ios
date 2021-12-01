@@ -4,7 +4,25 @@ platform :ios do
 
   desc "Push a new test build to TestFlight"
   lane :beta do
-    increment_build_number(xcodeproj: "ios.xcodeproj")
+    update_project_team(
+      path: "ios.xcodeproj",
+      teamid: "D985GVG462"
+    )
+    update_app_identifier(
+      xcodeproj: "ios.xcodeproj",
+      plist_path: "ios/Info.plist",
+      app_identifier: "app.livetl.ios"
+    )
+    update_app_identifier(
+      xcodeproj: "ios.xcodeproj",
+      plist_path: "yt-extension/Info.plist",
+      app_identifier: "app.livetl.ios.yt-extension"
+    )
+
+    increment_build_number(
+      xcodeproj: "ios.xcodeproj",
+      build_number: latest_testflight_build_number + 1
+    )
 
     build_app(
       workspace: "ios.xcworkspace",
@@ -15,8 +33,26 @@ platform :ios do
   end
 
   desc "Push a new release build to the App Store"
-  lane :beta do
-    increment_build_number(xcodeproj: "ios.xcodeproj")
+  lane :release do
+    update_project_team(
+      path: "ios.xcodeproj",
+      teamid: "6S4L29QT59"
+    )
+    update_app_identifier(
+      xcodeproj: "ios.xcodeproj",
+      plist_path: "ios/Info.plist",
+      app_identifier: "app.livetl.ios"
+    )
+    update_app_identifier(
+      xcodeproj: "ios.xcodeproj",
+      plist_path: "yt-extension/Info.plist",
+      app_identifier: "app.livetl.ios.yt-extension"
+    )
+
+    increment_build_number(
+      xcodeproj: "ios.xcodeproj",
+      build_number: latest_testflight_build_number + 1
+    )
 
     build_app(
       workspace: "ios.xcworkspace",
