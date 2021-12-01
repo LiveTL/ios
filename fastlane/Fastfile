@@ -6,7 +6,7 @@ platform :ios do
   lane :beta do
     update_project_team(
       path: "ios.xcodeproj",
-      teamid: "D985GVG462"
+      teamid: "6S4L29QT59"
     )
     update_app_identifier(
       xcodeproj: "ios.xcodeproj",
