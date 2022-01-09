@@ -2,17 +2,16 @@
 //  AppStep.swift
 //  ios
 //
-//  Created by Mason Phillips on 3/25/21.
+//  Created by Mason Phillips on 12/30/21.
 //
 
-import Foundation
 import RxFlow
 
 enum AppStep: Step {
+    case onboarding
+    
+    
     case home
-    case view(_ id: String)
-    case streamDone
+    case stream(_ id: String), streamDone
     case settings, settingsDone
-    case filter, filterDone
-    case toConsent(_ showAlert: Bool), consentDone
 }

@@ -2,15 +2,8 @@ PODS:
   - Differentiator (5.0.0)
   - Eureka (5.3.4)
   - FLEX (4.6.1)
-  - FontAwesome.swift (1.9.1)
   - FontBlaster (5.2.0)
-  - Kingfisher (7.1.1)
-  - M3U8Kit (1.0.2)
-  - MarqueeLabel (4.0.5)
-  - Neon (0.4.0)
-  - NotificationBannerSwift (3.0.6):
-    - MarqueeLabel (~> 4.0.5)
-    - SnapKit (~> 5.0.1)
+  - Kingfisher (7.1.2)
   - RxCocoa (6.2.0):
     - RxRelay (= 6.2.0)
     - RxSwift (= 6.2.0)
@@ -28,7 +21,6 @@ PODS:
     - RxSwift (= 6.2.0)
   - RxSwift (6.2.0)
   - SCLAlertView (0.8)
-  - SnapKit (5.0.1)
   - SwiftDate (6.3.1)
   - SwiftyUserDefaults (5.3.0)
   - XCDYouTubeKit (2.15.2)
@@ -36,12 +28,8 @@ PODS:
 DEPENDENCIES:
   - Eureka
   - FLEX
-  - FontAwesome.swift
   - FontBlaster
   - Kingfisher
-  - M3U8Kit
-  - Neon
-  - NotificationBannerSwift (~> 3.0.0)
   - RxCocoa
   - RxCombine
   - RxDataSources
@@ -57,13 +45,8 @@ SPEC REPOS:
     - Differentiator
     - Eureka
     - FLEX
-    - FontAwesome.swift
     - FontBlaster
     - Kingfisher
-    - M3U8Kit
-    - MarqueeLabel
-    - Neon
-    - NotificationBannerSwift
     - RxCocoa
     - RxCombine
     - RxDataSources
@@ -71,7 +54,6 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - SCLAlertView
-    - SnapKit
     - SwiftDate
     - SwiftyUserDefaults
 
@@ -89,13 +71,8 @@ SPEC CHECKSUMS:
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   Eureka: 60cf058f86a8fb3ed26165ba5292b9850361b0a6
   FLEX: bbc55d197f87d7cde2454c3981aa47069b694144
-  FontAwesome.swift: 6b52cb7be66eacd28cbfaa0ca7ffd0de4a186a1d
   FontBlaster: b848e9d7b0ed2f2b3ebaf5b83458eb4ff9ba0764
-  Kingfisher: f738f9c4a3415823b8e2985d10aa2d6a9f37bc4d
-  M3U8Kit: 6a0d55ba2e62e146f34f53276d7c3aa78ed4fc00
-  MarqueeLabel: 00cc0bcd087111dca575878b3531af980559707d
-  Neon: 7fb5a9327e7e57911843f608e08f4893a74deaf9
-  NotificationBannerSwift: 7021be2338f8f29cf424b0aca43da462bf9e2a1a
+  Kingfisher: 44ed6a8504763f27bab46163adfac83f5deb240c
   RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
   RxCombine: 74cd98f7bb1d908eff3758d13651917fc296adb3
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
@@ -103,11 +80,10 @@ SPEC CHECKSUMS:
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
-  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftDate: 72d28954e8e1c6c1c0f917ccc8005e4f83c7d4b2
   SwiftyUserDefaults: 63f80248cf5bfb3458825d9a78f2eb7e1293a040
   XCDYouTubeKit: b120aced3d8638ffb570c5450cddb5a1dac448c7
 
-PODFILE CHECKSUM: bd3025cc71699ad0300e7ce21de6683a7ce4a10a
+PODFILE CHECKSUM: 31706bcdbf1de6436972bb7028e6a9777fbd7987
 
 COCOAPODS: 1.11.2
