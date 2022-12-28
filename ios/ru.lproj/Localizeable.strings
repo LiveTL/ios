@@ -1,0 +1,109 @@
+
+
+
+/* button that clears all caches other than the image cache */
+"Clear Other Caches" = "Очистить другие кеши";
+
+/* button that clears the image cache */
+"Clear Image Cache" = "Очистить кэш изображений";
+
+/* section header of advanced settings */
+"Advanced Settings" = "Дополнительные настройки";
+
+/* header for list of users that will always be prevented from appearing in the TL filter */
+"Blocked Users" = "Заблокированные пользователи";
+
+/* placeholder for a username */
+"Username" = "Имя пользователя";
+
+/* button that adds a user to a list */
+"Tap to Add User" = "Нажмите, чтобы добавить пользователя";
+
+/* Placeholder for when no language is selected  */
+"No languages selected" = "Языки не выбраны";
+
+/* header for list of selectable languages */
+"Languages" = "Языки";
+
+/* section header of message settings */
+"Message Settings" = "Настройки сообщений";
+
+/* section header of app settings */
+"App Settings" = "Настройки приложения";
+
+/* title of the settings screen */
+"Settings" = "Настройки";
+
+/* a dismiss button */
+"Save" = "Сохранить";
+
+/* a message that appears when we are loading the chat */
+"Loading chat..." = "Загрузка чата…";
+
+/* a placeholder for when we have not recieved any chat messages yet */
+"No messages yet" = "Сообщений пока нет";
+
+/* the title of a popup that appears when an error occurs */
+"An Error Occurred" = "Произошла ошибка";
+
+/* a dismissal button that will go back a screen */
+"Go Back" = "Назад";
+
+/* a toggle that shows just TL messages */
+"LiveTL Mode" = "Режим LiveTL";
+
+/* a toggle to show all chat messages */
+"All Chat" = "Весь чат";
+
+/* a button that opens the video in the youtube app or youtube.com in safari*/
+"Open in Youtube" = "Открыть в YouTube";
+
+/* a button to share a youtube video */
+"Share" = "Поделиться";
+
+/* a button to access the description of a youtube video */
+"Description" = "Описание";
+
+/* Explanation in the clipboard popup */
+"We detected a Youtube link in your clipboard. Would you like to access this stream?" = "Открыть ссылку на YouTube из буфера обмена?";
+
+/* title of a popup that appears when we detect a youtube URL in the clipboard*/
+"Youtube Link Detected!" = "Обнаружена ссылка на YouTube";
+
+/* a dismissal button that will advance a screen */
+"Let's Go!" = "Начать!";
+
+/* A dismissal button */
+"OK" = "ОК";
+
+/* Header for the Org list */
+"Select Organization" = "Выберите организацию";
+
+/* A Dismissal Button */
+"Done" = "Готово";
+
+/* User-selectable Developer testing language filter */
+"Developer Tags" = "Теги разработчика";
+
+/* User-selectable fr language filter */
+"French" = "Французский";
+
+/* User-selectable ru language filter */
+"Russian" = "Русский";
+
+/* User-selectable zh language filter */
+"Chinese" = "Китайский";
+
+/* User-selectable ko language filter */
+"Korean" = "Корейский";
+
+/* User-selectable id language filter */
+"Indonesian" = "Индонезийский";
+
+/* User-selectable es language filter */
+"Spanish" = "Испанский";
+
+/* User-selectable ja language filter */
+"Japanese" = "Японский";
+/* User-selectable en language filter */
+"English" = "Английский";
